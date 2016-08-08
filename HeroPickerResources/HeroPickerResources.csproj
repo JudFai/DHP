@@ -1,0 +1,424 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{312A1658-2041-4E62-A6DA-0AB7F278AA01}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HeroPickerResources</RootNamespace>
+    <AssemblyName>HeroPickerResources</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Drawing">
+      <HintPath>..\packages\Microsoft.Expression.Drawing.3.0.0\lib\net45\Microsoft.Expression.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\FlyGridViewControl.cs" />
+    <Compile Include="Controls\MenuButtonItem.xaml.cs">
+      <DependentUpon>MenuButtonItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PageControl.cs" />
+    <Compile Include="Controls\PanelWithToolTipControl.cs" />
+    <Compile Include="Controls\ProgressBarControl.cs" />
+    <Compile Include="Controls\ProgressRing.xaml.cs">
+      <DependentUpon>ProgressRing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProgressRingIndeterminateControl.cs" />
+    <Compile Include="Converters\BoolNotConverter.cs" />
+    <Compile Include="Converters\NullImageConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Converters\NumericSignToBoolConverter.cs" />
+    <Compile Include="Converters\VisibilityToBoolConverter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Resources\IconEnum.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="Fonts\segmdl2.ttf" />
+    <Resource Include="Fonts\segoeui.ttf" />
+    <Resource Include="Fonts\segoeuil.ttf" />
+    <Resource Include="Fonts\segoeuisl.ttf" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heroes\Abaddon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heroes\AncientApparition.jpg" />
+    <Resource Include="Images\Heroes\AntiMage.jpg" />
+    <Resource Include="Images\Heroes\ArcWarden.jpg" />
+    <Resource Include="Images\Heroes\Axe.jpg" />
+    <Resource Include="Images\Heroes\Bane.jpg" />
+    <Resource Include="Images\Heroes\Batrider.jpg" />
+    <Resource Include="Images\Heroes\Beastmaster.jpg" />
+    <Resource Include="Images\Heroes\Bloodseeker.jpg" />
+    <Resource Include="Images\Heroes\BountyHunter.jpg" />
+    <Resource Include="Images\Heroes\Brewmaster.jpg" />
+    <Resource Include="Images\Heroes\Bristleback.jpg" />
+    <Resource Include="Images\Heroes\Broodmother.jpg" />
+    <Resource Include="Images\Heroes\CentaurWarrunner.jpg" />
+    <Resource Include="Images\Heroes\ChaosKnight.jpg" />
+    <Resource Include="Images\Heroes\Chen.jpg" />
+    <Resource Include="Images\Heroes\Clinkz.jpg" />
+    <Resource Include="Images\Heroes\Clockwerk.jpg" />
+    <Resource Include="Images\Heroes\CrystalMaiden.jpg" />
+    <Resource Include="Images\Heroes\DarkSeer.jpg" />
+    <Resource Include="Images\Heroes\Dazzle.jpg" />
+    <Resource Include="Images\Heroes\DeathProphet.jpg" />
+    <Resource Include="Images\Heroes\Disruptor.jpg" />
+    <Resource Include="Images\Heroes\Doom.jpg" />
+    <Resource Include="Images\Heroes\DragonKnight.jpg" />
+    <Resource Include="Images\Heroes\DrowRanger.jpg" />
+    <Resource Include="Images\Heroes\Earthshaker.jpg" />
+    <Resource Include="Images\Heroes\EarthSpirit.jpg" />
+    <Resource Include="Images\Heroes\ElderTitan.jpg" />
+    <Resource Include="Images\Heroes\EmberSpirit.jpg" />
+    <Resource Include="Images\Heroes\Enchantress.jpg" />
+    <Resource Include="Images\Heroes\Enigma.jpg" />
+    <Resource Include="Images\Heroes\FacelessVoid.jpg" />
+    <Resource Include="Images\Heroes\Gyrocopter.jpg" />
+    <Resource Include="Images\Heroes\Huskar.jpg" />
+    <Resource Include="Images\Heroes\Invoker.jpg" />
+    <Resource Include="Images\Heroes\Io.jpg" />
+    <Resource Include="Images\Heroes\Jakiro.jpg" />
+    <Resource Include="Images\Heroes\Juggernaut.jpg" />
+    <Resource Include="Images\Heroes\KeeperOfTheLight.jpg" />
+    <Resource Include="Images\Heroes\Kunkka.jpg" />
+    <Resource Include="Images\Heroes\LegionCommander.jpg" />
+    <Resource Include="Images\Heroes\Leshrac.jpg" />
+    <Resource Include="Images\Heroes\Lich.jpg" />
+    <Resource Include="Images\Heroes\Lifestealer.jpg" />
+    <Resource Include="Images\Heroes\Lina.jpg" />
+    <Resource Include="Images\Heroes\Lion.jpg" />
+    <Resource Include="Images\Heroes\LoneDruid.jpg" />
+    <Resource Include="Images\Heroes\Luna.jpg" />
+    <Resource Include="Images\Heroes\Lycan.jpg" />
+    <Resource Include="Images\Heroes\Magnus.jpg" />
+    <Resource Include="Images\Heroes\Medusa.jpg" />
+    <Resource Include="Images\Heroes\Meepo.jpg" />
+    <Resource Include="Images\Heroes\Mirana.jpg" />
+    <Resource Include="Images\Heroes\Morphling.jpg" />
+    <Resource Include="Images\Heroes\NagaSiren.jpg" />
+    <Resource Include="Images\Heroes\NatureProphet.jpg" />
+    <Resource Include="Images\Heroes\Necrophos.jpg" />
+    <Resource Include="Images\Heroes\NightStalker.jpg" />
+    <Resource Include="Images\Heroes\NyxAssassin.jpg" />
+    <Resource Include="Images\Heroes\OgreMagi.jpg" />
+    <Resource Include="Images\Heroes\Omniknight.jpg" />
+    <Resource Include="Images\Heroes\Oracle.jpg" />
+    <Resource Include="Images\Heroes\OutworldDevourer.jpg" />
+    <Resource Include="Images\Heroes\PhantomAssassin.jpg" />
+    <Resource Include="Images\Heroes\PhantomLancer.jpg" />
+    <Resource Include="Images\Heroes\Phoenix.jpg" />
+    <Resource Include="Images\Heroes\Puck.jpg" />
+    <Resource Include="Images\Heroes\Pudge.jpg" />
+    <Resource Include="Images\Heroes\Pugna.jpg" />
+    <Resource Include="Images\Heroes\QueenOfPain.jpg" />
+    <Resource Include="Images\Heroes\Razor.jpg" />
+    <Resource Include="Images\Heroes\Riki.jpg" />
+    <Resource Include="Images\Heroes\Rubick.jpg" />
+    <Resource Include="Images\Heroes\SandKing.jpg" />
+    <Resource Include="Images\Heroes\ShadowDemon.jpg" />
+    <Resource Include="Images\Heroes\ShadowFiend.jpg" />
+    <Resource Include="Images\Heroes\ShadowShaman.jpg" />
+    <Resource Include="Images\Heroes\Silencer.jpg" />
+    <Resource Include="Images\Heroes\SkywrathMage.jpg" />
+    <Resource Include="Images\Heroes\Slardar.jpg" />
+    <Resource Include="Images\Heroes\Slark.jpg" />
+    <Resource Include="Images\Heroes\Sniper.jpg" />
+    <Resource Include="Images\Heroes\Spectre.jpg" />
+    <Resource Include="Images\Heroes\SpiritBreaker.jpg" />
+    <Resource Include="Images\Heroes\StormSpirit.jpg" />
+    <Resource Include="Images\Heroes\Sven.jpg" />
+    <Resource Include="Images\Heroes\Techies.jpg" />
+    <Resource Include="Images\Heroes\TemplarAssassin.jpg" />
+    <Resource Include="Images\Heroes\Terrorblade.jpg" />
+    <Resource Include="Images\Heroes\Tidehunter.jpg" />
+    <Resource Include="Images\Heroes\Timbersaw.jpg" />
+    <Resource Include="Images\Heroes\Tinker.jpg" />
+    <Resource Include="Images\Heroes\Tiny.jpg" />
+    <Resource Include="Images\Heroes\TreantProtector.jpg" />
+    <Resource Include="Images\Heroes\TrollWarlord.jpg" />
+    <Resource Include="Images\Heroes\Tusk.jpg" />
+    <Resource Include="Images\Heroes\Undying.jpg" />
+    <Resource Include="Images\Heroes\Ursa.jpg" />
+    <Resource Include="Images\Heroes\VengefulSpirit.jpg" />
+    <Resource Include="Images\Heroes\Venomancer.jpg" />
+    <Resource Include="Images\Heroes\Viper.jpg" />
+    <Resource Include="Images\Heroes\Visage.jpg" />
+    <Resource Include="Images\Heroes\Warlock.jpg" />
+    <Resource Include="Images\Heroes\Weaver.jpg" />
+    <Resource Include="Images\Heroes\Windranger.jpg" />
+    <Resource Include="Images\Heroes\WinterWyvern.jpg" />
+    <Resource Include="Images\Heroes\WitchDoctor.jpg" />
+    <Resource Include="Images\Heroes\WraithKing.jpg" />
+    <Resource Include="Images\Heroes\Zeus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heroes\Alchemist.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\ItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MenuButtonItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ProgressRing.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\BorderStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\FlyGridViewStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ListBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\PageControlStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ProgressBarStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ProgressRingIndeterminateStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\RadioButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\TextBlockStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\TextBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Converters\ConverterResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ColorStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\FontStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\MUIMYWindowStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ProgressRingStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ScrollBarStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\Percent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heroes\Icons\Abaddon.png" />
+    <Resource Include="Images\Heroes\Icons\Alchemist.png" />
+    <Resource Include="Images\Heroes\Icons\AncientApparition.png" />
+    <Resource Include="Images\Heroes\Icons\AntiMage.png" />
+    <Resource Include="Images\Heroes\Icons\ArcWarden.png" />
+    <Resource Include="Images\Heroes\Icons\Axe.png" />
+    <Resource Include="Images\Heroes\Icons\Bane.png" />
+    <Resource Include="Images\Heroes\Icons\Batrider.png" />
+    <Resource Include="Images\Heroes\Icons\Beastmaster.png" />
+    <Resource Include="Images\Heroes\Icons\Bloodseeker.png" />
+    <Resource Include="Images\Heroes\Icons\BountyHunter.png" />
+    <Resource Include="Images\Heroes\Icons\Brewmaster.png" />
+    <Resource Include="Images\Heroes\Icons\Bristleback.png" />
+    <Resource Include="Images\Heroes\Icons\Broodmother.png" />
+    <Resource Include="Images\Heroes\Icons\CentaurWarrunner.png" />
+    <Resource Include="Images\Heroes\Icons\ChaosKnight.png" />
+    <Resource Include="Images\Heroes\Icons\Chen.png" />
+    <Resource Include="Images\Heroes\Icons\Clinkz.png" />
+    <Resource Include="Images\Heroes\Icons\Clockwerk.png" />
+    <Resource Include="Images\Heroes\Icons\CrystalMaiden.png" />
+    <Resource Include="Images\Heroes\Icons\DarkSeer.png" />
+    <Resource Include="Images\Heroes\Icons\Dazzle.png" />
+    <Resource Include="Images\Heroes\Icons\DeathProphet.png" />
+    <Resource Include="Images\Heroes\Icons\Disruptor.png" />
+    <Resource Include="Images\Heroes\Icons\Doom.png" />
+    <Resource Include="Images\Heroes\Icons\DragonKnight.png" />
+    <Resource Include="Images\Heroes\Icons\DrowRanger.png" />
+    <Resource Include="Images\Heroes\Icons\Earthshaker.png" />
+    <Resource Include="Images\Heroes\Icons\EarthSpirit.png" />
+    <Resource Include="Images\Heroes\Icons\ElderTitan.png" />
+    <Resource Include="Images\Heroes\Icons\EmberSpirit.png" />
+    <Resource Include="Images\Heroes\Icons\Enchantress.png" />
+    <Resource Include="Images\Heroes\Icons\Enigma.png" />
+    <Resource Include="Images\Heroes\Icons\FacelessVoid.png" />
+    <Resource Include="Images\Heroes\Icons\Gyrocopter.png" />
+    <Resource Include="Images\Heroes\Icons\Huskar.png" />
+    <Resource Include="Images\Heroes\Icons\Invoker.png" />
+    <Resource Include="Images\Heroes\Icons\Io.png" />
+    <Resource Include="Images\Heroes\Icons\Jakiro.png" />
+    <Resource Include="Images\Heroes\Icons\Juggernaut.png" />
+    <Resource Include="Images\Heroes\Icons\KeeperOfTheLight.png" />
+    <Resource Include="Images\Heroes\Icons\Kunkka.png" />
+    <Resource Include="Images\Heroes\Icons\LegionCommander.png" />
+    <Resource Include="Images\Heroes\Icons\Leshrac.png" />
+    <Resource Include="Images\Heroes\Icons\Lich.png" />
+    <Resource Include="Images\Heroes\Icons\Lifestealer.png" />
+    <Resource Include="Images\Heroes\Icons\Lina.png" />
+    <Resource Include="Images\Heroes\Icons\Lion.png" />
+    <Resource Include="Images\Heroes\Icons\LoneDruid.png" />
+    <Resource Include="Images\Heroes\Icons\Luna.png" />
+    <Resource Include="Images\Heroes\Icons\Lycan.png" />
+    <Resource Include="Images\Heroes\Icons\Magnus.png" />
+    <Resource Include="Images\Heroes\Icons\Medusa.png" />
+    <Resource Include="Images\Heroes\Icons\Meepo.png" />
+    <Resource Include="Images\Heroes\Icons\Mirana.png" />
+    <Resource Include="Images\Heroes\Icons\Morphling.png" />
+    <Resource Include="Images\Heroes\Icons\NagaSiren.png" />
+    <Resource Include="Images\Heroes\Icons\NatureProphet.png" />
+    <Resource Include="Images\Heroes\Icons\Necrophos.png" />
+    <Resource Include="Images\Heroes\Icons\NightStalker.png" />
+    <Resource Include="Images\Heroes\Icons\NyxAssassin.png" />
+    <Resource Include="Images\Heroes\Icons\OgreMagi.png" />
+    <Resource Include="Images\Heroes\Icons\Omniknight.png" />
+    <Resource Include="Images\Heroes\Icons\Oracle.png" />
+    <Resource Include="Images\Heroes\Icons\OutworldDevourer.png" />
+    <Resource Include="Images\Heroes\Icons\PhantomAssassin.png" />
+    <Resource Include="Images\Heroes\Icons\PhantomLancer.png" />
+    <Resource Include="Images\Heroes\Icons\Phoenix.png" />
+    <Resource Include="Images\Heroes\Icons\Puck.png" />
+    <Resource Include="Images\Heroes\Icons\Pudge.png" />
+    <Resource Include="Images\Heroes\Icons\Pugna.png" />
+    <Resource Include="Images\Heroes\Icons\QueenOfPain.png" />
+    <Resource Include="Images\Heroes\Icons\Razor.png" />
+    <Resource Include="Images\Heroes\Icons\Riki.png" />
+    <Resource Include="Images\Heroes\Icons\Rubick.png" />
+    <Resource Include="Images\Heroes\Icons\SandKing.png" />
+    <Resource Include="Images\Heroes\Icons\ShadowDemon.png" />
+    <Resource Include="Images\Heroes\Icons\ShadowFiend.png" />
+    <Resource Include="Images\Heroes\Icons\ShadowShaman.png" />
+    <Resource Include="Images\Heroes\Icons\Silencer.png" />
+    <Resource Include="Images\Heroes\Icons\SkywrathMage.png" />
+    <Resource Include="Images\Heroes\Icons\Slardar.png" />
+    <Resource Include="Images\Heroes\Icons\Slark.png" />
+    <Resource Include="Images\Heroes\Icons\Sniper.png" />
+    <Resource Include="Images\Heroes\Icons\Spectre.png" />
+    <Resource Include="Images\Heroes\Icons\SpiritBreaker.png" />
+    <Resource Include="Images\Heroes\Icons\StormSpirit.png" />
+    <Resource Include="Images\Heroes\Icons\Sven.png" />
+    <Resource Include="Images\Heroes\Icons\Techies.png" />
+    <Resource Include="Images\Heroes\Icons\TemplarAssassin.png" />
+    <Resource Include="Images\Heroes\Icons\Terrorblade.png" />
+    <Resource Include="Images\Heroes\Icons\Tidehunter.png" />
+    <Resource Include="Images\Heroes\Icons\Timbersaw.png" />
+    <Resource Include="Images\Heroes\Icons\Tinker.png" />
+    <Resource Include="Images\Heroes\Icons\Tiny.png" />
+    <Resource Include="Images\Heroes\Icons\TreantProtector.png" />
+    <Resource Include="Images\Heroes\Icons\TrollWarlord.png" />
+    <Resource Include="Images\Heroes\Icons\Tusk.png" />
+    <Resource Include="Images\Heroes\Icons\Undying.png" />
+    <Resource Include="Images\Heroes\Icons\Ursa.png" />
+    <Resource Include="Images\Heroes\Icons\VengefulSpirit.png" />
+    <Resource Include="Images\Heroes\Icons\Venomancer.png" />
+    <Resource Include="Images\Heroes\Icons\Viper.png" />
+    <Resource Include="Images\Heroes\Icons\Visage.png" />
+    <Resource Include="Images\Heroes\Icons\Warlock.png" />
+    <Resource Include="Images\Heroes\Icons\Weaver.png" />
+    <Resource Include="Images\Heroes\Icons\windranger.png" />
+    <Resource Include="Images\Heroes\Icons\WinterWyvern.png" />
+    <Resource Include="Images\Heroes\Icons\WitchDoctor.png" />
+    <Resource Include="Images\Heroes\Icons\WraithKing.png" />
+    <Resource Include="Images\Heroes\Icons\Zeus.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

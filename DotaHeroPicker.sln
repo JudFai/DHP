@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaHeroPicker", "DotaHeroPicker\DotaHeroPicker.csproj", "{CAB2648D-78C8-4AAE-852F-2392EFFC3789}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaHeroPickerUI", "DotaHeroPickerUI\DotaHeroPickerUI.csproj", "{0510B103-B5CF-4547-AFF7-38F29B9D5BE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroPickerResources", "HeroPickerResources\HeroPickerResources.csproj", "{312A1658-2041-4E62-A6DA-0AB7F278AA01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAB2648D-78C8-4AAE-852F-2392EFFC3789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAB2648D-78C8-4AAE-852F-2392EFFC3789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAB2648D-78C8-4AAE-852F-2392EFFC3789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAB2648D-78C8-4AAE-852F-2392EFFC3789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0510B103-B5CF-4547-AFF7-38F29B9D5BE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0510B103-B5CF-4547-AFF7-38F29B9D5BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0510B103-B5CF-4547-AFF7-38F29B9D5BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0510B103-B5CF-4547-AFF7-38F29B9D5BE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{312A1658-2041-4E62-A6DA-0AB7F278AA01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{312A1658-2041-4E62-A6DA-0AB7F278AA01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{312A1658-2041-4E62-A6DA-0AB7F278AA01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{312A1658-2041-4E62-A6DA-0AB7F278AA01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

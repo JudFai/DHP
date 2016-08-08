@@ -1,0 +1,32 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	         xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+	         mc:Ignorable="d"
+	         x:Class="HeroPickerResources.Controls.ProgressRing"
+	         x:Name="UserControl"
+	         d:DesignWidth="320" d:DesignHeight="320" >
+    <Grid x:Name="LayoutRoot">
+        <ed:Arc x:Name="ProgressRingBar_Path" 
+		    ArcThickness="0" 
+		    ArcThicknessUnit="Pixel"  
+		    Height="Auto" 
+		    StrokeThickness="50" 
+		    StartAngle="00" 
+		    Width="Auto" 
+		    Stretch="None" 
+		    EndAngle="360" />
+        
+        <ed:Arc x:Name="ProgressRingBar" 
+		    ArcThickness="0" 
+		    ArcThicknessUnit="Pixel"  
+		    Height="Auto" 
+		    Stroke="{Binding ElementName=UserControl, Path=Foreground}" 
+		    StrokeThickness="50" 
+		    StartAngle="0" 
+		    Width="Auto" 
+		    Stretch="None" 
+		    EndAngle="0"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.TeamFoundation.ObjectModel</id>
+    <version>14.0.0.3</version>
+    <title>Microsoft TeamFoundation ObjectModel</title>
+    <authors>Community TFS Build Extensions</authors>
+    <owners>Community TFS Build Extensions</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>NuGet package for referenced TFS object model</description>
+    <summary />
+  </metadata>
+</package>
