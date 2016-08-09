@@ -74,30 +74,5 @@ namespace DotaHeroPickerUI.View
         {
             SystemCommands.RestoreWindow(this);
         }
-
-        private void MainWindowView_OnContentRendered(object sender, EventArgs e)
-        {
-            Console.WriteLine("ContentRendered");
-        }
-
-        private void MainWindowView_OnSourceInitialized(object sender, EventArgs e)
-        {
-            Console.WriteLine("SourceInitialized");
-        }
-
-        private void MainWindowView_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine("Loaded");
-        }
-
-        private void MainWindowView_OnTargetUpdated(object sender, DataTransferEventArgs e)
-        {
-            Console.WriteLine("TargetUpdated");
-        }
-
-        private void MainWindowView_OnSourceUpdated(object sender, DataTransferEventArgs e)
-        {
-            Console.WriteLine("SourceUpdated");
-        }
     }
 }

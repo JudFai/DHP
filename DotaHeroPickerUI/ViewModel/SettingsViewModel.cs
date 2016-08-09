@@ -28,10 +28,13 @@ namespace DotaHeroPickerUI.ViewModel
             {
                 if (_model.CountDaysForRefreshData != value)
                 {
-                    var oldValue = _model.CountDaysForRefreshData;
-                    _model.CountDaysForRefreshData = value;
-                    if (!_serializerHeroPickerSettings.WriteXml(_model))
-                        _model.CountDaysForRefreshData = oldValue;
+                    if (value > 0)
+                    {
+                        var oldValue = _model.CountDaysForRefreshData;
+                        _model.CountDaysForRefreshData = value;
+                        if (!_serializerHeroPickerSettings.WriteXml(_model))
+                            _model.CountDaysForRefreshData = oldValue;
+                    }
 
                     Dispatcher.Invoke(() => RaisePropertyChanged("CountDaysForRefreshData"));
                 }

@@ -10,12 +10,7 @@
         MinWidth="1024" MinHeight="500"
         Style="{DynamicResource WindowStyle}"
         Background="Black" Foreground="White"
-        StateChanged="Self_StateChanged"
-        ContentRendered="MainWindowView_OnContentRendered"
-        SourceInitialized="MainWindowView_OnSourceInitialized"
-        Loaded="MainWindowView_OnLoaded"
-        TargetUpdated="MainWindowView_OnTargetUpdated"
-        SourceUpdated="MainWindowView_OnSourceUpdated">
+        StateChanged="Self_StateChanged">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -63,12 +58,8 @@
                     </StackPanel>
                     <controls:PageControl Grid.Row="1" 
                                           OneAnimation="False"
-                                          ShowAnimation="True">
-                        <ScrollViewer IsEnabled="{Binding ApplicationBusy, Converter={StaticResource BoolNotConverter}}"
-                                      ><!--Visibility="{Binding ApplicationBusy, Converter={StaticResource VisibilityToBoolConverter}, ConverterParameter=True}"-->
-                            <!--<controls:PageControl OneAnimation="False" Margin="24, 0, 24, 0" ShowAnimation="True">
-                                    <ContentPresenter Content="{Binding SelectedItem}" />
-                                </controls:PageControl>-->
+                                          ShowAnimation="{Binding ApplicationBusy, Converter={StaticResource BoolNotConverter}}">
+                        <ScrollViewer><!--Visibility="{Binding ApplicationBusy, Converter={StaticResource VisibilityToBoolConverter}, ConverterParameter=True}"-->
                             <StackPanel>
                                 <ContentPresenter Content="{Binding SelectedItem}" />
                             </StackPanel>
@@ -83,15 +74,15 @@
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center" 
                        Style="{StaticResource TitleTextBlockStyle}"
-                       Text="{Binding Progress, StringFormat={}{0:##} %}" />
+                       Text="{Binding Progress, StringFormat={}{0:N0} %}" />
         </Grid>
-        <StackPanel VerticalAlignment="Center"
+        <!--<StackPanel VerticalAlignment="Center"
                     Visibility="{Binding ApplicationBusy, Converter={StaticResource VisibilityToBoolConverter}}">
             <controls:ProgressRingIndeterminateControl />
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center" 
                        Style="{StaticResource TextBlockBaseStyle}"
                        Text="Выполнение..." />
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </Window>

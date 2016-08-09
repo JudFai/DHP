@@ -163,9 +163,6 @@ namespace DotaHeroPickerUI.ViewModel
                         SwapHeroesByMainChar(collection[i], collection);
                 }
 
-                // Кажется, что не совсем разумно оставлять эту задержку, но это позволяет нивелировать исчезновение экрана
-                //Thread.Sleep(150);
-
                 collection.BlockedRaiseCollectionEvents = false;
             }
 
@@ -178,7 +175,13 @@ namespace DotaHeroPickerUI.ViewModel
                 RaisePropertyChanged("AlliedDotaHeroCollection");
                 RaisePropertyChanged("EnemyDotaHeroCollection");
             });
-            Thread.Sleep(450);
+            OnHeroesCollectionChanged(new HeroesCollectionChangedEventArgs(
+                BannedDotaHeroCollection.ToList(),
+                AlliedDotaHeroCollection.ToList(), 
+                EnemyDotaHeroCollection.ToList()));
+
+            // Кажется, что не совсем разумно оставлять эту задержку, но это позволяет нивелировать исчезновение экрана
+            Thread.Sleep(100);
             Parent.ApplicationBusy = false;
         }
 

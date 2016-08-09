@@ -76,7 +76,7 @@ namespace HeroPickerResources.Controls
         {
 
             var conditionValue = (bool)e.NewValue;
-            Console.WriteLine(conditionValue);
+            //Console.WriteLine(conditionValue);
             var thisUserControl = (PageControl)sender;
             if (thisUserControl.OneAnimation && !thisUserControl._oneOnimationCompleted)
             {

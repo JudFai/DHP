@@ -39,7 +39,7 @@
             <!--<TextBlock Text="Result" 
                        Foreground="White" Margin="{StaticResource ElementThickness}"
                        Style="{StaticResource BodyTextBlockStyle}" />-->
-            <ItemsControl ItemsSource="{Binding EnemyHeroAdvantageFilteredCollection}" 
+            <ItemsControl ItemsSource="{Binding EnemyHeroAdvantageFilteredCollection, IsAsync=True}" 
                           Margin="{StaticResource ElementThickness}"
                           ItemTemplate="{StaticResource EnemyHeroAdvantageTemplate}"
                           AlternationCount="2">
@@ -51,12 +51,15 @@
             </ItemsControl>
         </StackPanel>
         <StackPanel Visibility="{Binding EnemyHeroAdvantageCollection, Converter={StaticResource NullToVisibilityConverter}}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-            <controls:ProgressRingIndeterminateControl />
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top"
+                    Margin="{StaticResource TitleElementThickness}">
+            <controls:ProgressRingIndeterminateControl Width="30" Height="30" 
+                                                       Margin="0, 0, 5, 0" />
             <TextBlock Text="Ожидание выбора героев..."
-                       Margin="5"
-                       Style="{StaticResource CaptionTextBlockStyle}"/>
+                       Margin="5" VerticalAlignment="Center"
+                       Style="{StaticResource BodyTextBlockStyle}"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -22,6 +22,7 @@ namespace DotaHeroPickerUI.ViewModel
     {
         #region Fields
 
+        private object _selectedItemLocker = new object();
         private ItemViewModel _selectedItem;
 
         private readonly string _pathToHeroImage = "/HeroPickerResources;component/Images/Heroes/";
@@ -76,6 +77,9 @@ namespace DotaHeroPickerUI.ViewModel
             {
                 if (_applicationBusy != value)
                 {
+#if DEBUG
+                    Console.WriteLine("SelectedItem: {0}", value);
+#endif
                     _applicationBusy = value;
                     Dispatcher.Invoke(() => RaisePropertyChanged("ApplicationBusy"));
                 }
@@ -88,16 +92,7 @@ namespace DotaHeroPickerUI.ViewModel
         public ItemViewModel SelectedItem
         {
             get { return _selectedItem; }
-            set
-            {
-                if (_selectedItem != value)
-                {
-                    _selectedItem = null;
-                    RaisePropertyChanged("SelectedItem");
-                    _selectedItem = value;
-                    RaisePropertyChanged("SelectedItem");
-                }
-            }
+            set { SetSelectedItem(value); }
         }
 
         public ReadOnlyCollection<DotaHeroViewModel> AllDotaHero { get; private set; }
@@ -214,6 +209,24 @@ namespace DotaHeroPickerUI.ViewModel
         private void OnHeroesCollectionChanged(object sender, HeroesCollectionChangedEventArgs e)
         {
             OnHeroesCollectionChanged(e);
+        }
+
+        private void SetSelectedItem(ItemViewModel val)
+        {
+            if (_selectedItem != val)
+            {
+                ApplicationBusy = true;
+                _selectedItem = null;
+                RaisePropertyChanged("SelectedItem");
+                _selectedItem = val;
+                RaisePropertyChanged("SelectedItem");
+                Task.Run(() =>
+                {
+                    // Кажется, что не совсем разумно оставлять эту задержку, но это позволяет нивелировать исчезновение экрана
+                    Thread.Sleep(100);
+                    ApplicationBusy = false;
+                });
+            }
         }
 
         #endregion
