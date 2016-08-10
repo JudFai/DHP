@@ -49,6 +49,7 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
+            
         </StackPanel>
         <StackPanel Visibility="{Binding EnemyHeroAdvantageCollection, Converter={StaticResource NullToVisibilityConverter}}"
                     Orientation="Horizontal"

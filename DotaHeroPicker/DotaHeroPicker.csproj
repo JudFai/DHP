@@ -47,6 +47,7 @@
     <Compile Include="DotaHero.cs" />
     <Compile Include="DotaHeroCollection.cs" />
     <Compile Include="DotaHeroFactory.cs" />
+    <Compile Include="DotaItem.cs" />
     <Compile Include="DotaLane.cs" />
     <Compile Include="DotaLaneCollection.cs" />
     <Compile Include="Hero.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="HeroAdvantage.cs" />
     <Compile Include="HeroCharacteristic.cs" />
     <Compile Include="HeroLanePresence.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="LanePresence.cs" />
     <Compile Include="HeroName.cs" />
     <Compile Include="HeroRole.cs" />
