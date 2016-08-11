@@ -22,13 +22,13 @@ namespace DotaHeroPicker
         //TODO: сделать искючение на индексатор
         public DotaHero this[Hero hero]
         {
-            get { return this.FirstOrDefault(p => p.Name.Hero == hero); }
+            get { return this.FirstOrDefault(p => p.DotaName.Entity == hero); }
         }
 
         //TODO: сделать искючение на индексатор
         public DotaHero this[string fullName]
         {
-            get { return this.FirstOrDefault(p => p.Name.FullName == fullName); }
+            get { return this.FirstOrDefault(p => p.DotaName.FullName == fullName); }
         }
 
 
@@ -46,558 +46,558 @@ namespace DotaHeroPicker
             : base(new List<DotaHero>())
         {
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Abaddon, "Abaddon"),
+                new DotaName<Hero>(Hero.Abaddon, "Abaddon"),
                 AttackType.Melee, HeroCharacteristic.Strength, 
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Durable, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Alchemist, "Alchemist"), 
+                new DotaName<Hero>(Hero.Alchemist, "Alchemist"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.AncientApparition, "Ancient Apparition"), 
+                new DotaName<Hero>(Hero.AncientApparition, "Ancient Apparition"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.AntiMage, "Anti-Mage"), 
+                new DotaName<Hero>(Hero.AntiMage, "Anti-Mage"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Escape, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.ArcWarden, "Arc Warden"), 
+                new DotaName<Hero>(Hero.ArcWarden, "Arc Warden"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Escape, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Axe, "Axe"), 
+                new DotaName<Hero>(Hero.Axe, "Axe"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Jungler }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Bane, "Bane"), 
+                new DotaName<Hero>(Hero.Bane, "Bane"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Batrider, "Batrider"), 
+                new DotaName<Hero>(Hero.Batrider, "Batrider"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Escape, HeroRole.Initiator, HeroRole.Jungler }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Beastmaster, "Beastmaster"), 
+                new DotaName<Hero>(Hero.Beastmaster, "Beastmaster"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Bloodseeker, "Bloodseeker"), 
+                new DotaName<Hero>(Hero.Bloodseeker, "Bloodseeker"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Initiator, HeroRole.Jungler, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.BountyHunter, "Bounty Hunter"), 
+                new DotaName<Hero>(Hero.BountyHunter, "Bounty Hunter"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Escape, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Brewmaster, "Brewmaster"), 
+                new DotaName<Hero>(Hero.Brewmaster, "Brewmaster"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Bristleback, "Bristleback"), 
+                new DotaName<Hero>(Hero.Bristleback, "Bristleback"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Broodmother, "Broodmother"), 
+                new DotaName<Hero>(Hero.Broodmother, "Broodmother"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Escape, HeroRole.Nuker, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.CentaurWarrunner, "Centaur Warrunner"), 
+                new DotaName<Hero>(Hero.CentaurWarrunner, "Centaur Warrunner"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Escape, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.ChaosKnight, "Chaos Knight"), 
+                new DotaName<Hero>(Hero.ChaosKnight, "Chaos Knight"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Chen, "Chen"), 
+                new DotaName<Hero>(Hero.Chen, "Chen"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Jungler, HeroRole.Pusher, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Clinkz, "Clinkz"), 
+                new DotaName<Hero>(Hero.Clinkz, "Clinkz"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Escape, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Clockwerk, "Clockwerk"), 
+                new DotaName<Hero>(Hero.Clockwerk, "Clockwerk"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.CrystalMaiden, "Crystal Maiden"), 
+                new DotaName<Hero>(Hero.CrystalMaiden, "Crystal Maiden"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Jungler, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.DarkSeer, "Dark Seer"), 
+                new DotaName<Hero>(Hero.DarkSeer, "Dark Seer"), 
                 AttackType.Melee, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Escape, HeroRole.Initiator, HeroRole.Jungler }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Dazzle, "Dazzle"), 
+                new DotaName<Hero>(Hero.Dazzle, "Dazzle"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.DeathProphet, "Death Prophet"), 
+                new DotaName<Hero>(Hero.DeathProphet, "Death Prophet"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Nuker, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Disruptor, "Disruptor"), 
+                new DotaName<Hero>(Hero.Disruptor, "Disruptor"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Doom, "Doom"), 
+                new DotaName<Hero>(Hero.Doom, "Doom"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.DragonKnight, "Dragon Knight"), 
+                new DotaName<Hero>(Hero.DragonKnight, "Dragon Knight"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.DrowRanger, "Drow Ranger"), 
+                new DotaName<Hero>(Hero.DrowRanger, "Drow Ranger"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.EarthSpirit, "Earth Spirit"), 
+                new DotaName<Hero>(Hero.EarthSpirit, "Earth Spirit"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Escape, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Earthshaker, "Earthshaker"), 
+                new DotaName<Hero>(Hero.Earthshaker, "Earthshaker"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.ElderTitan, "Elder Titan"), 
+                new DotaName<Hero>(Hero.ElderTitan, "Elder Titan"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.EmberSpirit, "Ember Spirit"), 
+                new DotaName<Hero>(Hero.EmberSpirit, "Ember Spirit"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Escape, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Enchantress, "Enchantress"), 
+                new DotaName<Hero>(Hero.Enchantress, "Enchantress"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Jungler, HeroRole.Pusher, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Enigma, "Enigma"), 
+                new DotaName<Hero>(Hero.Enigma, "Enigma"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Initiator, HeroRole.Jungler, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.FacelessVoid, "Faceless Void"), 
+                new DotaName<Hero>(Hero.FacelessVoid, "Faceless Void"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Escape, HeroRole.Initiator }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Gyrocopter, "Gyrocopter"), 
+                new DotaName<Hero>(Hero.Gyrocopter, "Gyrocopter"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Huskar, "Huskar"), 
+                new DotaName<Hero>(Hero.Huskar, "Huskar"), 
                 AttackType.Ranged, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Durable, HeroRole.Initiator }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Invoker, "Invoker"), 
+                new DotaName<Hero>(Hero.Invoker, "Invoker"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Escape, HeroRole.Nuker, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Io, "Io"), 
+                new DotaName<Hero>(Hero.Io, "Io"), 
                 AttackType.Ranged, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Escape, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Jakiro, "Jakiro"), 
+                new DotaName<Hero>(Hero.Jakiro, "Jakiro"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Nuker, HeroRole.Pusher, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Juggernaut, "Juggernaut"), 
+                new DotaName<Hero>(Hero.Juggernaut, "Juggernaut"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Escape, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.KeeperOfTheLight, "Keeper of the Light"), 
+                new DotaName<Hero>(Hero.KeeperOfTheLight, "Keeper of the Light"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Jungler, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Kunkka, "Kunkka"), 
+                new DotaName<Hero>(Hero.Kunkka, "Kunkka"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.LegionCommander, "Legion Commander"), 
+                new DotaName<Hero>(Hero.LegionCommander, "Legion Commander"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Leshrac, "Leshrac"), 
+                new DotaName<Hero>(Hero.Leshrac, "Leshrac"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Nuker, HeroRole.Pusher, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Lich, "Lich"), 
+                new DotaName<Hero>(Hero.Lich, "Lich"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Lifestealer, "Lifestealer"), 
+                new DotaName<Hero>(Hero.Lifestealer, "Lifestealer"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Escape, HeroRole.Jungler }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Lina, "Lina"), 
+                new DotaName<Hero>(Hero.Lina, "Lina"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Lion, "Lion"), 
+                new DotaName<Hero>(Hero.Lion, "Lion"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.LoneDruid, "Lone Druid"), 
+                new DotaName<Hero>(Hero.LoneDruid, "Lone Druid"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Durable, HeroRole.Jungler, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Luna, "Luna"), 
+                new DotaName<Hero>(Hero.Luna, "Luna"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Nuker, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Lycan, "Lycan"), 
+                new DotaName<Hero>(Hero.Lycan, "Lycan"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Durable, HeroRole.Escape, HeroRole.Jungler, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Magnus, "Magnus"), 
+                new DotaName<Hero>(Hero.Magnus, "Magnus"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Escape, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Medusa, "Medusa"), 
+                new DotaName<Hero>(Hero.Medusa, "Medusa"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Meepo, "Meepo"), 
+                new DotaName<Hero>(Hero.Meepo, "Meepo"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Escape, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Mirana, "Mirana"), 
+                new DotaName<Hero>(Hero.Mirana, "Mirana"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Escape, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Morphling, "Morphling"), 
+                new DotaName<Hero>(Hero.Morphling, "Morphling"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Escape, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.NagaSiren, "Naga Siren"), 
+                new DotaName<Hero>(Hero.NagaSiren, "Naga Siren"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Escape, HeroRole.Initiator, HeroRole.Pusher, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.NatureProphet, "Nature's Prophet"), 
+                new DotaName<Hero>(Hero.NatureProphet, "Nature's Prophet"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Escape, HeroRole.Jungler, HeroRole.Nuker, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Necrophos, "Necrophos"), 
+                new DotaName<Hero>(Hero.Necrophos, "Necrophos"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.NightStalker, "Night Stalker"), 
+                new DotaName<Hero>(Hero.NightStalker, "Night Stalker"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.NyxAssassin, "Nyx Assassin"), 
+                new DotaName<Hero>(Hero.NyxAssassin, "Nyx Assassin"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Escape, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.OgreMagi, "Ogre Magi"), 
+                new DotaName<Hero>(Hero.OgreMagi, "Ogre Magi"), 
                 AttackType.Melee, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Omniknight, "Omniknight"), 
+                new DotaName<Hero>(Hero.Omniknight, "Omniknight"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Durable, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Oracle, "Oracle"), 
+                new DotaName<Hero>(Hero.Oracle, "Oracle"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Escape, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.OutworldDevourer, "Outworld Devourer"), 
+                new DotaName<Hero>(Hero.OutworldDevourer, "Outworld Devourer"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.PhantomAssassin, "Phantom Assassin"), 
+                new DotaName<Hero>(Hero.PhantomAssassin, "Phantom Assassin"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Escape }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.PhantomLancer, "Phantom Lancer"), 
+                new DotaName<Hero>(Hero.PhantomLancer, "Phantom Lancer"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Escape, HeroRole.Nuker, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Phoenix, "Phoenix"), 
+                new DotaName<Hero>(Hero.Phoenix, "Phoenix"), 
                 AttackType.Ranged, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Escape, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Puck, "Puck"), 
+                new DotaName<Hero>(Hero.Puck, "Puck"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Escape, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Pudge, "Pudge"), 
+                new DotaName<Hero>(Hero.Pudge, "Pudge"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Pugna, "Pugna"), 
+                new DotaName<Hero>(Hero.Pugna, "Pugna"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Nuker, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.QueenOfPain, "Queen of Pain"), 
+                new DotaName<Hero>(Hero.QueenOfPain, "Queen of Pain"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Escape, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Razor, "Razor"), 
+                new DotaName<Hero>(Hero.Razor, "Razor"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Durable, HeroRole.Nuker, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Riki, "Riki"), 
+                new DotaName<Hero>(Hero.Riki, "Riki"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Escape }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Rubick, "Rubick"), 
+                new DotaName<Hero>(Hero.Rubick, "Rubick"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.SandKing, "Sand King"), 
+                new DotaName<Hero>(Hero.SandKing, "Sand King"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Escape, HeroRole.Initiator, HeroRole.Jungler, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.ShadowDemon, "Shadow Demon"), 
+                new DotaName<Hero>(Hero.ShadowDemon, "Shadow Demon"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.ShadowFiend, "Shadow Fiend"), 
+                new DotaName<Hero>(Hero.ShadowFiend, "Shadow Fiend"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.ShadowShaman, "Shadow Shaman"), 
+                new DotaName<Hero>(Hero.ShadowShaman, "Shadow Shaman"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Pusher, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Silencer, "Silencer"), 
+                new DotaName<Hero>(Hero.Silencer, "Silencer"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.SkywrathMage, "Skywrath Mage"), 
+                new DotaName<Hero>(Hero.SkywrathMage, "Skywrath Mage"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Slardar, "Slardar"), 
+                new DotaName<Hero>(Hero.Slardar, "Slardar"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Escape, HeroRole.Initiator }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Slark, "Slark"), 
+                new DotaName<Hero>(Hero.Slark, "Slark"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Escape, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Sniper, "Sniper"), 
+                new DotaName<Hero>(Hero.Sniper, "Sniper"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Spectre, "Spectre"), 
+                new DotaName<Hero>(Hero.Spectre, "Spectre"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Durable, HeroRole.Escape }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.SpiritBreaker, "Spirit Breaker"),
+                new DotaName<Hero>(Hero.SpiritBreaker, "Spirit Breaker"),
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Escape, HeroRole.Initiator }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.StormSpirit, "Storm Spirit"), 
+                new DotaName<Hero>(Hero.StormSpirit, "Storm Spirit"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Escape, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Sven, "Sven"), 
+                new DotaName<Hero>(Hero.Sven, "Sven"), 
                 AttackType.Melee, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Techies, "Techies"), 
+                new DotaName<Hero>(Hero.Techies, "Techies"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.TemplarAssassin, "Templar Assassin"), 
+                new DotaName<Hero>(Hero.TemplarAssassin, "Templar Assassin"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Escape }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Terrorblade, "Terrorblade"), 
+                new DotaName<Hero>(Hero.Terrorblade, "Terrorblade"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Nuker, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Tidehunter, "Tidehunter"), 
+                new DotaName<Hero>(Hero.Tidehunter, "Tidehunter"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Timbersaw, "Timbersaw"), 
+                new DotaName<Hero>(Hero.Timbersaw, "Timbersaw"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Durable, HeroRole.Escape, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Tinker, "Tinker"), 
+                new DotaName<Hero>(Hero.Tinker, "Tinker"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Nuker, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Tiny, "Tiny"), 
+                new DotaName<Hero>(Hero.Tiny, "Tiny"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.TreantProtector, "Treant Protector"), 
+                new DotaName<Hero>(Hero.TreantProtector, "Treant Protector"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Escape, HeroRole.Initiator, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.TrollWarlord, "Troll Warlord"), 
+                new DotaName<Hero>(Hero.TrollWarlord, "Troll Warlord"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Pusher }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Tusk, "Tusk"), 
+                new DotaName<Hero>(Hero.Tusk, "Tusk"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Initiator, HeroRole.Nuker }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Undying, "Undying"), 
+                new DotaName<Hero>(Hero.Undying, "Undying"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Ursa, "Ursa"), 
+                new DotaName<Hero>(Hero.Ursa, "Ursa"), 
                 AttackType.Melee, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Jungler }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.VengefulSpirit, "Vengeful Spirit"), 
+                new DotaName<Hero>(Hero.VengefulSpirit, "Vengeful Spirit"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Escape, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Venomancer, "Venomancer"), 
+                new DotaName<Hero>(Hero.Venomancer, "Venomancer"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Initiator, HeroRole.Nuker, HeroRole.Pusher, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Viper, "Viper"), 
+                new DotaName<Hero>(Hero.Viper, "Viper"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Visage, "Visage"), 
+                new DotaName<Hero>(Hero.Visage, "Visage"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Nuker, HeroRole.Pusher, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Warlock, "Warlock"), 
+                new DotaName<Hero>(Hero.Warlock, "Warlock"), 
                 AttackType.Ranged, 
                 HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Durable, HeroRole.Initiator, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Weaver, "Weaver"), 
+                new DotaName<Hero>(Hero.Weaver, "Weaver"), 
                 AttackType.Ranged, HeroCharacteristic.Agility,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Escape }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Windranger, "Windranger"), 
+                new DotaName<Hero>(Hero.Windranger, "Windranger"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Escape, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.WinterWyvern, "Winter Wyvern"), 
+                new DotaName<Hero>(Hero.WinterWyvern, "Winter Wyvern"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.WitchDoctor, "Witch Doctor"), 
+                new DotaName<Hero>(Hero.WitchDoctor, "Witch Doctor"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Disabler, HeroRole.Nuker, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.WraithKing, "Wraith King"), 
+                new DotaName<Hero>(Hero.WraithKing, "Wraith King"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
                 new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Support }));
 
             Items.Add(DotaHero.Factory.CreateDotaHero(
-                new HeroName(Hero.Zeus, "Zeus"), 
+                new DotaName<Hero>(Hero.Zeus, "Zeus"), 
                 AttackType.Ranged, HeroCharacteristic.Intelligence,
                 new List<HeroRole> { HeroRole.Nuker }));
         }

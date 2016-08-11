@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DotaHeroPicker
 {
-    public class DotaHeroFactory
+    class DotaHeroFactory
     {
         #region Fields
 
@@ -37,15 +37,15 @@ namespace DotaHeroPicker
             }
         }
 
-        public DotaHero CreateDotaHero(HeroName name, AttackType attackType, HeroCharacteristic mainCharacteristic, IList<HeroRole> roles)
+        public DotaHero CreateDotaHero(DotaName<Hero> dotaName, AttackType attackType, HeroCharacteristic mainCharacteristic, IList<HeroRole> roles)
         {
             lock (_lockerCreate)
             {
-                if (_dotaHeroCollection.Any(p => p.Name.Hero == name.Hero))
-                    throw new Exception(string.Format("{0} has been created", name));
+                if (_dotaHeroCollection.Any(p => p.DotaName.Entity == dotaName.Entity))
+                    throw new Exception(string.Format("{0} has been created", dotaName));
 
                 var flags = BindingFlags.NonPublic | BindingFlags.Instance;
-                var dotaHero = (DotaHero)Activator.CreateInstance(typeof(DotaHero), flags, null, new object[] { name, attackType, mainCharacteristic, roles }, null);
+                var dotaHero = (DotaHero)Activator.CreateInstance(typeof(DotaHero), flags, null, new object[] { dotaName, attackType, mainCharacteristic, roles }, null);
                 _dotaHeroCollection.Add(dotaHero);
 
                 return dotaHero;

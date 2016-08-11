@@ -121,9 +121,9 @@ namespace DotaHeroPickerUI.ViewModel
             AllDotaHero = new ReadOnlyCollection<DotaHeroViewModel>(
                 collection.Select(p => new DotaHeroViewModel(
                     p,
-                    string.Format("{0}{1}.jpg", _pathToHeroImage, p.Name.Hero),
+                    string.Format("{0}{1}.jpg", _pathToHeroImage, p.DotaName.Entity),
                     true,
-                    string.Format("{0}{1}.png", _pathToHeroIcons, p.Name.Hero))).ToList());
+                    string.Format("{0}{1}.png", _pathToHeroIcons, p.DotaName.Entity))).ToList());
 
             var heroesPick = new HeroesPickViewModel(this, "Выбор героев", IconEnum.Pick);
             heroesPick.HeroesCollectionChanged += OnHeroesCollectionChanged;

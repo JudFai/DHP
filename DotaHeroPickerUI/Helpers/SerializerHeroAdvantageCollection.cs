@@ -95,12 +95,12 @@ namespace DotaHeroPickerUI.Helpers
             foreach (var heroAdvantage in heroAdvantageCollection)
             {
                 var xmlHeroAdvantage = new XElement("HeroAdvantage",
-                    new XAttribute("FullName", heroAdvantage.Hero.Name.FullName));
+                    new XAttribute("FullName", heroAdvantage.Hero.DotaName.FullName));
                 xml.Add(xmlHeroAdvantage);
                 foreach (var enemyHeroAdvantage in heroAdvantage.EnemyHeroAdvantageCollection)
                 {
                     xmlHeroAdvantage.Add(new XElement("EnemyHeroAdvantage",
-                        new XElement("EnemyHero", enemyHeroAdvantage.Hero.Name.FullName),
+                        new XElement("EnemyHero", enemyHeroAdvantage.Hero.DotaName.FullName),
                         new XElement("AdvantageValue", enemyHeroAdvantage.AdvantageValue)));
                 }
             }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DotaHeroPicker
 {
-    public class HeroName
+    public class DotaName<T> where T : struct 
     {
         #region Properties
 
-        public Hero Hero { get; private set; }
+        public T Entity { get; private set; }
         public string FullName { get; private set; }
         public string HtmlName { get; private set; }
 
@@ -18,13 +18,13 @@ namespace DotaHeroPicker
 
         #region Constrcutors
 
-        private HeroName()
+        private DotaName()
         { 
         }
 
-        public HeroName(Hero hero, string fullName)
+        public DotaName(T entity, string fullName)
         {
-            Hero = hero;
+            Entity = entity;
             FullName = fullName;
             HtmlName = fullName.ToLower()
                 .Replace(" ", "-")

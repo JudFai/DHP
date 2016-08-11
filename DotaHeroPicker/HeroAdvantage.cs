@@ -33,7 +33,7 @@ namespace DotaHeroPicker
 
         public override string ToString()
         {
-            return string.Format("Hero: {0}", Hero.Name.FullName);
+            return string.Format("Hero: {0}", Hero.DotaName.FullName);
         }
 
         #endregion

@@ -248,7 +248,7 @@ namespace DotaHeroPickerUI.ViewModel
                 .Concat(DotaHeroStrengthColletion);
             IEnumerable<DotaHeroViewModel> filteredCollection = allHero;
             if (!string.IsNullOrEmpty(HeroName))
-                filteredCollection = filteredCollection.Where(p => !p.IsEmpty && p.Hero.Name.FullName.ToUpper().Contains(HeroName.ToUpper()));
+                filteredCollection = filteredCollection.Where(p => !p.IsEmpty && p.Hero.DotaName.FullName.ToUpper().Contains(HeroName.ToUpper()));
 
             foreach (var hero in allHero)
                 hero.IsEnabledHero = false;

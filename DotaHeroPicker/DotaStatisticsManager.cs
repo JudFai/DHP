@@ -144,7 +144,7 @@ namespace DotaHeroPicker
         {
             //var dic = new Dictionary<string, double>();
             var enemyHeroAdvantageCollection = new List<EnemyHeroAdvantage>();
-            var root = GetXmlElement(string.Format(_pathToMatchups, hero.Name.HtmlName));
+            var root = GetXmlElement(string.Format(_pathToMatchups, hero.DotaName.HtmlName));
             var tdElements = root.SelectNodes(@"
                 body
                 /div[@class='container-outer']
@@ -187,7 +187,7 @@ namespace DotaHeroPicker
             }
 
 #if DEBUG
-            Console.WriteLine(hero.Name.FullName);
+            Console.WriteLine(hero.DotaName.FullName);
 #endif
 
             return new HeroAdvantage(hero, enemyHeroAdvantageCollection);
@@ -220,7 +220,7 @@ namespace DotaHeroPicker
         public List<LanePresence> GetHeroLanePresenceCollection(DotaHero hero)
         {
             var heroLanePresenceCollection = new List<LanePresence>();
-            var root = GetXmlElement(string.Format(_pathToOverview, hero.Name.HtmlName));
+            var root = GetXmlElement(string.Format(_pathToOverview, hero.DotaName.HtmlName));
             var laneCollection = DotaLaneCollection.GetInstance();
             var trElements = root.SelectNodes(@"
                 body
@@ -264,7 +264,7 @@ namespace DotaHeroPicker
             }
 
 #if DEBUG
-            Console.WriteLine(hero.Name.FullName);
+            Console.WriteLine(hero.DotaName.FullName);
 #endif
 
             return heroLanePresenceCollection;

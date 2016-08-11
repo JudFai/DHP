@@ -44,12 +44,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttackType.cs" />
-    <Compile Include="DotaHero.cs" />
+    <Compile Include="Types\Core\DotaBase.cs" />
+    <Compile Include="Types\Core\IDotaBase.cs" />
+    <Compile Include="Types\DotaHero.cs" />
     <Compile Include="DotaHeroCollection.cs" />
-    <Compile Include="DotaHeroFactory.cs" />
-    <Compile Include="DotaItem.cs" />
+    <Compile Include="Factories\DotaHeroFactory.cs" />
+    <Compile Include="Types\DotaItem.cs" />
+    <Compile Include="Factories\DotaItemFactory.cs" />
     <Compile Include="DotaLane.cs" />
     <Compile Include="DotaLaneCollection.cs" />
+    <Compile Include="Factories\DotaFactory.cs" />
     <Compile Include="Hero.cs" />
     <Compile Include="EnemyHeroAdvantage.cs" />
     <Compile Include="HeroAdvantage.cs" />
@@ -57,7 +61,7 @@
     <Compile Include="HeroLanePresence.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="LanePresence.cs" />
-    <Compile Include="HeroName.cs" />
+    <Compile Include="Types\DotaName.cs" />
     <Compile Include="HeroRole.cs" />
     <Compile Include="Lane.cs" />
     <Compile Include="Program.cs" />
@@ -71,6 +75,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

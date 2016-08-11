@@ -11,7 +11,7 @@ namespace DotaHeroPicker
     {
         #region Properties
 
-        public static DotaHeroFactory Factory
+        internal static DotaHeroFactory Factory
         {
             get { return DotaHeroFactory.GetInstance(); }
         }
@@ -19,15 +19,15 @@ namespace DotaHeroPicker
         public ReadOnlyCollection<HeroRole> Roles { get; private set; }
         public AttackType AttackType { get; private set; }
         public HeroCharacteristic MainCharacteristic { get; private set; }
-        public HeroName Name { get; private set; }
+        public DotaName<Hero> DotaName { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        private DotaHero(HeroName name, AttackType attackType, HeroCharacteristic mainCharacteristic, IList<HeroRole> roles)
+        private DotaHero(DotaName<Hero> dotaName, AttackType attackType, HeroCharacteristic mainCharacteristic, IList<HeroRole> roles)
         {
-            Name = name;
+            DotaName = dotaName;
             AttackType = attackType;
             MainCharacteristic = mainCharacteristic;
             Roles = new ReadOnlyCollection<HeroRole>(roles);
@@ -39,7 +39,7 @@ namespace DotaHeroPicker
 
         public override string ToString()
         {
-            return Name.ToString();
+            return DotaName.ToString();
         }
 
         #endregion
