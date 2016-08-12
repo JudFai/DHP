@@ -8,11 +8,13 @@ using DotaHeroPicker.Types.Core;
 
 namespace DotaHeroPicker.Factories
 {
-    abstract class DotaFactory<T> where T : IDotaBase 
+    abstract class DotaFactory<T, TSingleTone> 
+        where T : IDotaBase
+        where TSingleTone : DotaFactory<T, TSingleTone>
     {
         #region Fields
 
-        private static DotaFactory<T> _instance;
+        private static TSingleTone _instance;
         private static readonly object _locker = new object();
         private static readonly object _lockerCreate = new object();
 
@@ -27,49 +29,73 @@ namespace DotaHeroPicker.Factories
 
         #endregion
 
+        #region Private Methods
+
+        /// <summary>
+        /// Получить полное имя <see cref="T:DotaHeroPicker.Types.Core.DotaBase"/>
+        /// </summary>
+        /// <param name="dotaBase">Эзкемпляр класса <see cref="T:DotaHeroPicker.Types.Core.DotaBase"/></param>
+        /// <returns>Полное имя</returns>
+        private string GetFullNameOfElement(object dotaName)
+        {
+            //var t = typeof(DotaBase<>);
+            //var prop = t.GetProperty("DotaName");
+            //var dotaName = prop.GetValue(dotaBase, null);
+
+            var t = typeof(T);
+            var prop = t.GetProperty("DotaName");
+            t = prop.PropertyType;
+            t = typeof(DotaName<>).GetGenericTypeDefinition();
+            prop = t.GetProperty("FullName");
+            var val = prop.GetValue(dotaName, null) as string;
+
+            return val;
+        }
+
+        private bool IsContainsInCollectionElement(object dotaBase)
+        {
+            var val = GetFullNameOfElement(dotaBase);
+            return _collection.Any(p => GetFullNameOfElement(p) == val);
+        }
+
+        private bool IsContainsInCollectionElement(string fullname)
+        {
+            return _collection.Any(p => GetFullNameOfElement(p) == fullname);
+        }
+
+        #endregion
+
         #region Public Methods
 
-        public static DotaFactory<T> GetInstance()
+        public static TSingleTone GetInstance()
         {
             lock (_locker)
             {
-                return _instance ?? (_instance = new DotaFactory<T>());
+                if (_instance == null)
+                {
+                    var constructor = typeof (TSingleTone).GetConstructor(
+                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, 
+                        null, 
+                        Type.EmptyTypes,
+                        null);
+                    _instance = (TSingleTone)constructor.Invoke(null);
+                }
             }
-        }
 
-        public bool IsContainsInCollectionElement(object dotaBase)
-        {
-            return _collection.Any(p =>
-            {
-                var t = typeof(DotaBase<>);
-                var prop = t.GetProperty("DotaName");
-                var dotaName = prop.GetValue(p, null);
-
-                t = typeof(DotaName<>);
-                prop = t.GetProperty("FullName");
-                var valInCollection = prop.GetValue(dotaName, null) as string;
-
-                t = typeof(DotaBase<>);
-                prop = t.GetProperty("DotaName");
-                dotaName = prop.GetValue(dotaBase, null);
-
-                t = typeof(DotaName<>);
-                prop = t.GetProperty("FullName");
-                var valOfDotaBase = prop.GetValue(dotaName, null) as string;
-                return valInCollection == valOfDotaBase;
-            });
+            return _instance;
         }
 
         public T CreateElement(List<object> collectionParam)
         {
             lock (_lockerCreate)
             {
-                var dotaBase = collectionParam.FirstOrDefault(p => p.GetType() == typeof(DotaBase<>));
-                if (dotaBase == null)
-                    throw new ArgumentException("Collection of parameters does not contain DotaBase");
+                var dotaName = collectionParam.FirstOrDefault(p => p.GetType().GetGenericTypeDefinition() == typeof(DotaName<>));
+                if (dotaName == null)
+                    throw new ArgumentException("Collection of parameters does not contain DotaName");
 
-                if (IsContainsInCollectionElement(dotaBase))
-                    throw new Exception(string.Format("{0} has been created", name));
+                var fullName = GetFullNameOfElement(dotaName);
+                if (IsContainsInCollectionElement(fullName))
+                    throw new Exception(string.Format("{0} has been created", fullName));
 
                 var flags = BindingFlags.NonPublic | BindingFlags.Instance;
                 var element = (T)Activator.CreateInstance(typeof(T), flags, null, collectionParam.ToArray(), null);

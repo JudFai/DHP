@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DotaHeroPicker;
+using DotaHeroPicker.Types;
 using Microsoft.TeamFoundation.MVVM;
 
 namespace DotaHeroPickerUI.ViewModel

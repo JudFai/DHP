@@ -15,6 +15,15 @@ namespace DotaHeroPicker.Types.Core
 
         #endregion
 
+        #region Consturctors
+
+        protected DotaBase(DotaName<T> dotaName)
+        {
+            DotaName = dotaName;
+        }
+
+        #endregion
+
         #region Public Methods
 
         public override string ToString()

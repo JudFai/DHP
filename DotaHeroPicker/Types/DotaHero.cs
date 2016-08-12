@@ -4,10 +4,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DotaHeroPicker.Factories;
+using DotaHeroPicker.Types.Core;
 
-namespace DotaHeroPicker
+namespace DotaHeroPicker.Types
 {
-    public class DotaHero
+    public class DotaHero : DotaBase<Hero>
     {
         #region Properties
 
@@ -19,13 +21,14 @@ namespace DotaHeroPicker
         public ReadOnlyCollection<HeroRole> Roles { get; private set; }
         public AttackType AttackType { get; private set; }
         public HeroCharacteristic MainCharacteristic { get; private set; }
-        public DotaName<Hero> DotaName { get; private set; }
 
         #endregion
 
         #region Constructors
 
         private DotaHero(DotaName<Hero> dotaName, AttackType attackType, HeroCharacteristic mainCharacteristic, IList<HeroRole> roles)
+            : base(dotaName)
+
         {
             DotaName = dotaName;
             AttackType = attackType;

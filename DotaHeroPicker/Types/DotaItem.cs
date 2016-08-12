@@ -12,9 +12,7 @@ namespace DotaHeroPicker.Types
         #region Constructors
 
         private DotaItem(DotaName<Item> dotaName)
-        {
-            DotaName = dotaName;
-        }
+            : base(dotaName) { }
 
         #endregion
     }
