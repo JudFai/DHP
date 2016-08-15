@@ -32,11 +32,11 @@ namespace DotaHeroPicker.Factories
         #region Private Methods
 
         /// <summary>
-        /// Получить полное имя <see cref="T:DotaHeroPicker.Types.Core.DotaBase"/>
+        /// Получить полное имя DotaName
         /// </summary>
-        /// <param name="dotaBase">Эзкемпляр класса <see cref="T:DotaHeroPicker.Types.Core.DotaBase"/></param>
+        /// <param name="dotaName">Эзкемпляр класса DotaName</param>
         /// <returns>Полное имя</returns>
-        private string GetFullNameOfElement(object dotaName)
+        private string GetFullNameByDotaName(object dotaName)
         {
             //var t = typeof(DotaBase<>);
             //var prop = t.GetProperty("DotaName");
@@ -45,22 +45,29 @@ namespace DotaHeroPicker.Factories
             var t = typeof(T);
             var prop = t.GetProperty("DotaName");
             t = prop.PropertyType;
-            t = typeof(DotaName<>).GetGenericTypeDefinition();
             prop = t.GetProperty("FullName");
             var val = prop.GetValue(dotaName, null) as string;
 
             return val;
         }
 
+        private string GetFullNameByDotaBase(object dotaBase)
+        {
+            var t = dotaBase.GetType();
+            var prop = t.GetProperty("DotaName");
+            var val = prop.GetValue(dotaBase);
+            return GetFullNameByDotaName(val);
+        }
+
         private bool IsContainsInCollectionElement(object dotaBase)
         {
-            var val = GetFullNameOfElement(dotaBase);
-            return _collection.Any(p => GetFullNameOfElement(p) == val);
+            var val = GetFullNameByDotaName(dotaBase);
+            return _collection.Any(p => GetFullNameByDotaBase(p) == val);
         }
 
         private bool IsContainsInCollectionElement(string fullname)
         {
-            return _collection.Any(p => GetFullNameOfElement(p) == fullname);
+            return _collection.Any(p => GetFullNameByDotaBase(p) == fullname);
         }
 
         #endregion
@@ -93,7 +100,7 @@ namespace DotaHeroPicker.Factories
                 if (dotaName == null)
                     throw new ArgumentException("Collection of parameters does not contain DotaName");
 
-                var fullName = GetFullNameOfElement(dotaName);
+                var fullName = GetFullNameByDotaName(dotaName);
                 if (IsContainsInCollectionElement(fullName))
                     throw new Exception(string.Format("{0} has been created", fullName));
 

@@ -30,19 +30,9 @@ namespace DotaHeroPicker.Types
             : base(dotaName)
 
         {
-            DotaName = dotaName;
             AttackType = attackType;
             MainCharacteristic = mainCharacteristic;
             Roles = new ReadOnlyCollection<HeroRole>(roles);
-        }
-
-        #endregion
-
-        #region Public Methods
-
-        public override string ToString()
-        {
-            return DotaName.ToString();
         }
 
         #endregion

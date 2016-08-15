@@ -10,11 +10,5 @@ namespace DotaHeroPicker.Factories
 {
     class DotaItemFactory : DotaFactory<DotaItem, DotaItemFactory>
     {
-        #region Constructors
-
-        //private DotaItemFactory()
-        //{ }
-
-        #endregion
     }
 }

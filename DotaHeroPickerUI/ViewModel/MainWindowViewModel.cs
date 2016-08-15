@@ -15,6 +15,7 @@ using DotaHeroPickerUI.Helpers;
 using DotaHeroPickerUI.Model;
 using DotaHeroPickerUI.ViewModel.Core;
 using HeroPickerResources.Resources;
+using DotaHeroPicker.Collections;
 
 namespace DotaHeroPickerUI.ViewModel
 {

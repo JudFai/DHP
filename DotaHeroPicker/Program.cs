@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using DotaHeroPicker.Types;
+using DotaHeroPicker.Collections;
 
 namespace DotaHeroPicker
 {

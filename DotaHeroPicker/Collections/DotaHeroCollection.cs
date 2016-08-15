@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DotaHeroPicker.Types;
 
-namespace DotaHeroPicker
+namespace DotaHeroPicker.Collections
 {
     public class DotaHeroCollection : ReadOnlyCollection<DotaHero>
     {
@@ -31,7 +31,6 @@ namespace DotaHeroPicker
         {
             get { return this.FirstOrDefault(p => p.DotaName.FullName == fullName); }
         }
-
 
         //TODO: сделать искючение на индексатор 
         public new DotaHero this[int index]
