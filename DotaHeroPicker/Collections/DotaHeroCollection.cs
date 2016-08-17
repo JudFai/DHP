@@ -49,7 +49,11 @@ namespace DotaHeroPicker.Collections
             {
                 new DotaName<Hero>(Hero.Abaddon, "Abaddon"),
                 AttackType.Melee, HeroCharacteristic.Strength, 
-                new List<HeroRole> { HeroRole.Carry, HeroRole.Durable, HeroRole.Support }
+                new List<HeroRole> { HeroRole.Carry, HeroRole.Durable, HeroRole.Support },
+                new ReadOnlyCollection<DotaHeroAbility>(new List<DotaHeroAbility>
+                {
+                    DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.AcidSpray, "Acid Spray")),
+                })
             }));
 
             Items.Add(DotaHero.Factory.CreateElement(new List<object>()

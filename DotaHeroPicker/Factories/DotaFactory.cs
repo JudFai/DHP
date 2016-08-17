@@ -32,11 +32,11 @@ namespace DotaHeroPicker.Factories
         #region Private Methods
 
         /// <summary>
-        /// Получить полное имя DotaName
+        /// Получить enum-сущность класса DotaName
         /// </summary>
         /// <param name="dotaName">Эзкемпляр класса DotaName</param>
-        /// <returns>Полное имя</returns>
-        private string GetFullNameByDotaName(object dotaName)
+        /// <returns>Enum-сущность</returns>
+        private string GetEntityByDotaName(object dotaName)
         {
             //var t = typeof(DotaBase<>);
             //var prop = t.GetProperty("DotaName");
@@ -45,29 +45,23 @@ namespace DotaHeroPicker.Factories
             var t = typeof(T);
             var prop = t.GetProperty("DotaName");
             t = prop.PropertyType;
-            prop = t.GetProperty("FullName");
-            var val = prop.GetValue(dotaName, null) as string;
+            prop = t.GetProperty("Entity");
+            var val = prop.GetValue(dotaName, null).ToString();
 
             return val;
         }
 
-        private string GetFullNameByDotaBase(object dotaBase)
+        private string GetEntityByDotaBase(object dotaBase)
         {
             var t = dotaBase.GetType();
             var prop = t.GetProperty("DotaName");
             var val = prop.GetValue(dotaBase);
-            return GetFullNameByDotaName(val);
+            return GetEntityByDotaName(val);
         }
 
-        private bool IsContainsInCollectionElement(object dotaBase)
+        private bool IsContainsInCollectionElement(string entity)
         {
-            var val = GetFullNameByDotaName(dotaBase);
-            return _collection.Any(p => GetFullNameByDotaBase(p) == val);
-        }
-
-        private bool IsContainsInCollectionElement(string fullname)
-        {
-            return _collection.Any(p => GetFullNameByDotaBase(p) == fullname);
+            return _collection.Any(p => GetEntityByDotaBase(p) == entity);
         }
 
         #endregion
@@ -92,6 +86,9 @@ namespace DotaHeroPicker.Factories
             return _instance;
         }
 
+        /// <summary>
+        /// Первым элементом в коллекции обязательно должен быть DotaName
+        /// </summary>
         public T CreateElement(List<object> collectionParam)
         {
             lock (_lockerCreate)
@@ -100,9 +97,9 @@ namespace DotaHeroPicker.Factories
                 if (dotaName == null)
                     throw new ArgumentException("Collection of parameters does not contain DotaName");
 
-                var fullName = GetFullNameByDotaName(dotaName);
-                if (IsContainsInCollectionElement(fullName))
-                    throw new Exception(string.Format("{0} has been created", fullName));
+                var entity = GetEntityByDotaName(dotaName);
+                if (IsContainsInCollectionElement(entity))
+                    throw new Exception(string.Format("{0} has been created", entity));
 
                 var flags = BindingFlags.NonPublic | BindingFlags.Instance;
                 var element = (T)Activator.CreateInstance(typeof(T), flags, null, collectionParam.ToArray(), null);
@@ -110,6 +107,11 @@ namespace DotaHeroPicker.Factories
 
                 return element;
             }
+        }
+
+        public T CreateElement(object dotaName)
+        {
+            return CreateElement(new List<object> { dotaName });
         }
 
         #endregion

@@ -21,18 +21,25 @@ namespace DotaHeroPicker.Types
         public ReadOnlyCollection<HeroRole> Roles { get; private set; }
         public AttackType AttackType { get; private set; }
         public HeroCharacteristic MainCharacteristic { get; private set; }
+        public ReadOnlyCollection<DotaHeroAbility> DotaHeroAbilities { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        private DotaHero(DotaName<Hero> dotaName, AttackType attackType, HeroCharacteristic mainCharacteristic, IList<HeroRole> roles)
+        private DotaHero(
+            DotaName<Hero> dotaName, 
+            AttackType attackType, 
+            HeroCharacteristic mainCharacteristic, 
+            IList<HeroRole> roles, 
+            ReadOnlyCollection<DotaHeroAbility> dotaHeroAbilities)
             : base(dotaName)
 
         {
             AttackType = attackType;
             MainCharacteristic = mainCharacteristic;
             Roles = new ReadOnlyCollection<HeroRole>(roles);
+            DotaHeroAbilities = dotaHeroAbilities;
         }
 
         #endregion

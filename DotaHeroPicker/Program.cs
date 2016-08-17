@@ -28,6 +28,67 @@ namespace DotaHeroPicker
 
             //var test = DotaStatisticsManager.GetInstance();
             var collection = DotaHeroCollection.GetInstance();
+            var fullNameAbility = Manager.GetAllHeroAbilitiy().OrderBy(p => p);
+            using (var sw = new StreamWriter("ForClass.txt", true))
+            {
+                var i = 1;
+                foreach (var her in DotaHeroCollection.GetInstance())
+                {
+                    sw.WriteLine("////////////////////////////////////////////////////////////////////////////////////////////////////");
+                    sw.WriteLine("// {0}", her.DotaName.FullName);
+                    sw.WriteLine("new ReadOnlyCollection<DotaHeroAbility>(new List<DotaHeroAbility>");
+                    sw.WriteLine("{");
+                    foreach (var ability in fullNameAbility.Where(p => p.Key == her.DotaName.Entity))
+                    {
+                        var t = ability.Value
+                            .Replace("'s", string.Empty)
+                            .Replace(" of", string.Empty)
+                            .Replace(" the", string.Empty)
+                            .Replace("(", string.Empty)
+                            .Replace(")", string.Empty)
+                            .Replace(",", string.Empty)
+                            .Replace("-", string.Empty)
+                            .Replace(":", string.Empty)
+                            .Replace("!", string.Empty)
+                            .Replace(" ", string.Empty);
+                        sw.WriteLine("    DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.{0}, \"{1}\")),", t, ability.Value);
+                    }
+
+                    sw.WriteLine("}));");
+                    sw.WriteLine();
+                }
+                //*var enumAbilities = */fullNameAbility.ToList()
+                //    .ForEach(p =>
+                //    {
+                //        var t = p.Value
+                //            .Replace("'s", string.Empty)
+                //            .Replace(" of", string.Empty)
+                //            .Replace(" the", string.Empty)
+                //            .Replace("(", string.Empty)
+                //            .Replace(")", string.Empty)
+                //            .Replace(",", string.Empty)
+                //            .Replace("-", string.Empty)
+                //            .Replace(":", string.Empty)
+                //            .Replace("!", string.Empty)
+                //            .Replace(" ", string.Empty);
+
+                //        sw.WriteLine("new ReadOnlyCollection<DotaHeroAbility>(new List<DotaHeroAbility>");
+                //        sw.WriteLine("{");
+                //        sw.WriteLine("    new DotaName<Ability>(Ability.{0}, \"{1}\")", t, p);
+                //        sw.WriteLine("}));");
+                //        sw.WriteLine();
+                //        //return string.Format("{0} = {1},", t, i++);
+                //    });
+            }
+            //using (var sw = new StreamWriter("FullName.txt", true))
+            //{
+            //    fullNameAbility.ToList().ForEach(p => sw.WriteLine(p));
+            //}
+
+            //using (var sw = new StreamWriter("EnumName.txt", true))
+            //{
+            //    enumAbilities.ToList().ForEach(p => sw.WriteLine(p));
+            //}
 
             //var tttt = test.GetHeroLanePresenceCollection(collection[Hero.Enigma]);
 

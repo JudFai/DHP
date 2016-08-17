@@ -22,6 +22,7 @@ namespace DotaHeroPicker
 
         private readonly object _lockerRequest = new object();
         private readonly string _pathToMatchups = "http://dotabuff.com/heroes/{0}/matchups";
+        private readonly string _pathToAbilities = "http://dotabuff.com/heroes/{0}/abilities";
         private readonly string _pathToOverview = "http://dotabuff.com/heroes/{0}";
         private readonly string _userAgent = "Mozilla/5.0";
 
@@ -105,7 +106,7 @@ namespace DotaHeroPicker
                         string responseText = null;
                         using (var reader = new System.IO.StreamReader(res.GetResponseStream(), encoding))
                         {
-                            responseText = reader.ReadToEnd();
+                            responseText = reader.ReadToEnd().Replace("\\", string.Empty);
                         }
 
                         var xml = new XmlDocument();
@@ -196,6 +197,33 @@ namespace DotaHeroPicker
         }
 
         /// <summary>
+        /// Возвращает преимущества по отношению к другим героям
+        /// </summary>
+        public List<KeyValuePair<Hero, string>> GetHeroAbilities(DotaHero hero)
+        {
+            //var dic = new Dictionary<string, double>();
+            var heroAbilities = new List<KeyValuePair<Hero, string>>();
+            var root = GetXmlElement(string.Format(_pathToAbilities, hero.DotaName.HtmlName));
+            var elements = root.SelectNodes(@"
+                body
+                /div[@class='container-outer']
+                /div[@class='container-inner']
+                /div[@class='content-inner']
+                /div[@class='row-12']
+                /div[@class='col-8']
+                /section
+                /header");
+            foreach (XmlElement element in elements)
+            {
+                var abilityValue = element.FirstChild;
+                if (abilityValue != null)
+                    heroAbilities.Add(new KeyValuePair<Hero, string>(hero.DotaName.Entity, abilityValue.InnerText));
+            }
+
+            return heroAbilities;
+        }
+
+        /// <summary>
         /// Возвращает преимущества всех героев по отношению друг к другу
         /// </summary>
         public async void GetAllHeroAdvantage()
@@ -214,6 +242,15 @@ namespace DotaHeroPicker
                 OperationProgress = 100;
                 OnGetAllHeroAdvantageCompleted(collection);
             });
+        }
+
+        public IEnumerable<KeyValuePair<Hero, string>> GetAllHeroAbilitiy()
+        {
+            var collection = new List<KeyValuePair<Hero, string>>();
+            foreach (var hero in _heroCollection)
+                collection.AddRange(GetHeroAbilities(hero));
+
+            return collection;
         }
 
         /// <summary>

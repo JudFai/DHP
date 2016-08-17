@@ -59,12 +59,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ability.cs" />
     <Compile Include="AttackType.cs" />
+    <Compile Include="Collections\DotaHeroAbilityCollection.cs" />
+    <Compile Include="Factories\DotaHeroAbilityFactory.cs" />
+    <Compile Include="HeroGuide.cs" />
     <Compile Include="Types\Core\DotaBase.cs" />
     <Compile Include="Types\Core\IDotaBase.cs" />
     <Compile Include="Types\DotaHero.cs" />
     <Compile Include="Collections\DotaHeroCollection.cs" />
     <Compile Include="Factories\DotaHeroFactory.cs" />
+    <Compile Include="Types\DotaHeroAbility.cs" />
     <Compile Include="Types\DotaItem.cs" />
     <Compile Include="Factories\DotaItemFactory.cs" />
     <Compile Include="DotaLane.cs" />
