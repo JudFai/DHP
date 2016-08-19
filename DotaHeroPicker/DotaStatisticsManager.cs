@@ -24,6 +24,7 @@ namespace DotaHeroPicker
         private readonly string _pathToMatchups = "http://dotabuff.com/heroes/{0}/matchups";
         private readonly string _pathToAbilities = "http://dotabuff.com/heroes/{0}/abilities";
         private readonly string _pathToOverview = "http://dotabuff.com/heroes/{0}";
+        private readonly string _pathToItems = "http://dotabuff.com/items";
         private readonly string _userAgent = "Mozilla/5.0";
 
         private readonly DotaHeroCollection _heroCollection = DotaHeroCollection.GetInstance();
@@ -197,33 +198,6 @@ namespace DotaHeroPicker
         }
 
         /// <summary>
-        /// Возвращает преимущества по отношению к другим героям
-        /// </summary>
-        public List<KeyValuePair<Hero, string>> GetHeroAbilities(DotaHero hero)
-        {
-            //var dic = new Dictionary<string, double>();
-            var heroAbilities = new List<KeyValuePair<Hero, string>>();
-            var root = GetXmlElement(string.Format(_pathToAbilities, hero.DotaName.HtmlName));
-            var elements = root.SelectNodes(@"
-                body
-                /div[@class='container-outer']
-                /div[@class='container-inner']
-                /div[@class='content-inner']
-                /div[@class='row-12']
-                /div[@class='col-8']
-                /section
-                /header");
-            foreach (XmlElement element in elements)
-            {
-                var abilityValue = element.FirstChild;
-                if (abilityValue != null)
-                    heroAbilities.Add(new KeyValuePair<Hero, string>(hero.DotaName.Entity, abilityValue.InnerText));
-            }
-
-            return heroAbilities;
-        }
-
-        /// <summary>
         /// Возвращает преимущества всех героев по отношению друг к другу
         /// </summary>
         public async void GetAllHeroAdvantage()
@@ -242,15 +216,6 @@ namespace DotaHeroPicker
                 OperationProgress = 100;
                 OnGetAllHeroAdvantageCompleted(collection);
             });
-        }
-
-        public IEnumerable<KeyValuePair<Hero, string>> GetAllHeroAbilitiy()
-        {
-            var collection = new List<KeyValuePair<Hero, string>>();
-            foreach (var hero in _heroCollection)
-                collection.AddRange(GetHeroAbilities(hero));
-
-            return collection;
         }
 
         /// <summary>
@@ -307,6 +272,88 @@ namespace DotaHeroPicker
 #endif
 
             return heroLanePresenceCollection;
+        }
+
+        #endregion
+
+        #region Internal Methods
+
+        /// <summary>
+        /// Возвращает способности героя
+        /// </summary>
+        internal List<KeyValuePair<Hero, string>> GetHeroAbilities(DotaHero hero)
+        {
+            //var dic = new Dictionary<string, double>();
+            var heroAbilities = new List<KeyValuePair<Hero, string>>();
+            var root = GetXmlElement(string.Format(_pathToAbilities, hero.DotaName.HtmlName));
+            var elements = root.SelectNodes(@"
+                body
+                /div[@class='container-outer']
+                /div[@class='container-inner']
+                /div[@class='content-inner']
+                /div[@class='row-12']
+                /div[@class='col-8']
+                /section
+                /header");
+            foreach (XmlElement element in elements)
+            {
+                var abilityValue = element.FirstChild;
+                if (abilityValue != null)
+                    heroAbilities.Add(new KeyValuePair<Hero, string>(hero.DotaName.Entity, abilityValue.InnerText));
+            }
+
+            return heroAbilities;
+        }
+
+        internal IEnumerable<KeyValuePair<Hero, string>> GetAllHeroAbilitiy()
+        {
+            var collection = new List<KeyValuePair<Hero, string>>();
+            foreach (var hero in _heroCollection)
+            {
+                collection.AddRange(GetHeroAbilities(hero));
+#if DEBUG
+                Console.WriteLine(hero.DotaName.FullName);
+#endif
+            }
+
+            return collection;
+        }
+
+        internal List<string> GetItems()
+        {
+            var items = new List<string>();
+            var root = GetXmlElement(_pathToItems);
+//            var elements = root.SelectNodes(@"
+//                body
+//                /div[@class='container-outer']
+//                /div[@class='container-inner']
+//                /div[@class='content-inner']
+//                /section
+//                /article
+//                /section
+//                /table[@class='sortable']
+//                /tbody
+//                /tr
+//                /td[@class='cell-xlarge']");
+            var elements = root.SelectNodes(@"
+                body
+                /div[@class='container-outer']
+                /div[@class='container-inner']
+                /div[@class='content-inner']
+                /section
+                /article
+                /table[@class='sortable']
+                /tbody
+                /tr
+                /td[@class='cell-xlarge']");
+            foreach (XmlElement element in elements)
+            {
+                var itemValue = element.FirstChild;
+                if (itemValue != null)
+                    items.Add(itemValue.InnerText);
+            }
+
+            return items;
         }
 
         #endregion

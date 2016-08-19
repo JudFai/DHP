@@ -61,7 +61,7 @@
   <ItemGroup>
     <Compile Include="Ability.cs" />
     <Compile Include="AttackType.cs" />
-    <Compile Include="Collections\DotaHeroAbilityCollection.cs" />
+    <Compile Include="Collections\DotaItemCollection.cs" />
     <Compile Include="Factories\DotaHeroAbilityFactory.cs" />
     <Compile Include="HeroGuide.cs" />
     <Compile Include="Types\Core\DotaBase.cs" />
