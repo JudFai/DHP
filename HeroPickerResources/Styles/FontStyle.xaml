@@ -17,5 +17,6 @@
     <system:String x:Key="SymbolMenuDetails">&#xE700;</system:String>
     <system:String x:Key="SymbolPick">&#xE1E3;</system:String>
     <system:String x:Key="SymbolSettings">&#xE115;</system:String>
+    <system:String x:Key="SymbolGuide">&#xE91C;</system:String>
 
 </ResourceDictionary>

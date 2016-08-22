@@ -95,10 +95,14 @@
     <Compile Include="ViewModel\DotaHeroObservableCollection.cs" />
     <Compile Include="ViewModel\HeroesPickViewModel.cs" />
     <Compile Include="ViewModel\Core\ItemViewModel.cs" />
+    <Compile Include="ViewModel\HeroGuridsViewModel.cs" />
     <Compile Include="ViewModel\ResultAdvantagesViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="View\HeroesPickView.xaml.cs">
       <DependentUpon>HeroesPickView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HeroGuidsView.xaml.cs">
+      <DependentUpon>HeroGuidsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ResultAdvantagesView.xaml.cs">
       <DependentUpon>ResultAdvantagesView.xaml</DependentUpon>
@@ -107,6 +111,10 @@
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Page Include="View\HeroesPickView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HeroGuidsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

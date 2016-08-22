@@ -10,6 +10,7 @@ namespace HeroPickerResources.Resources
     {
         Default,
         Pick,
-        Settings
+        Settings,
+        Guide
     }
 }

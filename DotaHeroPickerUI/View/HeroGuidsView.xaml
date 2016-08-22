@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="DotaHeroPickerUI.View.HeroGuidsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:HeroPickerResources.Converters;assembly=HeroPickerResources"
+             xmlns:controls="clr-namespace:HeroPickerResources.Controls;assembly=HeroPickerResources"
+             Foreground="White">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ItemsControl Grid.Row="1"
+                      ItemsSource="{Binding}"
+                      ItemTemplate="{StaticResource}"/>
+    </Grid>
+</UserControl>

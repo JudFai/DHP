@@ -15,4 +15,8 @@
         <v:SettingsView />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:HeroGuridsViewModel}">
+        <v:HeroGuidsView />
+    </DataTemplate>
+
 </ResourceDictionary>

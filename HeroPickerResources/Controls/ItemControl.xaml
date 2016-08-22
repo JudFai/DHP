@@ -101,6 +101,30 @@
         </StackPanel>
     </DataTemplate>
 
+    <DataTemplate x:Key="HeroGuideTemplate">
+        <controls:PanelWithToolTipControl HorizontalAlignment="Left">
+            <controls:PanelWithToolTipControl.PopupContent>
+                <Border Background="{StaticResource AltMediumHighColorBrush}"
+                        BorderBrush="{StaticResource BaseLowColorBrush}"
+                        BorderThickness="1">
+                    <ItemsControl ItemsSource="{Binding EnemyHeroAdvantage}"
+                                  ItemTemplate="{StaticResource HeroAdvantageTemplate}" />
+                </Border>
+            </controls:PanelWithToolTipControl.PopupContent>
+            <Grid x:Name="BackgroundGrid" Margin="0, 1, 0, 0">
+                <ContentPresenter ContentTemplate="{StaticResource HeroAdvantageTemplate}" />
+            </Grid>
+        </controls:PanelWithToolTipControl>
+        <DataTemplate.Triggers>
+            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                <Setter Property="Background" Value="{StaticResource BaseLowestColorBrush}" TargetName="BackgroundGrid"/>
+            </Trigger>
+            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                <Setter Property="Background" Value="{StaticResource ChromeLowColorBrush}" TargetName="BackgroundGrid"/>
+            </Trigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
     <DataTemplate x:Key="EnemyHeroAdvantageTemplate">
         <controls:PanelWithToolTipControl HorizontalAlignment="Left">
             <controls:PanelWithToolTipControl.PopupContent>
