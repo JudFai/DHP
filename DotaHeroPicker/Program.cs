@@ -28,6 +28,7 @@ namespace DotaHeroPicker
 
             //var test = DotaStatisticsManager.GetInstance();
             var collection = DotaHeroCollection.GetInstance();
+            Manager.GetHeroGuide(collection[Hero.AncientApparition]);
             //var fullNameAbility = Manager.GetAllHeroAbilitiy().OrderBy(p => p.Value);
             //using (var sw = new StreamWriter("ForClass.txt", true))
             //{
@@ -87,26 +88,26 @@ namespace DotaHeroPicker
             //    //    });
             //}
 
-            var items = Manager.GetItems();
-            using (var sw = new StreamWriter("ItemsClass.txt", true))
-            {
-                var i = 0;
-                items.OrderBy(p => p).ToList().ForEach(p =>
-                {
-                    var t = p
-                            .Replace("'s", string.Empty)
-                            .Replace(" of", string.Empty)
-                            .Replace(" the", string.Empty)
-                            .Replace("(", string.Empty)
-                            .Replace(")", string.Empty)
-                            .Replace(",", string.Empty)
-                            .Replace("-", string.Empty)
-                            .Replace(":", string.Empty)
-                            .Replace("!", string.Empty)
-                            .Replace(" ", string.Empty);
-                    sw.WriteLine("Items.Add(DotaItem.Factory.CreateElement(DotaItem.Factory.CreateElement(new DotaName<Item>(Item.{0}, \"{1}\"))));", t, p);
-                });
-            }
+            //var items = Manager.GetItems();
+            //using (var sw = new StreamWriter("ItemsClass.txt", true))
+            //{
+            //    var i = 0;
+            //    items.OrderBy(p => p).ToList().ForEach(p =>
+            //    {
+            //        var t = p
+            //                .Replace("'s", string.Empty)
+            //                .Replace(" of", string.Empty)
+            //                .Replace(" the", string.Empty)
+            //                .Replace("(", string.Empty)
+            //                .Replace(")", string.Empty)
+            //                .Replace(",", string.Empty)
+            //                .Replace("-", string.Empty)
+            //                .Replace(":", string.Empty)
+            //                .Replace("!", string.Empty)
+            //                .Replace(" ", string.Empty);
+            //        sw.WriteLine("Items.Add(DotaItem.Factory.CreateElement(DotaItem.Factory.CreateElement(new DotaName<Item>(Item.{0}, \"{1}\"))));", t, p);
+            //    });
+            //}
 
             //using (var sw = new StreamWriter("EnumName.txt", true))
             //{

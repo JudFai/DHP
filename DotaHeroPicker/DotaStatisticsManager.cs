@@ -22,6 +22,7 @@ namespace DotaHeroPicker
 
         private readonly object _lockerRequest = new object();
         private readonly string _pathToMatchups = "http://dotabuff.com/heroes/{0}/matchups";
+        private readonly string _pathToGuides = "http://dotabuff.com/heroes/{0}/guides?page={1}";
         private readonly string _pathToAbilities = "http://dotabuff.com/heroes/{0}/abilities";
         private readonly string _pathToOverview = "http://dotabuff.com/heroes/{0}";
         private readonly string _pathToItems = "http://dotabuff.com/items";
@@ -107,7 +108,12 @@ namespace DotaHeroPicker
                         string responseText = null;
                         using (var reader = new System.IO.StreamReader(res.GetResponseStream(), encoding))
                         {
-                            responseText = reader.ReadToEnd().Replace("\\", string.Empty);
+                            responseText = reader.ReadToEnd()
+                                .Replace("\\", string.Empty)
+                                .Replace("&rsaquo;", string.Empty)
+                                .Replace("&raquo;", string.Empty)
+                                .Replace("&lsaquo;", string.Empty)
+                                .Replace("&laquo;", string.Empty);
                         }
 
                         var xml = new XmlDocument();
@@ -272,6 +278,44 @@ namespace DotaHeroPicker
 #endif
 
             return heroLanePresenceCollection;
+        }
+
+        /// <summary>
+        /// Возвращает доступные руковода для героя
+        /// </summary>
+        public HeroGuide GetHeroGuide(DotaHero hero)
+        {
+            var gameGuideCollection = new List<GameGuide>();
+            // TODO: test
+            var playerNameCollection = new List<string>();
+            for (var page = 1; page <= 4; page++)
+            {
+                var root = GetXmlElement(string.Format(_pathToGuides, hero.DotaName.HtmlName, page));
+                var elements = root.SelectNodes(@"
+                    body
+                    /div[@class='container-outer']
+                    /div[@class='container-inner']
+                    /div[@class='content-inner']
+                    /section
+                    /article
+                    /div[@class='r-stats-grid']");
+                foreach (XmlElement element in elements)
+                {
+                    var row = element.SelectSingleNode(@"
+                        div[@class='group']
+                        /div[@class='kv kv-larger kv-small-margin']
+                        /a[@class='link-type-player-larger']");
+                    string playerName = null;
+                    if (row != null)
+                        playerName = row.InnerText;
+
+                    row = element.SelectSingleNode(@"
+                        div[@class='group']
+                        /div[@class='kv kv-label']");
+                }
+            }
+
+            return null;
         }
 
         #endregion
