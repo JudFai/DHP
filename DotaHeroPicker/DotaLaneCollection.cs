@@ -36,10 +36,10 @@ namespace DotaHeroPicker
         private DotaLaneCollection()
             : base(new List<DotaLane>())
         {
-            Items.Add(CreateDotaLane(Lane.OffLane, "Off Lane"));
-            Items.Add(CreateDotaLane(Lane.MiddleLane, "Middle Lane"));
-            Items.Add(CreateDotaLane(Lane.SafeLane, "Safe Lane"));
-            Items.Add(CreateDotaLane(Lane.Roam, "Roam"));
+            Items.Add(CreateDotaLane(Lane.OffLane, "Off"));
+            Items.Add(CreateDotaLane(Lane.MiddleLane, "Middle"));
+            Items.Add(CreateDotaLane(Lane.SafeLane, "Safe"));
+            Items.Add(CreateDotaLane(Lane.Roam, "Roaming"));
             Items.Add(CreateDotaLane(Lane.Jungle, "Jungle"));
         }
 

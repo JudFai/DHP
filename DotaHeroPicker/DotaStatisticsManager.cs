@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -301,17 +302,69 @@ namespace DotaHeroPicker
                     /div[@class='r-stats-grid']");
                 foreach (XmlElement element in elements)
                 {
+                    // PlayerName
                     var row = element.SelectSingleNode(@"
                         div[@class='group']
                         /div[@class='kv kv-larger kv-small-margin']
                         /a[@class='link-type-player-larger']");
-                    string playerName = null;
-                    if (row != null)
-                        playerName = row.InnerText;
+                    var playerName = row.InnerText;
 
-                    row = element.SelectSingleNode(@"
+                    // Rating
+                    var rows = element.SelectNodes(@"
                         div[@class='group']
                         /div[@class='kv kv-label']");
+                    int playerRating = -1;
+                    var match = Regex.Match(rows[rows.Count - 1].InnerText, @"~ (?<mmr>\d+) MMR");
+                    if (match.Groups.Count >= 1)
+                        playerRating = int.Parse(match.Groups["mmr"].Value, NumberStyles.Integer);
+
+                    // Lane
+                    row = element.SelectSingleNode(@"
+                        div[@class='group']
+                        /div[@class='kv kv-label']
+                        /span
+                        /acronym[@rel='neighbour-tooltip']");
+                    var laneCollection = DotaLaneCollection.GetInstance();
+                    var lane = laneCollection.FirstOrDefault(p => row.InnerText.ToUpper().Contains(p.HtmlName.ToUpper()));
+
+                    // Starting items
+                    rows = element.SelectNodes(@"
+                        div[@class='group']
+                        /div[@class='kv r-none-mobile' and small='Starting Items']
+                        /div[@class='inline inline-margin']
+                        /div[@class='image-container image-container-item image-container-medicon image-container-importance-normal']
+                        /a
+                        /img
+                        /@title");
+                    var startingItems = new List<DotaItem>();
+                    var itemCollection = DotaItemCollection.GetInstance();
+                    foreach (XmlAttribute div in rows)
+                    {
+                        var foundItem = itemCollection.FirstOrDefault(p => p.DotaName.FullName == div.Value);
+                        if (foundItem == null)
+                            throw new Exception(string.Format("Item {0} not found", string.IsNullOrEmpty(div.Value) ? "EMPTY" : div.Value));
+
+                        startingItems.Add(foundItem);
+                    }
+
+                    // Bought items
+                    rows = element.SelectNodes(@"
+                        div[@class='group']
+                        /div[@class='kv r-none-mobile' and not(small='Starting Items')]");
+                    var boughtDotaItems = new List<BoughtDotaItem>();
+                    foreach (XmlElement div in rows)
+                    {
+                        //match = Regex.Match(div.SelectSingleNode("small").InnerXml,
+                        //    @"(?<hours>\d{2}):?(?<minutes>\d{2})?:?(?<seconds>\d{2})");
+                        //int hours = 0;
+                        //int minutes = 0;
+                        //int seconds = 0;
+                        //int.TryParse(match.Groups["hours"].Value, out hours);
+                        //int.TryParse(match.Groups["minutes"].Value, out minutes);
+                        //int.TryParse(match.Groups["seconds"].Value, out seconds);
+                        var t = TimeSpan.Parse(div.SelectSingleNode("small").InnerXml, new NumberFormatInfo());
+                        //var time = new TimeSpan() 
+                    }
                 }
             }
 
