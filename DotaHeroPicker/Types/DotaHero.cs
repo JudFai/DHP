@@ -39,7 +39,9 @@ namespace DotaHeroPicker.Types
             AttackType = attackType;
             MainCharacteristic = mainCharacteristic;
             Roles = new ReadOnlyCollection<HeroRole>(roles);
-            DotaHeroAbilities = dotaHeroAbilities;
+            var abilityCollection = dotaHeroAbilities.ToList();
+            abilityCollection.Add(DotaHeroAbility.AttributeBonus);
+            DotaHeroAbilities = new ReadOnlyCollection<DotaHeroAbility>(abilityCollection);
         }
 
         #endregion

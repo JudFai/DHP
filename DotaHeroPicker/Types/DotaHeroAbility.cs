@@ -10,6 +10,13 @@ namespace DotaHeroPicker.Types
 {
     public class DotaHeroAbility : DotaBase<Ability>
     {
+        #region Fields
+
+        public static DotaHeroAbility AttributeBonus =
+            Factory.CreateElement(new DotaName<Ability>(Ability.AttributeBonus, "Attribute Bonus"));
+
+        #endregion
+
         #region Properties
 
         internal static DotaHeroAbilityFactory Factory

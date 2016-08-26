@@ -182,6 +182,7 @@ namespace DotaHeroPicker.Collections
             Items.Add(DotaItem.Factory.CreateElement(new DotaName<Item>(Item.WindLace, "Wind Lace")));
             Items.Add(DotaItem.Factory.CreateElement(new DotaName<Item>(Item.WraithBand, "Wraith Band")));
             Items.Add(DotaItem.Factory.CreateElement(new DotaName<Item>(Item.Yasha, "Yasha")));
+            Items.Add(DotaItem.Factory.CreateElement(new DotaName<Item>(Item.RiverVialChrome, "River Vial: Chrome")));
         }
 
         #endregion

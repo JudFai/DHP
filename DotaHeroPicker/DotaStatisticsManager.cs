@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -62,6 +64,7 @@ namespace DotaHeroPicker
 
         public event EventHandler<double> ChangedOperationProgress;
         public event EventHandler<List<HeroAdvantage>> GetAllHeroAdvantageCompleted;
+        public event EventHandler<List<HeroGuide>> GetAllHeroGuideCompleted;
 
         #endregion
 
@@ -84,6 +87,12 @@ namespace DotaHeroPicker
         {
             if (GetAllHeroAdvantageCompleted != null)
                 GetAllHeroAdvantageCompleted(this, heroAdvantageCollection);
+        }
+
+        private void OnGetAllHeroGuideCompleted(List<HeroGuide> heroGuideCollection)
+        {
+            if (GetAllHeroGuideCompleted != null)
+                GetAllHeroGuideCompleted(this, heroGuideCollection);
         }
 
         private XmlElement GetXmlElement(string path)
@@ -121,6 +130,10 @@ namespace DotaHeroPicker
                         xml.LoadXml(responseText);
                         return xml.DocumentElement;
                     }
+                    //catch (IOException ex)
+                    //{
+                    //    if (ex.Message)
+                    //}
                     catch (Exception ex)
                     {
                         exception = ex;
@@ -287,8 +300,6 @@ namespace DotaHeroPicker
         public HeroGuide GetHeroGuide(DotaHero hero)
         {
             var gameGuideCollection = new List<GameGuide>();
-            // TODO: test
-            var playerNameCollection = new List<string>();
             for (var page = 1; page <= 4; page++)
             {
                 var root = GetXmlElement(string.Format(_pathToGuides, hero.DotaName.HtmlName, page));
@@ -354,21 +365,71 @@ namespace DotaHeroPicker
                     var boughtDotaItems = new List<BoughtDotaItem>();
                     foreach (XmlElement div in rows)
                     {
-                        //match = Regex.Match(div.SelectSingleNode("small").InnerXml,
-                        //    @"(?<hours>\d{2}):?(?<minutes>\d{2})?:?(?<seconds>\d{2})");
-                        //int hours = 0;
-                        //int minutes = 0;
-                        //int seconds = 0;
-                        //int.TryParse(match.Groups["hours"].Value, out hours);
-                        //int.TryParse(match.Groups["minutes"].Value, out minutes);
-                        //int.TryParse(match.Groups["seconds"].Value, out seconds);
-                        var t = TimeSpan.Parse(div.SelectSingleNode("small").InnerXml, new NumberFormatInfo());
-                        //var time = new TimeSpan() 
+                        var time = DateTime.ParseExact(
+                            div.SelectSingleNode("small").InnerXml,
+                            new[] {"H:mm:ss", "mm:ss"}, 
+                            new DateTimeFormatInfo(), DateTimeStyles.None).TimeOfDay;
+                        var sectionBoughtItem = div.SelectNodes(@"
+                            div[@class='inline inline-margin']
+                            /div
+                            /a
+                            /img
+                            /@title");
+                        foreach (XmlAttribute boughtItem in sectionBoughtItem)
+                        {
+                            var foundItem = itemCollection.FirstOrDefault(p => p.DotaName.FullName == boughtItem.Value);
+                            if (foundItem == null)
+                                throw new Exception(string.Format("Item {0} not found", string.IsNullOrEmpty(div.Value) ? "EMPTY" : div.Value));
+
+                            boughtDotaItems.Add(new BoughtDotaItem(foundItem, time));
+                        }
                     }
+
+                    // Skills
+                    rows = element.SelectNodes(@"
+                        div
+                        /div[@class='kv kv-small-margin']
+                        /div[@class='image-container image-container-skill image-container-medicon']
+                        /a
+                        /img
+                        /@title");
+                    var skills = new List<DotaHeroAbility>();
+                    foreach (XmlAttribute div in rows)
+                    {
+                        var foundSkill = hero.DotaHeroAbilities.FirstOrDefault(p => p.DotaName.FullName == div.Value);
+                        if (foundSkill == null)
+                            throw new Exception(string.Format("Skill {0} not found", string.IsNullOrEmpty(div.Value) ? "EMPTY" : div.Value));
+
+                        skills.Add(foundSkill);
+                    }
+
+                    var guide = new GameGuide(playerName, playerRating, lane, 
+                        new ReadOnlyCollection<DotaHeroAbility>(skills), 
+                        new ReadOnlyCollection<DotaItem>(startingItems), 
+                        new ReadOnlyCollection<BoughtDotaItem>(boughtDotaItems));
+                    gameGuideCollection.Add(guide);
                 }
             }
 
-            return null;
+            return new HeroGuide(hero, new ReadOnlyCollection<GameGuide>(gameGuideCollection));
+        }
+
+        public async void GetAllHeroGuide()
+        {
+            await Task.Run(() =>
+            {
+                var collection = new List<HeroGuide>();
+                OperationProgress = 0;
+                var percentsInIteration = 100d / _heroCollection.Count;
+                foreach (var hero in _heroCollection)
+                {
+                    collection.Add(GetHeroGuide(hero));
+                    OperationProgress += percentsInIteration;
+                }
+
+                OperationProgress = 100;
+                OnGetAllHeroGuideCompleted(collection);
+            });
         }
 
         #endregion

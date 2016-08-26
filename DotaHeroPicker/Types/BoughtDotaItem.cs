@@ -29,7 +29,7 @@ namespace DotaHeroPicker.Types
 
         public override string ToString()
         {
-            return string.Format("{0}: {1}", DotaItem, BoughtTime.ToString("mm:ss"));
+            return string.Format("{0}: {1}", DotaItem.DotaName.FullName, BoughtTime.ToString());
         }
 
         #endregion

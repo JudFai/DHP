@@ -513,6 +513,7 @@ namespace DotaHeroPicker
         WinterCurse = 503,
         WraithfireBlast = 504,
         WrathNature = 505,
-        XMarksSpot = 506
+        XMarksSpot = 506,
+        AttributeBonus = 507
     }
 }

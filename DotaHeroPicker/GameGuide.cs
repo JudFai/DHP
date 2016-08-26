@@ -32,11 +32,6 @@ namespace DotaHeroPicker
         /// </summary>
         public ReadOnlyCollection<BoughtDotaItem> BoughtDotaItemCollection { get; private set; }
 
-        /// <summary>
-        /// Предметы оставшиеся в инвентаре в конце игры
-        /// </summary>
-        public ReadOnlyCollection<BoughtDotaItem> InventoryDotaItemCollection { get; private set; }
-
         #endregion
 
         #region Constructors
@@ -45,8 +40,7 @@ namespace DotaHeroPicker
             DotaLane lane,
             ReadOnlyCollection<DotaHeroAbility> dotaHeroAbilityCollection, 
             ReadOnlyCollection<DotaItem> startDotaItemCollection,
-            ReadOnlyCollection<BoughtDotaItem> boughtDotaItemCollection,
-            ReadOnlyCollection<BoughtDotaItem> inventoryDotaItemCollection)
+            ReadOnlyCollection<BoughtDotaItem> boughtDotaItemCollection)
         {
             PlayerName = playerName;
             RatingPoints = ratingPoints;
@@ -54,7 +48,6 @@ namespace DotaHeroPicker
             DotaHeroAbilityCollection = dotaHeroAbilityCollection;
             StartDotaItemCollection = startDotaItemCollection;
             BoughtDotaItemCollection = boughtDotaItemCollection;
-            InventoryDotaItemCollection = inventoryDotaItemCollection;
         }
 
         #endregion

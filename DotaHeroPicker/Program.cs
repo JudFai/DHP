@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -28,7 +29,20 @@ namespace DotaHeroPicker
 
             //var test = DotaStatisticsManager.GetInstance();
             var collection = DotaHeroCollection.GetInstance();
-            Manager.GetHeroGuide(collection[Hero.AncientApparition]);
+            Manager.GetAllHeroGuideCompleted += (sender, list) =>
+            {
+                
+            };
+            Manager.ChangedOperationProgress += (sender, progress) =>
+            {
+                Console.Clear();
+                Console.WriteLine("{0}%", progress);
+            };
+            Manager.GetAllHeroGuide();
+            while (true)
+            {
+                Thread.Sleep(100);
+            }
             //var fullNameAbility = Manager.GetAllHeroAbilitiy().OrderBy(p => p.Value);
             //using (var sw = new StreamWriter("ForClass.txt", true))
             //{

@@ -168,6 +168,7 @@ namespace DotaHeroPicker
         VoidStone = 164,
         WindLace = 165,
         WraithBand = 166,
-        Yasha = 167
+        Yasha = 167,
+        RiverVialChrome = 168
     }
 }
