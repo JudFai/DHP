@@ -92,6 +92,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\DotaLaneModel.cs" />
     <Compile Include="ViewModel\DotaHeroObservableCollection.cs" />
     <Compile Include="ViewModel\HeroesPickViewModel.cs" />
     <Compile Include="ViewModel\Core\ItemViewModel.cs" />

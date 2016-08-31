@@ -101,7 +101,7 @@ namespace DotaHeroPicker
             {
                 Exception exception = null;
                 int countTry = 0;
-                while (countTry < 3)
+                while (countTry < 4)
                 {
                     try
                     {
@@ -130,10 +130,25 @@ namespace DotaHeroPicker
                         xml.LoadXml(responseText);
                         return xml.DocumentElement;
                     }
-                    //catch (IOException ex)
-                    //{
-                    //    if (ex.Message)
-                    //}
+                    catch (WebException ex)
+                    {
+                        // Ловим исключение, которое подразумевает большое кол-во запросов на сайт, поэтому ставим таймаут до тех пор,
+                        // пока не будет разрешено продолжить отправлять запросы и получать ответы
+                        if ((ex.Status == WebExceptionStatus.ProtocolError) &&
+                            (((HttpWebResponse) ex.Response).StatusCode == HttpStatusCode.Forbidden))
+                        {
+                            Thread.Sleep(30000);
+
+                            // TODO: пока не понятно: имеет ли смысл ставить continue, ведь не будет выхода из цикла
+                            //continue;
+                        }
+
+                        countTry++;
+
+#if DEBUG
+                        Console.WriteLine(ex.Message);
+#endif
+                    }
                     catch (Exception ex)
                     {
                         exception = ex;

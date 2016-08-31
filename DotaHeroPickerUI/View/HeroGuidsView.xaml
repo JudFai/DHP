@@ -4,13 +4,23 @@
              xmlns:converters="clr-namespace:HeroPickerResources.Converters;assembly=HeroPickerResources"
              xmlns:controls="clr-namespace:HeroPickerResources.Controls;assembly=HeroPickerResources"
              Foreground="White">
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/HeroPickerResources;component/MainResource.xaml" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="Позиция на карте" />
+            <ComboBox ItemsSource="{Binding LaneCollection}"
+                      SelectedItem="{Binding SelectedLane}"
+                      DisplayMemberPath="Title" />
+        </StackPanel>
         <ItemsControl Grid.Row="1"
-                      ItemsSource="{Binding}"
-                      ItemTemplate="{StaticResource}"/>
+                      ItemsSource="{Binding HeroGuideCollection}"
+                      ItemTemplate="{StaticResource HeroGuideTemplate}" />
+        
     </Grid>
 </UserControl>

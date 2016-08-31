@@ -24,6 +24,11 @@ namespace DotaHeroPicker
             get { return this.FirstOrDefault(p => p.HtmlName == htmlName); }
         }
 
+        public DotaLane this[Lane lane]
+        {
+            get { return this.FirstOrDefault(p => p.Lane == lane); }
+        }
+
         public new DotaLane this[int index]
         {
             get { return base[index]; }
