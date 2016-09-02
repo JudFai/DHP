@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaHeroPicker", "DotaHeroPicker\DotaHeroPicker.csproj", "{CAB2648D-78C8-4AAE-852F-2392EFFC3789}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaHeroPickerUI", "DotaHeroPickerUI\DotaHeroPickerUI.csproj", "{0510B103-B5CF-4547-AFF7-38F29B9D5BE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroPickerResources", "HeroPickerResources\HeroPickerResources.csproj", "{312A1658-2041-4E62-A6DA-0AB7F278AA01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaApi", "DotaApi\DotaApi.csproj", "{D2F585E2-C3D2-4131-9675-0C1B80FC3F36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +29,10 @@ Global
 		{312A1658-2041-4E62-A6DA-0AB7F278AA01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{312A1658-2041-4E62-A6DA-0AB7F278AA01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{312A1658-2041-4E62-A6DA-0AB7F278AA01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2F585E2-C3D2-4131-9675-0C1B80FC3F36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2F585E2-C3D2-4131-9675-0C1B80FC3F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2F585E2-C3D2-4131-9675-0C1B80FC3F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2F585E2-C3D2-4131-9675-0C1B80FC3F36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
