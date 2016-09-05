@@ -131,6 +131,8 @@ namespace DotaHeroPicker
         WinterWyvern = 108,
         WitchDoctor = 109,
         WraithKing = 110,
-        Zeus = 111
+        Zeus = 111,
+
+        Underlord = 112
     }
 }

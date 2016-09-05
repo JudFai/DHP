@@ -51,6 +51,7 @@ namespace DotaApi
                     var xml = new XmlDocument();
                     xml.LoadXml(responseText);
                     element = xml.DocumentElement;
+
                 }
                 catch (WebException ex)
                 {

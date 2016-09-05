@@ -1661,6 +1661,20 @@ namespace DotaHeroPicker.Collections
                     DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.ThundergodWrath, "Thundergod's Wrath"))
                 })
             }));
+
+            Items.Add(DotaHero.Factory.CreateElement(new List<object>()
+            {
+                new DotaName<Hero>(Hero.Underlord, "Underlord"), 
+                AttackType.Melee, HeroCharacteristic.Strength,
+                new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Jungler },
+                new ReadOnlyCollection<DotaHeroAbility>(new List<DotaHeroAbility>
+                {
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.BattleHunger, "Battle Hunger")),
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.BerserkerCall, "Berserker's Call")),
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.CounterHelix, "Counter Helix")),
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.CullingBlade, "Culling Blade"))
+                })
+            }));
         }
 
         #endregion
