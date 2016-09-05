@@ -13,6 +13,10 @@ namespace DotaApi.Types
         #region Properties
 
         public ulong MatchID { get; private set; }
+        /// <summary>
+        /// Номер, который формируется в процессе по записи
+        /// </summary>
+        public ulong MatchSeqNum { get; private set; }
         public ulong StartTimeInSeconds { get; private set; }
         public DateTime StartTime { get; private set; }
 
@@ -20,9 +24,10 @@ namespace DotaApi.Types
 
         #region Constructors
 
-        public Match(ulong matchID, ulong startTimeInSeconds)
+        public Match(ulong matchID, ulong matchSeqNum, ulong startTimeInSeconds)
         {
             MatchID = matchID;
+            MatchSeqNum = matchSeqNum;
             StartTimeInSeconds = startTimeInSeconds;
             StartTime = DateTime.SpecifyKind(new DateTime(1970, 1, 1), DateTimeKind.Utc).AddSeconds(startTimeInSeconds);
         }

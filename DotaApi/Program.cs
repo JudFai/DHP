@@ -14,10 +14,10 @@ namespace DotaApi
     class Program
     {
         public static readonly string _pathToUrlGetMatchHistory =
-            @"https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v1/?format=XML&min_players=10&key={0}";
+            @"http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v1/?format=XML&matches_requested=1&key={0}";
 
-        public static readonly string _pathToUrlGetMatchHistoryLastMatch =
-            @"https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/v1/?format=XML&min_players=10&start_at_match_id={1}&key={0}";
+        public static readonly string _pathToUrlGetMatchHistoryBySequenceNum =
+            @"http://api.steampowered.com/IDOTA2Match_570/GetMatchHistoryBySequenceNum/v1/?format=XML&start_at_match_seq_num={1}&key={0}";
 
         public static readonly string _pathToUrlGetMatchDetails = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1/?format=XML&match_id={1}&key={0}";
         public static readonly string _key = "9E08B26E9B8BEB385FF5A94AAFE9466C";
@@ -25,7 +25,7 @@ namespace DotaApi
 
         static void Main(string[] args)
         {
-            var test = GetMatchHistory(0, 1);
+            var test = GetMatchHistoryBySequenceNum(0, 1);
             //XmlElement element = null;
             //while (true)
             //{
@@ -73,17 +73,18 @@ namespace DotaApi
 
 
         /// <summary>
-        /// Возвращает последние матчи
+        /// Возвращает последние матчи по очереди записи
         /// </summary>
-        /// <param name="lastMatchID">Идентификатор матча с которого начнётся порядок матчей. Если 0, то берёт с последнего матча</param>
+        /// <param name="matchSeqNum">Идентификатор матча по записи с которого начнётся порядок матчей. Если 0, то берёт с последнего матча</param>
         /// <param name="countDays">Матчи за количество дней с момента запроса</param>
         /// <returns>Последние матчи за кол-во дней</returns>
-        public static IEnumerable<Match> GetMatchHistory(ulong lastMatchID, int countDays)
+        public static IEnumerable<Match> GetMatchHistoryBySequenceNum(ulong matchSeqNum, int countDays)
         {
             XmlElement element = null;
             var dotaMatchCollection = new List<Match>();
             var date = DateTime.Now.Date.AddDays(-countDays);
             var startDate = DateTime.MinValue;
+            bool matchSeqNumIsNonZero = matchSeqNum > 0;
             while ((startDate == DateTime.MinValue) || (date <= startDate))
             {
 
@@ -97,8 +98,8 @@ namespace DotaApi
                         // http://steamcommunity.com/dev/apikey
                         // API с описанием многих вещей
                         // http://dota2api.readthedocs.io/en/latest/responses.html#game-mode
-                        var fullPath = lastMatchID > 0
-                            ? string.Format(_pathToUrlGetMatchHistoryLastMatch, _key, lastMatchID)
+                        var fullPath = matchSeqNumIsNonZero
+                            ? string.Format(_pathToUrlGetMatchHistoryBySequenceNum, _key, matchSeqNum)
                             : string.Format(_pathToUrlGetMatchHistory, _key);
                         var wq = WebRequest.Create(fullPath) as HttpWebRequest;
                         if (wq == null)
@@ -109,12 +110,10 @@ namespace DotaApi
                         if (res == null)
                             throw new Exception("WebResponse is null");
 
-<<<<<<< HEAD
-                    var xml = new XmlDocument();
-                    xml.LoadXml(responseText);
-                    element = xml.DocumentElement;
+                        //var xml = new XmlDocument();
+                        //xml.LoadXml(responseText);
+                        //element = xml.DocumentElement;
 
-=======
                         var encoding = ASCIIEncoding.UTF8;
                         string responseText = null;
                         using (var reader = new System.IO.StreamReader(res.GetResponseStream(), encoding))
@@ -134,9 +133,8 @@ namespace DotaApi
                     }
                     catch (WebException ex)
                     {
-                        Thread.Sleep(15000);
+                        Thread.Sleep(10000);
                     }
->>>>>>> origin/master
                 }
 
                 var matches = element.SelectNodes(@"
@@ -144,15 +142,23 @@ namespace DotaApi
                     /match");
                 foreach (XmlElement match in matches)
                 {
-                    lastMatchID = ulong.Parse(match.SelectSingleNode("match_id").InnerXml);
+                    matchSeqNum = ulong.Parse(match.SelectSingleNode("match_seq_num").InnerXml);
+                    if (matchSeqNumIsNonZero)
+                        break;
+
+                    var matchID = ulong.Parse(match.SelectSingleNode("match_id").InnerXml);
                     var startTimeInSeconds = ulong.Parse(match.SelectSingleNode("start_time").InnerXml);
-                    var dotaMatch = new Match(lastMatchID, startTimeInSeconds);
+                    var dotaMatch = new Match(matchID, matchSeqNum, startTimeInSeconds);
                     startDate = dotaMatch.StartTime;
                     if (date > startDate)
                         break;
 
                     dotaMatchCollection.Add(dotaMatch);
                 }
+
+                dotaMatchCollection = dotaMatchCollection
+                    .OrderBy(p => p.StartTime)
+                    .ToList();
             }
 
             return dotaMatchCollection
@@ -162,7 +168,7 @@ namespace DotaApi
 
         public static Match GetMatchDetails(ulong matchID)
         {
-            
+            return null;
         }
     }
 }
