@@ -84,7 +84,7 @@ namespace DotaApi
             var dotaMatchCollection = new List<Match>();
             var date = DateTime.Now.Date.AddDays(-countDays);
             var startDate = DateTime.MinValue;
-            bool matchSeqNumIsNonZero = matchSeqNum > 0;
+            var matchSeqNumIsZero = matchSeqNum == 0;
             while ((startDate == DateTime.MinValue) || (date <= startDate))
             {
 
@@ -98,7 +98,7 @@ namespace DotaApi
                         // http://steamcommunity.com/dev/apikey
                         // API с описанием многих вещей
                         // http://dota2api.readthedocs.io/en/latest/responses.html#game-mode
-                        var fullPath = matchSeqNumIsNonZero
+                        var fullPath = !matchSeqNumIsZero
                             ? string.Format(_pathToUrlGetMatchHistoryBySequenceNum, _key, matchSeqNum)
                             : string.Format(_pathToUrlGetMatchHistory, _key);
                         var wq = WebRequest.Create(fullPath) as HttpWebRequest;
@@ -131,7 +131,7 @@ namespace DotaApi
                         element = xml.DocumentElement;
                         break;
                     }
-                    catch (WebException ex)
+                    catch (WebException)
                     {
                         Thread.Sleep(10000);
                     }
@@ -143,12 +143,25 @@ namespace DotaApi
                 foreach (XmlElement match in matches)
                 {
                     matchSeqNum = ulong.Parse(match.SelectSingleNode("match_seq_num").InnerXml);
-                    if (matchSeqNumIsNonZero)
+                    if (matchSeqNumIsZero)
+                    {
+                        matchSeqNumIsZero = matchSeqNum == 0;
                         break;
+                    }
 
                     var matchID = ulong.Parse(match.SelectSingleNode("match_id").InnerXml);
                     var startTimeInSeconds = ulong.Parse(match.SelectSingleNode("start_time").InnerXml);
-                    var dotaMatch = new Match(matchID, matchSeqNum, startTimeInSeconds);
+                    var duration = int.Parse(match.SelectSingleNode("duration").InnerXml);
+                    var winner = bool.Parse(match.SelectSingleNode("radiant_win").InnerXml) 
+                        ? Faction.Radiant 
+                        : Faction.Dire;
+                    var firstBloodTime = int.Parse(match.SelectSingleNode("first_blood_time").InnerXml);
+                    var lobbyType = (LobbyType)int.Parse(match.SelectSingleNode("lobby_type").InnerXml);
+                    var humanPlayers = int.Parse(match.SelectSingleNode("human_players").InnerXml);
+                    var gameMode = (GameMode)int.Parse(match.SelectSingleNode("game_mode").InnerXml);
+                    var detail = new MatchDetail(matchID, duration, winner, gameMode, firstBloodTime, lobbyType,
+                        humanPlayers, players);
+                    var dotaMatch = new Match(matchID, matchSeqNum, startTimeInSeconds, detail);
                     startDate = dotaMatch.StartTime;
                     if (date > startDate)
                         break;

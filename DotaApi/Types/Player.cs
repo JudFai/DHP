@@ -12,7 +12,7 @@ namespace DotaApi.Types
         #region Properties
 
         public int AccountID { get; private set; }
-        public DotaHero Dotahero { get; private set; }
+        public DotaHero DotaHero { get; private set; }
         public PlayerSlot PlayerSlot { get; private set; }
         public Faction Faction { get; private set; }
 
@@ -43,10 +43,42 @@ namespace DotaApi.Types
 
         #region Constructors
 
-        public Player(PlayerSlot playerSlot)
+        public Player(
+            int accountID, DotaHero dotaHero, PlayerSlot playerSlot,
+            DotaItem dotaItem0, DotaItem dotaItem1, DotaItem dotaItem2,
+            DotaItem dotaItem3, DotaItem dotaItem4, DotaItem dotaItem5,
+            int kills, int deaths, int assists,
+            LeaverStatus leaverStatus,
+            int lastHits, int denies,
+            int goldPerMinute, int xpPerMinute,
+            int level,
+            int heroDamage, int towerDamage, int heroHealing,
+            int gold, int goldSpent)
         {
+            AccountID = accountID;
+            DotaHero = dotaHero;
             PlayerSlot = playerSlot;
             Faction = (int)playerSlot >= 123 ? Faction.Dire : Faction.Radiant;
+            Item0 = dotaItem0;
+            Item1 = dotaItem1;
+            Item2 = dotaItem2;
+            Item3 = dotaItem3;
+            Item4 = dotaItem4;
+            Item5 = dotaItem5;
+            Kills = kills;
+            Deaths = deaths;
+            Assists = assists;
+            LeaverStatus = leaverStatus;
+            LastHits = lastHits;
+            Denies = denies;
+            GoldPerMinute = goldPerMinute;
+            XpPerMinute = xpPerMinute;
+            Level = level;
+            HeroDamage = heroDamage;
+            TowerDamage = towerDamage;
+            HeroHealing = heroHealing;
+            Gold = gold;
+            GoldSpent = goldSpent;
         }
 
         #endregion

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ namespace DotaApi.Types
 {
     public class MatchDetail
     {
+        #region Properties
+
         public ulong MatchID { get; private set; }
 
         /// <summary>
@@ -24,6 +27,28 @@ namespace DotaApi.Types
 
         public LobbyType LobbyType { get; private set; }
 
+        public int HumanPlayers { get; private set; }
+
         public List<Player> Players { get; private set; }
+
+        #endregion
+
+        #region Constructors
+
+        public MatchDetail(
+            ulong matchID, int duration, Faction winner,
+            GameMode gameMode, int firstBloodTime, LobbyType lobbyType,
+            int humanPlayers, List<Player> players)
+        {
+            MatchID = matchID;
+            Winner = winner;
+            GameMode = gameMode;
+            FirstBloodTime = firstBloodTime;
+            LobbyType = lobbyType;
+            HumanPlayers = humanPlayers;
+            Players = players;
+        }
+
+        #endregion
     }
 }

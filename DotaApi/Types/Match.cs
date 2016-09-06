@@ -20,16 +20,19 @@ namespace DotaApi.Types
         public ulong StartTimeInSeconds { get; private set; }
         public DateTime StartTime { get; private set; }
 
+        public MatchDetail Detail { get; private set; }
+
         #endregion
 
         #region Constructors
 
-        public Match(ulong matchID, ulong matchSeqNum, ulong startTimeInSeconds)
+        public Match(ulong matchID, ulong matchSeqNum, ulong startTimeInSeconds, MatchDetail matchDetail)
         {
             MatchID = matchID;
             MatchSeqNum = matchSeqNum;
             StartTimeInSeconds = startTimeInSeconds;
             StartTime = DateTime.SpecifyKind(new DateTime(1970, 1, 1), DateTimeKind.Utc).AddSeconds(startTimeInSeconds);
+            Detail = matchDetail;
         }
 
         #endregion
