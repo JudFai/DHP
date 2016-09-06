@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using DotaApi.Types;
 using DotaHeroPicker.Collections;
+using DotaHeroPicker;
 
 namespace DotaApi
 {
@@ -14,6 +15,7 @@ namespace DotaApi
         #region Fields
 
         private static readonly DotaHeroCollection _dotaHeroCollection = DotaHeroCollection.GetInstance();
+        private static readonly DotaItemCollection _dotaItemCollection = DotaItemCollection.GetInstance();
 
         #endregion
 
@@ -58,7 +60,13 @@ namespace DotaApi
             var heroHealing = int.Parse(player.SelectSingleNode("hero_healing").InnerXml);
             var gold = int.Parse(player.SelectSingleNode("gold").InnerXml);
             var goldSpent = int.Parse(player.SelectSingleNode("gold_spent").InnerXml);
-            return new Player(accountID, );
+
+            return new Player(
+                accountID, _dotaHeroCollection[(Hero)heroID], playerSlot,
+                _dotaItemCollection[(Item)item0], _dotaItemCollection[(Item)item1], _dotaItemCollection[(Item)item2],
+                _dotaItemCollection[(Item)item3], _dotaItemCollection[(Item)item4], _dotaItemCollection[(Item)item5],
+                kills, deaths, assists, leaverStatus, lastHits, denies, goldPerMin, xpPerMin, level, heroDamage,
+                towerDamage, heroHealing, gold, goldSpent);
         }
 
         #endregion

@@ -11,7 +11,7 @@ namespace DotaApi.Types
     {
         #region Properties
 
-        public int AccountID { get; private set; }
+        public ulong AccountID { get; private set; }
         public DotaHero DotaHero { get; private set; }
         public PlayerSlot PlayerSlot { get; private set; }
         public Faction Faction { get; private set; }
@@ -44,7 +44,7 @@ namespace DotaApi.Types
         #region Constructors
 
         public Player(
-            int accountID, DotaHero dotaHero, PlayerSlot playerSlot,
+            ulong accountID, DotaHero dotaHero, PlayerSlot playerSlot,
             DotaItem dotaItem0, DotaItem dotaItem1, DotaItem dotaItem2,
             DotaItem dotaItem3, DotaItem dotaItem4, DotaItem dotaItem5,
             int kills, int deaths, int assists,

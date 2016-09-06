@@ -17,6 +17,15 @@ namespace DotaHeroPicker.Collections
 
         #endregion
 
+        #region Indexers
+
+        public DotaItem this[Item item]
+        {
+            get { return this.FirstOrDefault(p => p.DotaName.Entity == item); }
+        }
+
+        #endregion
+
         #region Constructors
 
         private DotaItemCollection()
