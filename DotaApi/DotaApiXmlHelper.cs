@@ -33,11 +33,24 @@ namespace DotaApi
             var lobbyType = (LobbyType)int.Parse(matchDetail.SelectSingleNode("lobby_type").InnerXml);
             var humanPlayers = int.Parse(matchDetail.SelectSingleNode("human_players").InnerXml);
             var gameMode = (GameMode)int.Parse(matchDetail.SelectSingleNode("game_mode").InnerXml);
+
+            var playerCollection = new List<Player>();
+            foreach (XmlElement player in matchDetail.SelectNodes("players/player"))
+                playerCollection.Add(ParsePlayer(player));
+
+            return new MatchDetail(
+                matchID, duration, winner, gameMode, 
+                firstBloodTime, lobbyType, humanPlayers, playerCollection);
         }
 
         public static Player ParsePlayer(XmlElement player)
         {
-            var accountID = ulong.Parse(player.SelectSingleNode("account_id").InnerXml);
+            // Не всегда пользователь предоставляет о себе информацию
+            var accountIDXml = player.SelectSingleNode("account_id");
+            ulong accountID = 0;
+            if (accountIDXml != null)
+                accountID = ulong.Parse(accountIDXml.InnerXml);
+
             var playerSlot = (PlayerSlot)int.Parse(player.SelectSingleNode("player_slot").InnerXml);
             var heroID = int.Parse(player.SelectSingleNode("hero_id").InnerXml);
             var item0 = int.Parse(player.SelectSingleNode("item_0").InnerXml);
@@ -49,7 +62,12 @@ namespace DotaApi
             var kills = int.Parse(player.SelectSingleNode("kills").InnerXml);
             var deaths = int.Parse(player.SelectSingleNode("deaths").InnerXml);
             var assists = int.Parse(player.SelectSingleNode("assists").InnerXml);
-            var leaverStatus = (LeaverStatus)int.Parse(player.SelectSingleNode("leaver_status").InnerXml);
+
+            var leaverStatusXml = player.SelectSingleNode("leaver_status");
+            var leaverStatus = LeaverStatus.None;
+            if (leaverStatusXml != null)
+                leaverStatus = (LeaverStatus)int.Parse(leaverStatusXml.InnerXml);
+
             var lastHits = int.Parse(player.SelectSingleNode("last_hits").InnerXml);
             var denies = int.Parse(player.SelectSingleNode("denies").InnerXml);
             var goldPerMin = int.Parse(player.SelectSingleNode("gold_per_min").InnerXml);
@@ -61,12 +79,16 @@ namespace DotaApi
             var gold = int.Parse(player.SelectSingleNode("gold").InnerXml);
             var goldSpent = int.Parse(player.SelectSingleNode("gold_spent").InnerXml);
 
+            var scaledHeroDamage = int.Parse(player.SelectSingleNode("scaled_hero_damage").InnerXml);
+            var scaledTowerDamage = int.Parse(player.SelectSingleNode("scaled_tower_damage").InnerXml);
+            var scaledHeroHealing = int.Parse(player.SelectSingleNode("scaled_hero_healing").InnerXml);
+
             return new Player(
                 accountID, _dotaHeroCollection[(Hero)heroID], playerSlot,
                 _dotaItemCollection[(Item)item0], _dotaItemCollection[(Item)item1], _dotaItemCollection[(Item)item2],
                 _dotaItemCollection[(Item)item3], _dotaItemCollection[(Item)item4], _dotaItemCollection[(Item)item5],
                 kills, deaths, assists, leaverStatus, lastHits, denies, goldPerMin, xpPerMin, level, heroDamage,
-                towerDamage, heroHealing, gold, goldSpent);
+                towerDamage, heroHealing, gold, goldSpent, scaledHeroDamage, scaledTowerDamage, scaledHeroHealing);
         }
 
         #endregion

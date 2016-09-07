@@ -10,6 +10,12 @@ namespace DotaHeroPicker.Types
 {
     public class DotaItem : DotaBase<Item>
     {
+        #region Fields
+
+        public static DotaItem RecipeOrNone = new DotaItem(new DotaName<Item>(Item.RecipeOrNone, string.Empty));
+
+        #endregion
+
         #region Properties
 
         internal static DotaItemFactory Factory

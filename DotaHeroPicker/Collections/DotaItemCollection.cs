@@ -21,7 +21,7 @@ namespace DotaHeroPicker.Collections
 
         public DotaItem this[Item item]
         {
-            get { return this.FirstOrDefault(p => p.DotaName.Entity == item); }
+            get { return this.FirstOrDefault(p => p.DotaName.Entity == item) ?? DotaItem.RecipeOrNone; }
         }
 
         #endregion
@@ -192,6 +192,7 @@ namespace DotaHeroPicker.Collections
             Items.Add(DotaItem.Factory.CreateElement(new DotaName<Item>(Item.WraithBand, "Wraith Band")));
             Items.Add(DotaItem.Factory.CreateElement(new DotaName<Item>(Item.Yasha, "Yasha")));
             Items.Add(DotaItem.Factory.CreateElement(new DotaName<Item>(Item.RiverVialChrome, "River Vial: Chrome")));
+            Items.Add(DotaItem.Factory.CreateElement(new DotaName<Item>(Item.Banana, "Banana")));
         }
 
         #endregion

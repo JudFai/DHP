@@ -8,6 +8,7 @@ namespace DotaHeroPicker
 {
     public enum Item
     {
+        RecipeOrNone = 0,
         AbyssalBlade = 208,
         AegisImmortal = 117,
         AetherLens = 232,
@@ -109,7 +110,7 @@ namespace DotaHeroPicker
         Necronomicon3 = 194,
         NullTalisman = 77,
         OblivionStaff = 67,
-        ObserverandSentryWards = 43,
+        ObserverandSentryWards = 218,
         ObserverWard = 42,
         OctarineCore = 235,
         OgreClub = 21,
@@ -140,7 +141,7 @@ namespace DotaHeroPicker
         SangeandYasha = 154,
         Satanic = 156,
         ScytheVyse = 96,
-        SentryWard = 139,
+        SentryWard = 43,
         ShadowAmulet = 215,
         ShadowBlade = 152,
         ShivaGuard = 119,
@@ -166,10 +167,10 @@ namespace DotaHeroPicker
         VitalityBooster = 61,
         VladmirOffering = 81,
         VoidStone = 57,
-        WindLace = 235,
+        WindLace = 244,
         WraithBand = 75,
         Yasha = 170,
-        RiverVialChrome = 168,
+        RiverVialChrome = 1021,
         Banana = 264
     }
 }

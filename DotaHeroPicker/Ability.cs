@@ -514,6 +514,11 @@ namespace DotaHeroPicker
         WraithfireBlast = 504,
         WrathNature = 505,
         XMarksSpot = 506,
-        AttributeBonus = 507
+        AttributeBonus = 507,
+
+        Firestorm = 508,
+        PitMalice = 509,
+        AtrophyAura = 510,
+        DarkRift = 511
     }
 }

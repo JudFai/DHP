@@ -41,6 +41,7 @@ namespace DotaApi.Types
             int humanPlayers, List<Player> players)
         {
             MatchID = matchID;
+            Duration = duration;
             Winner = winner;
             GameMode = gameMode;
             FirstBloodTime = firstBloodTime;

@@ -1666,13 +1666,13 @@ namespace DotaHeroPicker.Collections
             {
                 new DotaName<Hero>(Hero.Underlord, "Underlord"), 
                 AttackType.Melee, HeroCharacteristic.Strength,
-                new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Initiator, HeroRole.Jungler },
+                new List<HeroRole> { HeroRole.Disabler, HeroRole.Durable, HeroRole.Escape, HeroRole.Nuker, HeroRole.Support },
                 new ReadOnlyCollection<DotaHeroAbility>(new List<DotaHeroAbility>
                 {
-                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.BattleHunger, "Battle Hunger")),
-                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.BerserkerCall, "Berserker's Call")),
-                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.CounterHelix, "Counter Helix")),
-                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.CullingBlade, "Culling Blade"))
+                    DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.Firestorm, "Firestorm")),
+                    DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.PitMalice, "Pit of Malice")),
+                    DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.AtrophyAura, "Atrophy Aura")),
+                    DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.DarkRift, "Dark Rift"))
                 })
             }));
         }

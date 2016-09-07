@@ -39,6 +39,10 @@ namespace DotaApi.Types
         public int Gold { get; private set; }
         public int GoldSpent { get; private set; }
 
+        public int ScaledHeroDamage { get; private set; }
+        public int ScaledTowerDamage { get; private set; }
+        public int ScaledHeroHealing { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -53,7 +57,8 @@ namespace DotaApi.Types
             int goldPerMinute, int xpPerMinute,
             int level,
             int heroDamage, int towerDamage, int heroHealing,
-            int gold, int goldSpent)
+            int gold, int goldSpent,
+            int scaledHeroDamage, int scaledTowerDamage, int scaledHeroHealing)
         {
             AccountID = accountID;
             DotaHero = dotaHero;
@@ -79,6 +84,18 @@ namespace DotaApi.Types
             HeroHealing = heroHealing;
             Gold = gold;
             GoldSpent = goldSpent;
+            ScaledHeroDamage = scaledHeroDamage;
+            ScaledTowerDamage = scaledTowerDamage;
+            ScaledHeroHealing = scaledHeroHealing;
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public override string ToString()
+        {
+            return DotaHero.ToString();
         }
 
         #endregion
