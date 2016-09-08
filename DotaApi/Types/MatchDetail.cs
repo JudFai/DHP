@@ -19,6 +19,8 @@ namespace DotaApi.Types
         /// </summary>
         public int Duration { get; private set; }
 
+        public TimeSpan DurationTimeSpan { get; private set; }
+
         public Faction Winner { get; private set; }
 
         public GameMode GameMode { get; private set; }
@@ -48,6 +50,16 @@ namespace DotaApi.Types
             LobbyType = lobbyType;
             HumanPlayers = humanPlayers;
             Players = players;
+            DurationTimeSpan = TimeSpan.FromSeconds(duration);
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public override string ToString()
+        {
+            return string.Format("MatchID: {0}, {1}", MatchID, DurationTimeSpan);
         }
 
         #endregion

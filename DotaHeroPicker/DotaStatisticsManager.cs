@@ -100,8 +100,8 @@ namespace DotaHeroPicker
             lock (_lockerRequest)
             {
                 Exception exception = null;
-                int countTry = 0;
-                while (countTry < 4)
+                var countTry = 0;
+                while (countTry < 5)
                 {
                     try
                     {
@@ -116,7 +116,7 @@ namespace DotaHeroPicker
 
                         var encoding = ASCIIEncoding.UTF8;
                         string responseText = null;
-                        using (var reader = new System.IO.StreamReader(res.GetResponseStream(), encoding))
+                        using (var reader = new StreamReader(res.GetResponseStream(), encoding))
                         {
                             responseText = reader.ReadToEnd()
                                 .Replace("\\", string.Empty)
