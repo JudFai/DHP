@@ -9,18 +9,12 @@ using System.Xml.Linq;
 
 namespace DotaHeroPickerUI.Helpers
 {
-    public class SerializerHeroPickerSettings : ISerializeXml<HeroPickerSettings>
+    public class SerializerHeroPickerSettings : SerializerBase<HeroPickerSettings>
     {
         #region Fields
 
         private static object _instanceLocker = new object();
         private static SerializerHeroPickerSettings _instance;
-
-        #endregion
-
-        #region Properties
-
-        public string PathToXml { get; private set; }
 
         #endregion
 
@@ -43,7 +37,7 @@ namespace DotaHeroPickerUI.Helpers
             }
         }
 
-        public HeroPickerSettings ReadXml()
+        public override HeroPickerSettings ReadXml()
         {
             HeroPickerSettings obj;
             try
@@ -67,7 +61,7 @@ namespace DotaHeroPickerUI.Helpers
             return obj;
         }
 
-        public bool WriteXml(HeroPickerSettings obj)
+        public override bool WriteXml(HeroPickerSettings obj)
         {
             var xml = new XElement("SerializerHeroPickerSettings",
                 new XElement("LastDateRefreshHeroAdvantageCollection", obj.LastDateRefreshHeroAdvantageCollection),

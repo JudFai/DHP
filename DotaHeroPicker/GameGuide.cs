@@ -18,7 +18,6 @@ namespace DotaHeroPicker
 
         /// <summary>
         /// Способности героя, которые прокачены по порядку
-        /// 
         /// </summary>
         public ReadOnlyCollection<DotaHeroAbility> DotaHeroAbilityCollection { get; private set; }
 
@@ -38,16 +37,16 @@ namespace DotaHeroPicker
 
         public GameGuide(string playerName, int ratingPoints, 
             DotaLane lane,
-            ReadOnlyCollection<DotaHeroAbility> dotaHeroAbilityCollection, 
-            ReadOnlyCollection<DotaItem> startDotaItemCollection,
-            ReadOnlyCollection<BoughtDotaItem> boughtDotaItemCollection)
+            IEnumerable<DotaHeroAbility> dotaHeroAbilityCollection,
+            IEnumerable<DotaItem> startDotaItemCollection,
+            IEnumerable<BoughtDotaItem> boughtDotaItemCollection)
         {
             PlayerName = playerName;
             RatingPoints = ratingPoints;
             Lane = lane;
-            DotaHeroAbilityCollection = dotaHeroAbilityCollection;
-            StartDotaItemCollection = startDotaItemCollection;
-            BoughtDotaItemCollection = boughtDotaItemCollection;
+            DotaHeroAbilityCollection = new ReadOnlyCollection<DotaHeroAbility>(dotaHeroAbilityCollection.ToList());
+            StartDotaItemCollection = new ReadOnlyCollection<DotaItem>(startDotaItemCollection.ToList());
+            BoughtDotaItemCollection = new ReadOnlyCollection<BoughtDotaItem>(boughtDotaItemCollection.ToList());
         }
 
         #endregion
@@ -56,7 +55,7 @@ namespace DotaHeroPicker
 
         public override string ToString()
         {
-            return string.Format("{0}: {1}, {2}", PlayerName, RatingPoints, Lane.Lane);
+            return string.Format("{0}: {1}, {2}", PlayerName, RatingPoints, Lane.DotaName.Entity);
         }
 
         #endregion

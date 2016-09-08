@@ -16,6 +16,7 @@ using DotaHeroPickerUI.Model;
 using DotaHeroPickerUI.ViewModel.Core;
 using HeroPickerResources.Resources;
 using DotaHeroPicker.Collections;
+using DotaHeroPicker.Types;
 
 namespace DotaHeroPickerUI.ViewModel
 {
@@ -32,6 +33,7 @@ namespace DotaHeroPickerUI.ViewModel
         private readonly HeroPickerSettings _settings;
 
         private readonly SerializerHeroAdvantageCollection _serializerHeroAdvantageCollection;
+        private readonly SerializerHeroGuideCollection _serializerHeroGuideCollection;
         private readonly SerializerHeroPickerSettings _serializerHeroPickerSettings;
 
         private double _progress;
@@ -108,6 +110,11 @@ namespace DotaHeroPickerUI.ViewModel
         public event EventHandler<List<HeroAdvantage>> GetAllHeroAdvantageCompleted;
 
         /// <summary>
+        /// Происходит, когда коллекция руководств сериализованна или получена
+        /// </summary>
+        public event EventHandler<List<HeroGuide>> GetAllHeroGuideCompleted;
+
+        /// <summary>
         /// Происходит, когда изменяется одна из коллекций вражских, союзных или забанненых героев
         /// </summary>
         public event EventHandler<HeroesCollectionChangedEventArgs> HeroesCollectionChanged;
@@ -119,6 +126,35 @@ namespace DotaHeroPickerUI.ViewModel
         public MainWindowViewModel()
         {
             var collection = DotaHeroCollection.GetInstance();
+
+            _serializerHeroGuideCollection = SerializerHeroGuideCollection.GetInstance();
+            var itemCollection = DotaItemCollection.GetInstance();
+            var testHero = collection[Hero.Abaddon];
+            var t = new List<HeroGuide>
+            {
+                new HeroGuide(
+                    testHero, 
+                    new List<GameGuide> 
+                    {
+                        new GameGuide(
+                            "Test", 3500, DotaLaneCollection.GetInstance().FirstOrDefault(),
+                            new List<DotaHeroAbility> 
+                            { 
+                                testHero.DotaHeroAbilities[0], 
+                                testHero.DotaHeroAbilities[3] 
+                            },
+                            new List<DotaItem> 
+                            { 
+                                itemCollection.FirstOrDefault(), itemCollection.FirstOrDefault(p => p.DotaName.Entity == Item.Tango) 
+                            },
+                            new List<BoughtDotaItem> 
+                            { 
+                                new BoughtDotaItem(itemCollection.FirstOrDefault(p => p.DotaName.Entity == Item.DivineRapier), TimeSpan.FromSeconds(100)) 
+                            })
+                    })
+            };
+            _serializerHeroGuideCollection.WriteXml(t);
+
             AllDotaHero = new ReadOnlyCollection<DotaHeroViewModel>(
                 collection.Select(p => new DotaHeroViewModel(
                     p,
@@ -143,6 +179,7 @@ namespace DotaHeroPickerUI.ViewModel
             _settings = _serializerHeroPickerSettings.ReadXml() ?? new HeroPickerSettings();
 
             DotaStatisticsManager.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;
+            DotaStatisticsManager.GetAllHeroGuideCompleted += OnGetAllHeroGuideCompleted;
             DotaStatisticsManager.ChangedOperationProgress += OnProgress;
             if (_settings.CountDaysForRefreshData <= (DateTime.Now - _settings.LastDateRefreshHeroAdvantageCollection).Days)
             {
@@ -200,6 +237,16 @@ namespace DotaHeroPickerUI.ViewModel
             _serializerHeroPickerSettings.WriteXml(_settings);
             ApplicationRefreshingData = false;
             OnGetAllHeroAdvantageCompleted(e);
+        }
+
+        private void OnGetAllHeroGuideCompleted(object sender, List<HeroGuide> e)
+        {
+            //StatisticsManager = new StatisticsManager(e);
+            //_settings.LastDateRefreshHeroGuideCollection = DateTime.Now.Date;
+            //_serializerHeroAdvantageCollection.WriteXml(e);
+            //_serializerHeroPickerSettings.WriteXml(_settings);
+            //ApplicationRefreshingData = false;
+            //OnGetAllHeroAdvantageCompleted(e);
         }
 
         private void OnHeroesCollectionChanged(HeroesCollectionChangedEventArgs e)

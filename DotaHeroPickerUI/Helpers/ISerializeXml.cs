@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DotaHeroPickerUI.Helpers
 {
-    interface ISerializeXml<T> where T: class
+    interface ISerializeXml<T> where T : class
     {
         string PathToXml { get; }
         T ReadXml();

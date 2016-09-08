@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DotaHeroPicker;
+using DotaHeroPicker.Types;
 
 namespace DotaHeroPickerUI.Model
 {

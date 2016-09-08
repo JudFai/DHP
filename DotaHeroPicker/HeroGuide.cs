@@ -19,10 +19,10 @@ namespace DotaHeroPicker
 
         #region Constructors
 
-        public HeroGuide(DotaHero hero, ReadOnlyCollection<GameGuide> guides)
+        public HeroGuide(DotaHero hero, IEnumerable<GameGuide> guides)
         {
             Hero = hero;
-            Guides = guides;
+            Guides = new ReadOnlyCollection<GameGuide>(guides.ToList());
         }
 
         #endregion

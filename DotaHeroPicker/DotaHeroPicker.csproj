@@ -63,6 +63,7 @@
     <Compile Include="AttackType.cs" />
     <Compile Include="Collections\DotaItemCollection.cs" />
     <Compile Include="Factories\DotaHeroAbilityFactory.cs" />
+    <Compile Include="Factories\DotaLaneFactory.cs" />
     <Compile Include="GameGuide.cs" />
     <Compile Include="HeroGuide.cs" />
     <Compile Include="Types\BoughtDotaItem.cs" />
@@ -74,8 +75,8 @@
     <Compile Include="Types\DotaHeroAbility.cs" />
     <Compile Include="Types\DotaItem.cs" />
     <Compile Include="Factories\DotaItemFactory.cs" />
-    <Compile Include="DotaLane.cs" />
-    <Compile Include="DotaLaneCollection.cs" />
+    <Compile Include="Types\DotaLane.cs" />
+    <Compile Include="Collections\DotaLaneCollection.cs" />
     <Compile Include="Factories\DotaFactory.cs" />
     <Compile Include="Hero.cs" />
     <Compile Include="EnemyHeroAdvantage.cs" />

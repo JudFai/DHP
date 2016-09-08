@@ -351,7 +351,7 @@ namespace DotaHeroPicker
                         /span
                         /acronym[@rel='neighbour-tooltip']");
                     var laneCollection = DotaLaneCollection.GetInstance();
-                    var lane = laneCollection.FirstOrDefault(p => row.InnerText.ToUpper().Contains(p.HtmlName.ToUpper()));
+                    var lane = laneCollection.FirstOrDefault(p => row.InnerText.ToUpper().Contains(p.DotaName.FullName.ToUpper()));
 
                     // Starting items
                     rows = element.SelectNodes(@"

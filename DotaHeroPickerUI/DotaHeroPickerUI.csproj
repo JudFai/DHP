@@ -92,6 +92,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\SerializerXmlBase.cs" />
+    <Compile Include="Helpers\SerializerHeroGuideCollection.cs" />
     <Compile Include="Model\DotaLaneModel.cs" />
     <Compile Include="ViewModel\HeroGuideViewModel.cs" />
     <Compile Include="ViewModel\DotaHeroObservableCollection.cs" />

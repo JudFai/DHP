@@ -11,18 +11,12 @@ using DotaHeroPicker.Collections;
 
 namespace DotaHeroPickerUI.Helpers
 {
-    public class SerializerHeroAdvantageCollection : ISerializeXml<List<HeroAdvantage>>
+    public class SerializerHeroAdvantageCollection : SerializerBase<List<HeroAdvantage>>
     {
         #region Fields
 
         private static object _instanceLocker = new object();
         private static SerializerHeroAdvantageCollection _instance;
-
-        #endregion
-
-        #region Properties
-
-        public string PathToXml { get; private set; }
 
         #endregion
 
@@ -45,7 +39,7 @@ namespace DotaHeroPickerUI.Helpers
             }
         }
 
-        public List<HeroAdvantage> ReadXml()
+        public override List<HeroAdvantage> ReadXml()
         {
             var heroAdvantageCollection = new List<HeroAdvantage>();
             try
@@ -89,7 +83,7 @@ namespace DotaHeroPickerUI.Helpers
             return heroAdvantageCollection;
         }
 
-        public bool WriteXml(List<HeroAdvantage> heroAdvantageCollection)
+        public override bool WriteXml(List<HeroAdvantage> heroAdvantageCollection)
         {
             var xml = new XElement("HeroAdvantages");
             //xml.Add(new XAttribute("Date", DateTime.Now.ToString("dd.MM.yyyy")));

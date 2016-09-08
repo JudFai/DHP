@@ -22,6 +22,11 @@ namespace DotaHeroPickerUI.Model
         public DateTime LastDateRefreshHeroAdvantageCollection { get; set; }
 
         /// <summary>
+        /// Дата последнего обновления руководств героев
+        /// </summary>
+        public DateTime LastDateRefreshHeroGuideCollection { get; set; }
+
+        /// <summary>
         /// Количество дней с даты последнего обновления преимуществ героев, когда необходимо обновить данные преимуществ
         /// </summary>
         public int CountDaysForRefreshData { get; set; }
@@ -33,6 +38,7 @@ namespace DotaHeroPickerUI.Model
         public HeroPickerSettings()
         {
             LastDateRefreshHeroAdvantageCollection = DateTime.MinValue;
+            LastDateRefreshHeroGuideCollection = DateTime.MinValue;
             CountDaysForRefreshData = 1;
         }
 

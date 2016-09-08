@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotaHeroPicker.Types;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,7 +30,7 @@ namespace DotaHeroPicker
 
         public override string ToString()
         {
-            return string.Format("{0}: {1}%", Lane.HtmlName, PercentagePresence);
+            return string.Format("{0}: {1}%", Lane.DotaName.FullName, PercentagePresence);
         }
 
         #endregion
