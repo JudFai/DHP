@@ -70,11 +70,24 @@
         </controls:FlyGridViewControl>
         <Grid VerticalAlignment="Center"
               Visibility="{Binding ApplicationRefreshingData, Converter={StaticResource VisibilityToBoolConverter}}">
-            <controls:ProgressRing PrPercent="{Binding Progress}" />
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center" 
-                       Style="{StaticResource TitleTextBlockStyle}"
-                       Text="{Binding Progress, StringFormat={}{0:N0} %}" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <controls:ProgressRing Grid.Row="0" PrPercent="{Binding Progress}" />
+                <TextBlock Grid.Row="0" 
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" 
+                           Style="{StaticResource TitleTextBlockStyle}"
+                           Text="{Binding Progress, StringFormat={}{0:N0} %}" />
+                <TextBlock Grid.Row="1" Margin="5"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           TextWrapping="WrapWithOverflow"
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           Text="{Binding ProgressDescription}" />
+            </Grid>
         </Grid>
         <!--<StackPanel VerticalAlignment="Center"
                     Visibility="{Binding ApplicationBusy, Converter={StaticResource VisibilityToBoolConverter}}">

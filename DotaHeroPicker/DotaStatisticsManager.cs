@@ -16,6 +16,32 @@ using DotaHeroPicker.Collections;
 
 namespace DotaHeroPicker
 {
+    public enum Operation
+    {
+        GetAllHeroAdvantage,
+        GetAllHeroGuide
+    }
+
+    public class ProgressEventArgs : EventArgs
+    {
+        #region Properties
+
+        public double Progress { get; private set; }
+        public Operation Operation { get; private set; }
+
+        #endregion
+
+        #region Constructors
+
+        public ProgressEventArgs(double progress, Operation operation)
+        {
+            Progress = progress;
+            Operation = operation;
+        }
+
+        #endregion
+    }
+
     public class DotaStatisticsManager
     {
         #region Fields
@@ -52,8 +78,6 @@ namespace DotaHeroPicker
                         _operationProgress = 100;
                     else
                         _operationProgress = value;
-
-                    OnChangedOperationProgress(_operationProgress);
                 }
             }
         }
@@ -62,7 +86,7 @@ namespace DotaHeroPicker
 
         #region Events
 
-        public event EventHandler<double> ChangedOperationProgress;
+        public event EventHandler<ProgressEventArgs> ChangedOperationProgress;
         public event EventHandler<List<HeroAdvantage>> GetAllHeroAdvantageCompleted;
         public event EventHandler<List<HeroGuide>> GetAllHeroGuideCompleted;
 
@@ -77,7 +101,13 @@ namespace DotaHeroPicker
 
         #region Private Methods
 
-        private void OnChangedOperationProgress(double operationProgress)
+        private void SetOperationProgress(double progress, Operation operation)
+        {
+            OperationProgress = progress;
+            OnChangedOperationProgress(new ProgressEventArgs(OperationProgress, operation));
+        }
+
+        private void OnChangedOperationProgress(ProgressEventArgs operationProgress)
         {
             if (ChangedOperationProgress != null)
                 ChangedOperationProgress(this, operationProgress);
@@ -240,15 +270,18 @@ namespace DotaHeroPicker
             await Task.Run(() =>
             {
                 var collection = new List<HeroAdvantage>();
-                OperationProgress = 0;
+                SetOperationProgress(0, Operation.GetAllHeroAdvantage);
+                //OperationProgress = 0;
                 var percentsInIteration = 100d / _heroCollection.Count;
                 foreach (var hero in _heroCollection)
                 {
                     collection.Add(GetHeroAdvantage(hero));
-                    OperationProgress += percentsInIteration;
+                    //OperationProgress += percentsInIteration;
+                    SetOperationProgress(OperationProgress + percentsInIteration, Operation.GetAllHeroAdvantage);
                 }
 
-                OperationProgress = 100;
+                //OperationProgress = 100;
+                SetOperationProgress(100, Operation.GetAllHeroAdvantage);
                 OnGetAllHeroAdvantageCompleted(collection);
             });
         }
@@ -434,15 +467,19 @@ namespace DotaHeroPicker
             await Task.Run(() =>
             {
                 var collection = new List<HeroGuide>();
-                OperationProgress = 0;
+                //OperationProgress = 0;
+                SetOperationProgress(0, Operation.GetAllHeroGuide);
                 var percentsInIteration = 100d / _heroCollection.Count;
                 foreach (var hero in _heroCollection)
                 {
                     collection.Add(GetHeroGuide(hero));
-                    OperationProgress += percentsInIteration;
+                    //OperationProgress += percentsInIteration;
+                    SetOperationProgress(OperationProgress + percentsInIteration, Operation.GetAllHeroGuide);
                 }
 
-                OperationProgress = 100;
+                //OperationProgress = 100;
+                SetOperationProgress(100, Operation.GetAllHeroGuide);
+
                 OnGetAllHeroGuideCompleted(collection);
             });
         }

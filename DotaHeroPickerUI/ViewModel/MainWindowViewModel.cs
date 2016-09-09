@@ -25,6 +25,7 @@ namespace DotaHeroPickerUI.ViewModel
         #region Fields
 
         private object _selectedItemLocker = new object();
+        private object _workProgressFunction = new object();
         private ItemViewModel _selectedItem;
 
         private readonly string _pathToHeroImage = "/HeroPickerResources;component/Images/Heroes/";
@@ -37,6 +38,7 @@ namespace DotaHeroPickerUI.ViewModel
         private readonly SerializerHeroPickerSettings _serializerHeroPickerSettings;
 
         private double _progress;
+        private string _progressDescription;
         private bool _applicationRefreshingData;
         private bool _applicationBusy;
 
@@ -56,6 +58,19 @@ namespace DotaHeroPickerUI.ViewModel
                 {
                     _progress = value;
                     Dispatcher.Invoke(() => RaisePropertyChanged("Progress"));
+                }
+            }
+        }
+
+        public string ProgressDescription
+        {
+            get { return _progressDescription; }
+            private set
+            {
+                if (_progressDescription != value)
+                {
+                    _progressDescription = value;
+                    Dispatcher.Invoke(() => RaisePropertyChanged("ProgressDescription"));
                 }
             }
         }
@@ -127,34 +142,6 @@ namespace DotaHeroPickerUI.ViewModel
         {
             var collection = DotaHeroCollection.GetInstance();
 
-            _serializerHeroGuideCollection = SerializerHeroGuideCollection.GetInstance();
-            var itemCollection = DotaItemCollection.GetInstance();
-            var testHero = collection[Hero.Abaddon];
-            var t = new List<HeroGuide>
-            {
-                new HeroGuide(
-                    testHero, 
-                    new List<GameGuide> 
-                    {
-                        new GameGuide(
-                            "Test", 3500, DotaLaneCollection.GetInstance().FirstOrDefault(),
-                            new List<DotaHeroAbility> 
-                            { 
-                                testHero.DotaHeroAbilities[0], 
-                                testHero.DotaHeroAbilities[3] 
-                            },
-                            new List<DotaItem> 
-                            { 
-                                itemCollection.FirstOrDefault(), itemCollection.FirstOrDefault(p => p.DotaName.Entity == Item.Tango) 
-                            },
-                            new List<BoughtDotaItem> 
-                            { 
-                                new BoughtDotaItem(itemCollection.FirstOrDefault(p => p.DotaName.Entity == Item.DivineRapier), TimeSpan.FromSeconds(100)) 
-                            })
-                    })
-            };
-            _serializerHeroGuideCollection.WriteXml(t);
-
             AllDotaHero = new ReadOnlyCollection<DotaHeroViewModel>(
                 collection.Select(p => new DotaHeroViewModel(
                     p,
@@ -174,13 +161,14 @@ namespace DotaHeroPickerUI.ViewModel
             //Loading settings=========================================================================================================
             DotaStatisticsManager = DotaStatisticsManager.GetInstance();
             _serializerHeroAdvantageCollection = SerializerHeroAdvantageCollection.GetInstance();
+            _serializerHeroGuideCollection = SerializerHeroGuideCollection.GetInstance();
             _serializerHeroPickerSettings = SerializerHeroPickerSettings.GetInstance();
 
             _settings = _serializerHeroPickerSettings.ReadXml() ?? new HeroPickerSettings();
 
-            DotaStatisticsManager.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;
-            DotaStatisticsManager.GetAllHeroGuideCompleted += OnGetAllHeroGuideCompleted;
             DotaStatisticsManager.ChangedOperationProgress += OnProgress;
+
+            DotaStatisticsManager.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;
             if (_settings.CountDaysForRefreshData <= (DateTime.Now - _settings.LastDateRefreshHeroAdvantageCollection).Days)
             {
                 ApplicationRefreshingData = true;
@@ -200,6 +188,28 @@ namespace DotaHeroPickerUI.ViewModel
                     OnGetAllHeroAdvantageCompleted(heroAdvantageCollection);
                 }
             }
+
+            // TODO: каким-то образом надо сделать один прогресс-бар, чтоб в одно время происходил 1 запрос
+            DotaStatisticsManager.GetAllHeroGuideCompleted += OnGetAllHeroGuideCompleted;
+            if (_settings.CountDaysForRefreshData <= (DateTime.Now - _settings.LastDateRefreshHeroGuideCollection).Days)
+            {
+                ApplicationRefreshingData = true;
+                DotaStatisticsManager.GetAllHeroGuide();
+            }
+            else
+            {
+                var heroGuideCollection = _serializerHeroGuideCollection.ReadXml();
+                if (heroGuideCollection == null)
+                {
+                    ApplicationRefreshingData = true;
+                    DotaStatisticsManager.GetAllHeroGuide();
+                }
+                else
+                {
+                    //StatisticsManager = new StatisticsManager(heroGuideCollection);
+                    OnGetAllHeroGuideCompleted(heroGuideCollection);
+                }
+            }
             //=========================================================================================================================
 
             ItemBottomCollection = new List<ItemViewModel>
@@ -212,9 +222,69 @@ namespace DotaHeroPickerUI.ViewModel
 
         #region Private Methods
 
-        private void OnProgress(object sender, double e)
+        private async void WorkProgressFunction(Operation operation)
         {
-            Progress = e;
+            // TODO: не понятно, каким образом можно представить heroGuideCollection, если это generic тип
+            // TODO: с другой стороны этот метод не очень нужен, т.к. он все равно пропускает стадию lock из-за асинхронности,
+            // TODO: можно в коре убрать асинхронность, тогда это условие пропадёт
+            await Task.Run(() =>
+            {
+                lock (_workProgressFunction)
+                {
+                    DateTime dataRefresh;
+                    Action actOperation;
+                    switch (operation)
+                    {
+                        case Operation.GetAllHeroAdvantage:
+                            dataRefresh = _settings.LastDateRefreshHeroGuideCollection;
+                            actOperation = DotaStatisticsManager.GetAllHeroGuide;
+                            break;
+                        default:
+                            return;
+                    }
+                    //DotaStatisticsManager.GetAllHeroGuideCompleted += OnGetAllHeroGuideCompleted;
+                    if (_settings.CountDaysForRefreshData <= (DateTime.Now - dataRefresh).Days)
+                    {
+                        ApplicationRefreshingData = true;
+                        actOperation();
+                    }
+                    else
+                    {
+                        var heroGuideCollection = _serializerHeroGuideCollection.ReadXml();
+                        if (heroGuideCollection == null)
+                        {
+                            ApplicationRefreshingData = true;
+                            actOperation();
+                        }
+                        else
+                        {
+                            //StatisticsManager = new StatisticsManager(heroGuideCollection);
+                            OnGetAllHeroGuideCompleted(heroGuideCollection);
+                        }
+                    }
+                }
+            });
+        }
+
+        private void OnProgress(object sender, ProgressEventArgs e)
+        {
+            Progress = e.Progress;
+            if (Progress == 100)
+            {
+                ProgressDescription = null;
+            }
+            else
+            {
+                switch (e.Operation)
+                {
+                    case Operation.GetAllHeroAdvantage:
+                        ProgressDescription = "Загрузка преимуществ перед вражеской командой...";
+                        break;
+                    case Operation.GetAllHeroGuide:
+                        ProgressDescription = "Загрузка руководств для героев...";
+                        break;
+                }
+            }
         }
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -239,14 +309,19 @@ namespace DotaHeroPickerUI.ViewModel
             OnGetAllHeroAdvantageCompleted(e);
         }
 
+        private void OnGetAllHeroGuideCompleted(List<HeroGuide> e)
+        {
+            if (GetAllHeroGuideCompleted != null)
+                GetAllHeroGuideCompleted(this, e);
+        }
+
         private void OnGetAllHeroGuideCompleted(object sender, List<HeroGuide> e)
         {
-            //StatisticsManager = new StatisticsManager(e);
-            //_settings.LastDateRefreshHeroGuideCollection = DateTime.Now.Date;
-            //_serializerHeroAdvantageCollection.WriteXml(e);
-            //_serializerHeroPickerSettings.WriteXml(_settings);
-            //ApplicationRefreshingData = false;
-            //OnGetAllHeroAdvantageCompleted(e);
+            _settings.LastDateRefreshHeroGuideCollection = DateTime.Now.Date;
+            _serializerHeroGuideCollection.WriteXml(e);
+            _serializerHeroPickerSettings.WriteXml(_settings);
+            ApplicationRefreshingData = false;
+            OnGetAllHeroGuideCompleted(e);
         }
 
         private void OnHeroesCollectionChanged(HeroesCollectionChangedEventArgs e)

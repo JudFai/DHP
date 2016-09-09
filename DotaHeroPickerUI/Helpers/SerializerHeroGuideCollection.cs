@@ -2,10 +2,12 @@
 using DotaHeroPicker.Collections;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using DotaHeroPicker.Types;
 
 namespace DotaHeroPickerUI.Helpers
 {
@@ -40,43 +42,71 @@ namespace DotaHeroPickerUI.Helpers
         public override List<HeroGuide> ReadXml()
         {
             var heroGuideCollection = new List<HeroGuide>();
-//            try
-//            {
-//                var xml = XElement.Load(PathToXml);
-//                var heroCollection = DotaHeroCollection.GetInstance();
-//                foreach (var heroAdvantage in xml.Elements("HeroAdvantage"))
-//                {
-//                    var hero = heroCollection[heroAdvantage.Attribute("FullName").Value];
-//                    if (hero == null)
-//                        throw new Exception(string.Format("Hero {0} not found", heroAdvantage.Attribute("FullName").Value));
+            try
+            {
+                var xml = XElement.Load(PathToXml);
+                var heroCollection = DotaHeroCollection.GetInstance();
+                var itemCollection = DotaItemCollection.GetInstance();
+                var laneCollection = DotaLaneCollection.GetInstance();
+                foreach (var heroGuide in xml.Elements("HeroGuide"))
+                {
+                    var hero = heroCollection[heroGuide.Attribute("FullName").Value];
+                    if (hero == null)
+                        throw new Exception(string.Format("Hero {0} not found", heroGuide.Attribute("FullName").Value));
 
-//                    var enemyHeroAdvantageCollection = new List<EnemyHeroAdvantage>();
-//                    foreach (var enemyHeroAdvantage in heroAdvantage.Elements("EnemyHeroAdvantage"))
-//                    {
-//                        var enemyHero = heroCollection[enemyHeroAdvantage.Element("EnemyHero").Value];
-//                        if (enemyHero == null)
-//                            throw new Exception(string.Format("Hero {0} not found", enemyHeroAdvantage.Element("EnemyHero").Value));
+                    var xmlGameGuideCollection = heroGuide.Elements("GameGuide");
+                    var gameGuideCollection = new List<GameGuide>();
+                    foreach (var xmlGameGuide in xmlGameGuideCollection)
+                    {
+                        var playerName = xmlGameGuide.Element("PlayerName").Value;
+                        var ratingPoints = int.Parse(xmlGameGuide.Element("RatingPoints").Value);
+                        var lane = laneCollection[xmlGameGuide.Element("Lane").Value];
 
-//                        double advantage;
-//                        if (double.TryParse(enemyHeroAdvantage.Element("AdvantageValue").Value,
-//                            NumberStyles.Number, CultureInfo.InvariantCulture, out advantage))
-//                        {
-//                            enemyHeroAdvantageCollection.Add(new EnemyHeroAdvantage(enemyHero, advantage));
-//                        }
-//                        else
-//                            throw new Exception(string.Format("Error parse {0}", enemyHeroAdvantage.Element("AdvantageValue").Value));
-//                    }
+                        var dotaHeroAbilityCollection = new List<DotaHeroAbility>();
+                        var xmlDotaHeroAbilityCollection = xmlGameGuide
+                            .Element("DotaHeroAbilities")
+                            .Elements("DotaHeroAbility");
+                        foreach (var dotaHeroAbility in xmlDotaHeroAbilityCollection)
+                        {
+                            dotaHeroAbilityCollection.Add(
+                                hero.DotaHeroAbilities.FirstOrDefault(p => p.DotaName.FullName == dotaHeroAbility.Attribute("FullName").Value));
+                        }
 
-//                    heroAdvantageCollection.Add(new HeroAdvantage(hero, enemyHeroAdvantageCollection));
-//                }
-//            }
-//            catch (Exception ex)
-//            {
-//#if DEBUG
-//                Console.WriteLine(ex.Message);
-//#endif
-//                return null;
-//            }
+                        var startDotaItemCollection = new List<DotaItem>();
+                        var xmlStartDotaItemCollection = xmlGameGuide
+                            .Element("StartDotaItems")
+                            .Elements("StartDotaItem");
+                        foreach (var startDotaItem in xmlStartDotaItemCollection)
+                        {
+                            startDotaItemCollection.Add(itemCollection[startDotaItem.Attribute("FullName").Value]);
+                        }
+
+                        var boughtDotaItemCollection = new List<BoughtDotaItem>();
+                        var xmlBoughtDotaItemCollection = xmlGameGuide
+                            .Element("BoughtDotaItems")
+                            .Elements("BoughtDotaItem");
+                        foreach (var boughtDotaItem in xmlBoughtDotaItemCollection)
+                        {
+                            var boughtTimeSeconds = int.Parse(boughtDotaItem.Element("BoughtTime").Value);
+                            boughtDotaItemCollection.Add(
+                                new BoughtDotaItem(
+                                    itemCollection[boughtDotaItem.Attribute("FullName").Value],
+                                    TimeSpan.FromSeconds(boughtTimeSeconds)));
+                        }
+
+                        gameGuideCollection.Add(new GameGuide(playerName, ratingPoints, lane, dotaHeroAbilityCollection, startDotaItemCollection, boughtDotaItemCollection));
+                    }
+
+                    heroGuideCollection.Add(new HeroGuide(hero, gameGuideCollection));
+                }
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                Console.WriteLine(ex.Message);
+#endif
+                return null;
+            }
 
             return heroGuideCollection;
         }

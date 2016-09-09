@@ -19,6 +19,11 @@ namespace DotaHeroPicker.Collections
 
         #region Indexers
 
+        public DotaItem this[string fullName]
+        {
+            get { return this.FirstOrDefault(p => p.DotaName.FullName == fullName); }
+        }
+
         public DotaItem this[Item item]
         {
             get { return this.FirstOrDefault(p => p.DotaName.Entity == item) ?? DotaItem.RecipeOrNone; }
