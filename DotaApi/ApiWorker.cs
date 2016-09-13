@@ -88,8 +88,6 @@ namespace DotaApi
 
         #region Public Methods
 
-        // TODO: покуда не известно, возвращает ли матчи в порядке убывания или нет
-        // Возможно, что придётся делать вместо countDays - countMatches
         /// <summary>
         /// Возвращает матчи
         /// </summary>
