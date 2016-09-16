@@ -88,22 +88,18 @@ namespace DotaApi
 
         #region Public Methods
 
-        // TODO: покуда не известно, возвращает ли матчи в порядке убывания или нет
-        // Возможно, что придётся делать вместо countDays - countMatches
         /// <summary>
         /// Возвращает матчи
         /// </summary>
         /// <param name="matchSeqNum">Идентификатор матча сгенерированный после окончания матча, если равен 0, то начинает с последнего доступного</param>
         /// <param name="countDays">Период дней, за который необходимо получить матчи</param>
         /// <returns>Матчи с подробностями</returns>
-        public IEnumerable<Match> GetMatchHistoryBySequenceNum(ulong matchSeqNum, int countDays)
+        public IEnumerable<Match> GetMatchHistoryBySequenceNum(ulong matchSeqNum, int matchesCount)
         {
             XmlElement element = null;
             var dotaMatchCollection = new List<Match>();
-            var date = DateTime.Now.Date.AddDays(-countDays);
-            var startDate = DateTime.MinValue;
             var matchSeqNumIsZero = matchSeqNum == 0;
-            while ((startDate == DateTime.MinValue) || (date <= startDate))
+            while (dotaMatchCollection.Count < matchesCount)
             {
                 var fullPath = !matchSeqNumIsZero
                     ? string.Format(_pathToUrlGetMatchHistoryBySequenceNum, _key, matchSeqNum)
@@ -125,21 +121,21 @@ namespace DotaApi
                     var matchID = ulong.Parse(match.SelectSingleNode("match_id").InnerXml);
                     var startTimeInSeconds = ulong.Parse(match.SelectSingleNode("start_time").InnerXml);
                     var dotaMatch = new Match(matchID, matchSeqNum, startTimeInSeconds, DotaApiXmlHelper.ParseMatchDetail(match));
-                    startDate = dotaMatch.StartTime;
-                    if (date > startDate)
-                        break;
 
                     dotaMatchCollection.Add(dotaMatch);
+                    if (dotaMatchCollection.Count >= matchesCount)
+                    {
+                        dotaMatchCollection = dotaMatchCollection
+                            .GroupBy(p => p.MatchID)
+                            .Select(p => p.FirstOrDefault())
+                            .ToList();
+                        if (dotaMatchCollection.Count >= matchesCount)
+                            break;
+                    }
                 }
-
-                dotaMatchCollection = dotaMatchCollection
-                    .OrderBy(p => p.StartTime)
-                    .ToList();
             }
 
-            return dotaMatchCollection
-                .GroupBy(p => p.MatchID)
-                .Select(p => p.FirstOrDefault());
+            return dotaMatchCollection.OrderBy(p => p.MatchID);
         }
 
         #endregion

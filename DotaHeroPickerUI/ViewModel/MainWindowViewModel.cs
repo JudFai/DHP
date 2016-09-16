@@ -190,26 +190,26 @@ namespace DotaHeroPickerUI.ViewModel
             }
 
             // TODO: каким-то образом надо сделать один прогресс-бар, чтоб в одно время происходил 1 запрос
-            DotaStatisticsManager.GetAllHeroGuideCompleted += OnGetAllHeroGuideCompleted;
-            if (_settings.CountDaysForRefreshData <= (DateTime.Now - _settings.LastDateRefreshHeroGuideCollection).Days)
-            {
-                ApplicationRefreshingData = true;
-                DotaStatisticsManager.GetAllHeroGuide();
-            }
-            else
-            {
-                var heroGuideCollection = _serializerHeroGuideCollection.ReadXml();
-                if (heroGuideCollection == null)
-                {
-                    ApplicationRefreshingData = true;
-                    DotaStatisticsManager.GetAllHeroGuide();
-                }
-                else
-                {
-                    //StatisticsManager = new StatisticsManager(heroGuideCollection);
-                    OnGetAllHeroGuideCompleted(heroGuideCollection);
-                }
-            }
+            //DotaStatisticsManager.GetAllHeroGuideCompleted += OnGetAllHeroGuideCompleted;
+            //if (_settings.CountDaysForRefreshData <= (DateTime.Now - _settings.LastDateRefreshHeroGuideCollection).Days)
+            //{
+            //    ApplicationRefreshingData = true;
+            //    DotaStatisticsManager.GetAllHeroGuide();
+            //}
+            //else
+            //{
+            //    var heroGuideCollection = _serializerHeroGuideCollection.ReadXml();
+            //    if (heroGuideCollection == null)
+            //    {
+            //        ApplicationRefreshingData = true;
+            //        DotaStatisticsManager.GetAllHeroGuide();
+            //    }
+            //    else
+            //    {
+            //        //StatisticsManager = new StatisticsManager(heroGuideCollection);
+            //        OnGetAllHeroGuideCompleted(heroGuideCollection);
+            //    }
+            //}
             //=========================================================================================================================
 
             ItemBottomCollection = new List<ItemViewModel>
