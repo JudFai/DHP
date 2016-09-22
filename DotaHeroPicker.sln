@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeroPickerResources", "Hero
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaApi", "DotaApi\DotaApi.csproj", "{D2F585E2-C3D2-4131-9675-0C1B80FC3F36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDota", "EFDota\EFDota.csproj", "{DE02F5F7-66BC-445B-A0DD-912BC7375A05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D2F585E2-C3D2-4131-9675-0C1B80FC3F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2F585E2-C3D2-4131-9675-0C1B80FC3F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2F585E2-C3D2-4131-9675-0C1B80FC3F36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE02F5F7-66BC-445B-A0DD-912BC7375A05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE02F5F7-66BC-445B-A0DD-912BC7375A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE02F5F7-66BC-445B-A0DD-912BC7375A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE02F5F7-66BC-445B-A0DD-912BC7375A05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
