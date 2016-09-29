@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotaApi.Types
+namespace EFDota.Types
 {
     public enum GameMode
     {

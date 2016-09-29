@@ -17,11 +17,7 @@ namespace DotaApi
         static void Main(string[] args)
         {
             var api = new ApiWorker("9E08B26E9B8BEB385FF5A94AAFE9466C");
-<<<<<<< HEAD
-            var matches = api.GetMatchHistoryBySequenceNum(2305257462, 1);
-=======
             var matches = api.GetMatchHistoryBySequenceNum(0, 250).ToList();
->>>>>>> origin/master
         }
     }
 }

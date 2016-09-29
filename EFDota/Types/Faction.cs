@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotaApi.Types
+namespace EFDota.Types
 {
     public enum Faction
     {
-        Dire, 
-        Radiant
+        None = 0,
+        Dire = 1, 
+        Radiant = 2,
     }
 }

@@ -1,29 +1,32 @@
-﻿using DotaHeroPicker.Types;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotaApi.Types
+namespace EFDota.Types
 {
     public class Player
     {
         #region Properties
 
-        public ulong ID { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long ID { get; set; }
 
-        public ulong AccountID { get; set; }
-        public DotaHero DotaHero { get; set; }
+        public long AccountID { get; set; }
+        public Hero DotaHero { get; set; }
         public PlayerSlot PlayerSlot { get; set; }
         public Faction Faction { get; set; }
 
-        public DotaItem Item0 { get; set; }
-        public DotaItem Item1 { get; set; }
-        public DotaItem Item2 { get; set; }
-        public DotaItem Item3 { get; set; }
-        public DotaItem Item4 { get; set; }
-        public DotaItem Item5 { get; set; }
+        public Item Item0 { get; set; }
+        public Item Item1 { get; set; }
+        public Item Item2 { get; set; }
+        public Item Item3 { get; set; }
+        public Item Item4 { get; set; }
+        public Item Item5 { get; set; }
 
         public int Kills { get; set; }
         public int Deaths { get; set; }
@@ -46,6 +49,8 @@ namespace DotaApi.Types
         public int ScaledHeroDamage { get; set; }
         public int ScaledTowerDamage { get; set; }
         public int ScaledHeroHealing { get; set; }
+
+        public MatchDetail MatchDetail { get; set; }
 
         #endregion
 
