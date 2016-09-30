@@ -23,6 +23,11 @@ namespace EFDota.Types
         LeastPlayed = 12,
         NewPlayerPool = 13,
         CompendiumMatchmaking = 14,
-        CaptainsDraft = 16
+        CoopVsAI = 15,
+        CaptainsDraft = 16,
+        AbilityDraft = 18,
+        AllRandomDeathmatch = 20,
+        OneVsOneMidOnly = 21,
+        RankedMatchmaking = 22
     }
 }

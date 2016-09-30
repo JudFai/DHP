@@ -45,13 +45,6 @@
     <Compile Include="DotaApiXmlHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\LeaverStatus.cs" />
-    <Compile Include="Types\LobbyType.cs" />
-    <Compile Include="Types\Faction.cs" />
-    <Compile Include="Types\GameMode.cs" />
-    <Compile Include="Types\MatchDetail.cs" />
-    <Compile Include="Types\Player.cs" />
-    <Compile Include="Types\PlayerSlot.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -60,6 +53,10 @@
     <ProjectReference Include="..\DotaHeroPicker\DotaHeroPicker.csproj">
       <Project>{cab2648d-78c8-4aae-852f-2392effc3789}</Project>
       <Name>DotaHeroPicker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EFDota\EFDota.csproj">
+      <Project>{de02f5f7-66bc-445b-a0dd-912bc7375a05}</Project>
+      <Name>EFDota</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

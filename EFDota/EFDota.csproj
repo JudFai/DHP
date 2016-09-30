@@ -54,6 +54,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\BarracksStatus.cs" />
     <Compile Include="Types\Faction.cs" />
     <Compile Include="Types\GameMode.cs" />
     <Compile Include="Types\Hero.cs" />
@@ -61,8 +62,10 @@
     <Compile Include="Types\LeaverStatus.cs" />
     <Compile Include="Types\LobbyType.cs" />
     <Compile Include="Types\MatchDetail.cs" />
+    <Compile Include="Types\PickOrBan.cs" />
     <Compile Include="Types\Player.cs" />
     <Compile Include="Types\PlayerSlot.cs" />
+    <Compile Include="Types\TowerStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

@@ -16,8 +16,8 @@ namespace EFDota.Types
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
 
-        public long AccountID { get; set; }
-        public Hero DotaHero { get; set; }
+        public long? AccountID { get; set; }
+        public Hero Hero { get; set; }
         public PlayerSlot PlayerSlot { get; set; }
         public Faction Faction { get; set; }
 
@@ -58,7 +58,7 @@ namespace EFDota.Types
 
         public override string ToString()
         {
-            return DotaHero.ToString();
+            return Hero.ToString();
         }
 
         #endregion

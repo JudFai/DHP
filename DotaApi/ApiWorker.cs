@@ -1,12 +1,13 @@
-﻿using DotaApi.Types;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
+using EFDota.Types;
 
 namespace DotaApi
 {
@@ -94,10 +95,10 @@ namespace DotaApi
         /// <param name="matchSeqNum">Идентификатор матча сгенерированный после окончания матча, если равен 0, то начинает с последнего доступного</param>
         /// <param name="countDays">Период дней, за который необходимо получить матчи</param>
         /// <returns>Матчи с подробностями</returns>
-        public IEnumerable<Match> GetMatchHistoryBySequenceNum(ulong matchSeqNum, int matchesCount)
+        public IEnumerable<MatchDetail> GetMatchHistoryBySequenceNum(ulong matchSeqNum, int matchesCount)
         {
             XmlElement element = null;
-            var dotaMatchCollection = new List<Match>();
+            var dotaMatchCollection = new List<MatchDetail>();
             var matchSeqNumIsZero = matchSeqNum == 0;
             while (dotaMatchCollection.Count < matchesCount)
             {
@@ -118,15 +119,11 @@ namespace DotaApi
                         break;
                     }
 
-                    var matchID = ulong.Parse(match.SelectSingleNode("match_id").InnerXml);
-                    var startTimeInSeconds = ulong.Parse(match.SelectSingleNode("start_time").InnerXml);
-                    var dotaMatch = new Match(matchID, matchSeqNum, startTimeInSeconds, DotaApiXmlHelper.ParseMatchDetail(match));
-
-                    dotaMatchCollection.Add(dotaMatch);
+                    dotaMatchCollection.Add(DotaApiXmlHelper.ParseMatchDetail(match));
                     if (dotaMatchCollection.Count >= matchesCount)
                     {
                         dotaMatchCollection = dotaMatchCollection
-                            .GroupBy(p => p.MatchID)
+                            .GroupBy(p => p.ID)
                             .Select(p => p.FirstOrDefault())
                             .ToList();
                         if (dotaMatchCollection.Count >= matchesCount)
@@ -135,7 +132,7 @@ namespace DotaApi
                 }
             }
 
-            return dotaMatchCollection.OrderBy(p => p.MatchID);
+            return dotaMatchCollection.OrderBy(p => p.ID);
         }
 
         #endregion

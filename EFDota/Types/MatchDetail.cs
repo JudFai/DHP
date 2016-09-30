@@ -34,7 +34,7 @@ namespace EFDota.Types
         /// <summary>
         /// Кол-во секунд прошедших с 01.01.1970
         /// </summary>
-        public int StartTime { get; set; }
+        public long StartTime { get; set; }
 
         public Faction Winner { get; set; }
 
@@ -53,13 +53,12 @@ namespace EFDota.Types
         public int RadiantScore { get; set; }
         public int DireScore { get; set; }
 
-        // TODO: На перспективу сделать статусы
-        public int TowerStatusRadiant { get; set; }
-        public int TowerStatusDire { get; set; }
+        public TowerStatus TowerStatusRadiant { get; set; }
+        public TowerStatus TowerStatusDire { get; set; }
+        public BarracksStatus BarracksStatusRadiant { get; set; }
+        public BarracksStatus BarracksStatusDire { get; set; }
 
-        // TODO: На перспективу сделать статусы
-        public int BarracksStatusRadiant { get; set; }
-        public int BarracksStatusDire { get; set; }
+        public List<PickOrBan> PickOrBans { get; set; }
 
         #endregion
 

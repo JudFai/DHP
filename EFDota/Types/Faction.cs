@@ -8,8 +8,7 @@ namespace EFDota.Types
 {
     public enum Faction
     {
-        None = 0,
-        Dire = 1, 
-        Radiant = 2,
+        Radiant = 0,
+        Dire = 1
     }
 }
