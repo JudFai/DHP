@@ -119,7 +119,8 @@ namespace DotaApi
                         break;
                     }
 
-                    dotaMatchCollection.Add(DotaApiXmlHelper.ParseMatchDetail(match));
+                    var m = DotaApiXmlHelper.ParseMatchDetail(match);
+                    dotaMatchCollection.Add(m);
                     if (dotaMatchCollection.Count >= matchesCount)
                     {
                         dotaMatchCollection = dotaMatchCollection

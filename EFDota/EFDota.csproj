@@ -63,7 +63,7 @@
     <Compile Include="Types\LobbyType.cs" />
     <Compile Include="Types\MatchDetail.cs" />
     <Compile Include="Types\PickOrBan.cs" />
-    <Compile Include="Types\Player.cs" />
+    <Compile Include="Types\PlayerDetail.cs" />
     <Compile Include="Types\PlayerSlot.cs" />
     <Compile Include="Types\TowerStatus.cs" />
   </ItemGroup>

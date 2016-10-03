@@ -46,7 +46,7 @@ namespace EFDota.Types
 
         public int HumanPlayers { get; set; }
 
-        public List<Player> Players { get; set; }
+        public List<PlayerDetail> PlayerDetails { get; set; }
 
         public long LeagueID { get; set; }
 
@@ -59,6 +59,28 @@ namespace EFDota.Types
         public BarracksStatus BarracksStatusDire { get; set; }
 
         public List<PickOrBan> PickOrBans { get; set; }
+
+        public int? RadiantTeamID { get; set; }
+        public string RadiantName { get; set; }
+        /// <summary>
+        /// Идентификатор до логотипа
+        /// </summary>
+        public long? RadiantLogo { get; set; }
+        /// <summary>
+        /// В полном ли составе команда в этом матче
+        /// </summary>
+        public bool? RadiantTeamComplete { get; set; }
+
+        public int? DireTeamID { get; set; }
+        public string DireName { get; set; }
+        /// <summary>
+        /// Идентификатор до логотипа
+        /// </summary>
+        public long? DireLogo { get; set; }
+        /// <summary>
+        /// В полном ли составе команда в этом матче
+        /// </summary>
+        public bool? DireTeamComplete { get; set; }
 
         #endregion
 
