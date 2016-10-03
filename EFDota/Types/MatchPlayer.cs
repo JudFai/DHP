@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EFDota.Types
 {
-    public class PlayerDetail
+    public class MatchPlayer
     {
         #region Properties
 

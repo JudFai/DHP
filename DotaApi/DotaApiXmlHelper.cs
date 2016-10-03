@@ -88,7 +88,7 @@ namespace DotaApi
             if (radiantTeamIDXml != null)
                 radiantTeamID = XmlConvert.ToInt32(radiantTeamIDXml.InnerXml);
 
-            var playerCollection = new List<PlayerDetail>();
+            var playerCollection = new List<MatchPlayer>();
             foreach (XmlElement player in matchDetail.SelectNodes("players/player"))
                 playerCollection.Add(ParsePlayer(player));
 
@@ -115,7 +115,7 @@ namespace DotaApi
                 TowerStatusDire = towerStatusDire,
                 TowerStatusRadiant = towerStatusRadiant,
                 Winner = winner,
-                PlayerDetails = playerCollection,
+                MatchPlayers = playerCollection,
                 PickOrBans = pickOrBanCollection,
                 DireLogo = direLogo,
                 DireName = direName,
@@ -132,7 +132,7 @@ namespace DotaApi
             return match;
         }
 
-        public static PlayerDetail ParsePlayer(XmlElement player)
+        public static MatchPlayer ParsePlayer(XmlElement player)
         {
             // Не всегда пользователь предоставляет о себе информацию или это бот
             var accountIDXml = player.SelectSingleNode("account_id");
@@ -173,7 +173,7 @@ namespace DotaApi
 
             var heroID = XmlConvert.ToInt32(player.SelectSingleNode("hero_id").InnerXml);
 
-            return new PlayerDetail
+            return new MatchPlayer
             {
                 AccountID = accountID,
                 Assists = assists,

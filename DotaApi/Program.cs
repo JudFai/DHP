@@ -17,7 +17,7 @@ namespace DotaApi
         {
             var api = new ApiWorker("9E08B26E9B8BEB385FF5A94AAFE9466C");
             var matches = api.GetMatchHistoryBySequenceNum(0, 300).ToList();
-            var cmMatches = matches.Where(p => p.GameMode == GameMode.CaptainMode).ToList();
+            var cmMatches = matches.Where(p => !string.IsNullOrEmpty(p.RadiantName) || !string.IsNullOrEmpty(p.DireName)).ToList();
         }
     }
 }

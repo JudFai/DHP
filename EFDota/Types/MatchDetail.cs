@@ -46,7 +46,7 @@ namespace EFDota.Types
 
         public int HumanPlayers { get; set; }
 
-        public List<PlayerDetail> PlayerDetails { get; set; }
+        public List<MatchPlayer> MatchPlayers { get; set; }
 
         public long LeagueID { get; set; }
 

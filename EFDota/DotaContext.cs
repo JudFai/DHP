@@ -12,7 +12,7 @@ namespace EFDota
     public class DotaContext : DbContext
     {
         public DbSet<MatchDetail> MatchDetails { get; set; }
-        public DbSet<PlayerDetail> Players { get; set; }
+        public DbSet<MatchPlayer> Players { get; set; }
 
         public DotaContext()
             : base("dota")
@@ -34,7 +34,7 @@ namespace EFDota
             //    .HasOptional<MatchDetail>(p => p.MatchDetail)
             //    .WithMany(p => p.Players)
             //    .HasForeignKey(p => p.MatchDetailID);
-            modelBuilder.Entity<PlayerDetail>().HasRequired(p => p.MatchDetail);
+            modelBuilder.Entity<MatchPlayer>().HasRequired(p => p.MatchDetail);
             base.OnModelCreating(modelBuilder);
         }
 

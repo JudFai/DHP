@@ -23,9 +23,9 @@ namespace EFDota
                         HumanPlayers = 10,
                         //LobbyType = LobbyType.RankedMatchmaking,
                         ID = 133,
-                        PlayerDetails = new List<PlayerDetail>
+                        MatchPlayers = new List<MatchPlayer>
                         {
-                            new PlayerDetail
+                            new MatchPlayer
                             {
                                 AccountID = 123,
                                 Assists = 123123,
@@ -56,7 +56,7 @@ namespace EFDota
                                 TowerDamage = 1233,
                                 XpPerMinute = 400
                             },
-                            new PlayerDetail
+                            new MatchPlayer
                             {
                                 AccountID = 123,
                                 Assists = 123123,
@@ -90,7 +90,7 @@ namespace EFDota
                         },
                         Winner = Faction.Dire
                     };
-                    match.PlayerDetails.ToList().ForEach(p => p.MatchDetail = match);
+                    match.MatchPlayers.ToList().ForEach(p => p.MatchDetail = match);
                     //dc.Set<MatchDetail>().Add(match);
                     //dc.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [DotaHeroPicker].[dbo].[MatchDetails] ON");
 
