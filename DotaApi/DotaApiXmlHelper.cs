@@ -126,7 +126,11 @@ namespace DotaApi
                 RadiantTeamComplete = radiantTeamComplete,
                 RadiantTeamID = radiantTeamID
             };
-            playerCollection.ForEach(p => p.MatchDetail = match);
+            playerCollection.ForEach(p => 
+            {
+                p.MatchDetail = match;
+                p.AbilityUpgrades.ForEach(a => a.MatchPlayer = p);
+            });
             pickOrBanCollection.ForEach(p => p.MatchDetail = match);
 
             return match;
@@ -173,6 +177,10 @@ namespace DotaApi
 
             var heroID = XmlConvert.ToInt32(player.SelectSingleNode("hero_id").InnerXml);
 
+            var abilityUpgradeCollection = new List<AbilityUpgrade>();
+            foreach (XmlElement abilityUpgrade in player.SelectNodes("ability_upgrades/ability"))
+                abilityUpgradeCollection.Add(ParseAbilityUpgrade(abilityUpgrade));
+
             return new MatchPlayer
             {
                 AccountID = accountID,
@@ -201,7 +209,8 @@ namespace DotaApi
                 ScaledHeroHealing = scaledHeroHealing,
                 ScaledTowerDamage = scaledTowerDamage,
                 TowerDamage = towerDamage,
-                XpPerMinute = xpPerMin
+                XpPerMinute = xpPerMin,
+                AbilityUpgrades = abilityUpgradeCollection
             };
         }
 
@@ -224,6 +233,19 @@ namespace DotaApi
                 IsPick = isPick,
                 Order = order,
                 Team = team
+            };
+        }
+
+        public static AbilityUpgrade ParseAbilityUpgrade(XmlElement abilityUpgrade)
+        {
+            var ability = XmlConvert.ToInt32(abilityUpgrade.SelectSingleNode("ability").InnerXml);
+            var level = XmlConvert.ToInt32(abilityUpgrade.SelectSingleNode("level").InnerXml);
+            var time = XmlConvert.ToInt32(abilityUpgrade.SelectSingleNode("time").InnerXml);
+            return new AbilityUpgrade
+            {
+                Ability = ability,
+                Level = level,
+                Time = time
             };
         }
 

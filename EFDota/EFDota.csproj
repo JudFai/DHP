@@ -51,9 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DotaContext.cs" />
+    <Compile Include="MatchDetailWorker.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\AbilityUpgrade.cs" />
     <Compile Include="Types\BarracksStatus.cs" />
     <Compile Include="Types\Faction.cs" />
     <Compile Include="Types\GameMode.cs" />

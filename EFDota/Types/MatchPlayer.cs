@@ -50,6 +50,8 @@ namespace EFDota.Types
         public int ScaledTowerDamage { get; set; }
         public int ScaledHeroHealing { get; set; }
 
+        public List<AbilityUpgrade> AbilityUpgrades { get; set; }
+
         public MatchDetail MatchDetail { get; set; }
 
         #endregion
