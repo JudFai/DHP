@@ -53,7 +53,7 @@ namespace DotaHeroPickerUI.ViewModel
                 if (_onlyPositiveAdvantages != value)
                 {
                     _onlyPositiveAdvantages = value;
-                    Dispatcher.Invoke(() => RaisePropertyChanged("OnlyPositiveAdvantages"));
+                    RaisePropertyChanged("OnlyPositiveAdvantages");
                     RefreshFilteredCollection();
                 }
             }

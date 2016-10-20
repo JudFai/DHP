@@ -407,11 +407,17 @@
     <Resource Include="Images\Heroes\Icons\Visage.png" />
     <Resource Include="Images\Heroes\Icons\Warlock.png" />
     <Resource Include="Images\Heroes\Icons\Weaver.png" />
-    <Resource Include="Images\Heroes\Icons\windranger.png" />
+    <Resource Include="Images\Heroes\Icons\Windranger.png" />
     <Resource Include="Images\Heroes\Icons\WinterWyvern.png" />
     <Resource Include="Images\Heroes\Icons\WitchDoctor.png" />
     <Resource Include="Images\Heroes\Icons\WraithKing.png" />
     <Resource Include="Images\Heroes\Icons\Zeus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heroes\Underlord.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Heroes\Icons\Underlord.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -39,7 +39,7 @@
             <!--<TextBlock Text="Result" 
                        Foreground="White" Margin="{StaticResource ElementThickness}"
                        Style="{StaticResource BodyTextBlockStyle}" />-->
-            <ItemsControl ItemsSource="{Binding EnemyHeroAdvantageFilteredCollection, IsAsync=True}" 
+            <ItemsControl ItemsSource="{Binding EnemyHeroAdvantageFilteredCollection}" 
                           Margin="{StaticResource ElementThickness}"
                           ItemTemplate="{StaticResource EnemyHeroAdvantageTemplate}"
                           AlternationCount="2">

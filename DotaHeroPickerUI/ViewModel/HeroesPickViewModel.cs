@@ -38,6 +38,7 @@ namespace DotaHeroPickerUI.ViewModel
         private string _heroName;
 
         private AsyncRelayCommand _resetHeroesCommand;
+        private RelayCommand _removeDotaHeroByMainCharCommand;
 
         #endregion
 
@@ -77,6 +78,15 @@ namespace DotaHeroPickerUI.ViewModel
             {
                 return _resetHeroesCommand ??
                        (_resetHeroesCommand = new AsyncRelayCommand(p => Task.Factory.StartNew(ResetHeroes)));
+            }
+        }
+
+        public RelayCommand RemoveDotaHeroByMainCharCommand
+        {
+            get
+            {
+                return _removeDotaHeroByMainCharCommand ??
+                       (_removeDotaHeroByMainCharCommand = new RelayCommand(RemoveDotaHeroByMainChar));
             }
         }
 
@@ -146,6 +156,44 @@ namespace DotaHeroPickerUI.ViewModel
         #endregion
 
         #region Command Methods
+
+        private void RemoveDotaHeroByMainChar(object param)
+        {
+            var hero = param as DotaHeroViewModel;
+            if (hero != null)
+            {
+                DotaHeroObservableCollection heroFromCollection = null;
+                switch (hero.Hero.MainCharacteristic)
+                {
+                    case HeroCharacteristic.Agility:
+                        heroFromCollection = DotaHeroAgilityColletion;
+                        break;
+                    case HeroCharacteristic.Intelligence:
+                        heroFromCollection = DotaHeroAgilityColletion;
+                        break;
+                    case HeroCharacteristic.Strength:
+                        heroFromCollection = DotaHeroAgilityColletion;
+                        break;
+                    default:
+                        return;
+                }
+
+                if (!heroFromCollection.Contains(hero))
+                {
+                    var empty = heroFromCollection.FirstOrDefault(p => p.IsEmpty);
+                    var indexOfEmpty = heroFromCollection.IndexOf(empty);
+                    var dotaHeroCollection = new List<DotaHeroObservableCollection>
+                    {
+                        BannedDotaHeroCollection,
+                        AlliedDotaHeroCollection,
+                        EnemyDotaHeroCollection
+                    }.FirstOrDefault(p => p.Contains(hero));
+                    var indexOfHero = dotaHeroCollection.IndexOf(hero);
+                    heroFromCollection[indexOfEmpty] = hero;
+                    dotaHeroCollection[indexOfHero] = empty;
+                }
+            }
+        }
 
         private void ResetHeroes()
         {

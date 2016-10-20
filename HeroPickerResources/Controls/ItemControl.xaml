@@ -14,6 +14,11 @@
                 Width="54" Height="30.375"
                 Margin="2" IsEnabled="{Binding IsEnabledHero}"
                 BorderBrush="{StaticResource BaseMediumColorBrush}">
+            <Border.InputBindings>
+                <MouseBinding MouseAction="RightClick" 
+                              Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.RemoveDotaHeroByMainCharCommand}" 
+                              CommandParameter="{Binding}" />
+            </Border.InputBindings>
             <StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <StackPanel.Style>
