@@ -60,6 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ability.cs" />
+    <Compile Include="Advantage.cs" />
+    <Compile Include="AlliedHeroAdvantage.cs" />
     <Compile Include="AttackType.cs" />
     <Compile Include="Collections\DotaItemCollection.cs" />
     <Compile Include="Factories\DotaHeroAbilityFactory.cs" />

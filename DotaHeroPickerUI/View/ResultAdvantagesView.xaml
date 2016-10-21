@@ -19,7 +19,7 @@
                     </Style.Triggers>
                 </Style>
             </StackPanel.Style>
-            <TextBlock Text="Преимущества героев:"
+            <TextBlock Text="Преимущества перед вражескими героями:"
                        Style="{StaticResource BodyTextBlockStyle}"
                        Margin="{StaticResource ElementThickness}" />
             <StackPanel Orientation="Horizontal">
@@ -49,7 +49,6 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-            
         </StackPanel>
         <StackPanel Visibility="{Binding EnemyHeroAdvantageCollection, Converter={StaticResource NullToVisibilityConverter}}"
                     Orientation="Horizontal"

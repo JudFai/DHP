@@ -14,6 +14,7 @@ namespace DotaHeroPicker
 
         public DotaHero Hero { get; private set; }
         public ReadOnlyCollection<EnemyHeroAdvantage> EnemyHeroAdvantageCollection { get; private set; }
+        public ReadOnlyCollection<AlliedHeroAdvantage> AlliedHeroAdvantageCollection { get; private set; }
 
         #endregion
 

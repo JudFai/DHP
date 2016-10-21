@@ -169,10 +169,10 @@ namespace DotaHeroPickerUI.ViewModel
                         heroFromCollection = DotaHeroAgilityColletion;
                         break;
                     case HeroCharacteristic.Intelligence:
-                        heroFromCollection = DotaHeroAgilityColletion;
+                        heroFromCollection = DotaHeroIntelligenceColletion;
                         break;
                     case HeroCharacteristic.Strength:
-                        heroFromCollection = DotaHeroAgilityColletion;
+                        heroFromCollection = DotaHeroStrengthColletion;
                         break;
                     default:
                         return;

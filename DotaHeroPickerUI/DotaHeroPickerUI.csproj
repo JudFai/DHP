@@ -100,6 +100,7 @@
     <Compile Include="ViewModel\HeroesPickViewModel.cs" />
     <Compile Include="ViewModel\Core\ItemViewModel.cs" />
     <Compile Include="ViewModel\HeroGuridsViewModel.cs" />
+    <Compile Include="ViewModel\ResultAdvantagesAlliesViewModel.cs" />
     <Compile Include="ViewModel\ResultAdvantagesViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="View\HeroesPickView.xaml.cs">

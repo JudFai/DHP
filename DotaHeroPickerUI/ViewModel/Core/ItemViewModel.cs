@@ -26,6 +26,8 @@ namespace DotaHeroPickerUI.ViewModel.Core
 
         #endregion
 
+        #region Commands
+
         public RelayCommand SelectItemCommand
         {
             get
@@ -37,6 +39,8 @@ namespace DotaHeroPickerUI.ViewModel.Core
                        }));
             }
         }
+
+        #endregion
 
         #region Constructors
 
