@@ -39,7 +39,7 @@ namespace DotaHeroPickerUI.ViewModel
 
         #region Constructors
 
-        public HeroGuridsViewModel(MainWindowViewModel parent, string title, IconEnum icon)
+        public HeroGuridsViewModel(HostViewModel parent, string title, IconEnum icon)
             : base(parent, title, icon)
         {
             var dotaLaneCollection = DotaLaneCollection.GetInstance();

@@ -133,6 +133,8 @@ namespace DotaHeroPicker
         WraithKing = 42,
         Zeus = 22,
 
-        Underlord = 108
+        Underlord = 108,
+        // TODO: поменять ID
+        MonkeyKing = 255
     }
 }

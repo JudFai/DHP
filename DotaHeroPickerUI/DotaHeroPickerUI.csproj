@@ -100,8 +100,8 @@
     <Compile Include="ViewModel\HeroesPickViewModel.cs" />
     <Compile Include="ViewModel\Core\ItemViewModel.cs" />
     <Compile Include="ViewModel\HeroGuridsViewModel.cs" />
-    <Compile Include="ViewModel\ResultAdvantagesAlliesViewModel.cs" />
-    <Compile Include="ViewModel\ResultAdvantagesViewModel.cs" />
+    <Compile Include="ViewModel\ResultAdvantageAlliesViewModel.cs" />
+    <Compile Include="ViewModel\ResultAdvantageEnemiesViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="View\HeroesPickView.xaml.cs">
       <DependentUpon>HeroesPickView.xaml</DependentUpon>
@@ -109,8 +109,8 @@
     <Compile Include="View\HeroGuidsView.xaml.cs">
       <DependentUpon>HeroGuidsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ResultAdvantagesView.xaml.cs">
-      <DependentUpon>ResultAdvantagesView.xaml</DependentUpon>
+    <Compile Include="View\ResultAdvantageEnemiesView.xaml.cs">
+      <DependentUpon>ResultAdvantageEnemiesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
@@ -123,7 +123,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MainWindowView.xaml">
+    <Page Include="View\HostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -141,16 +141,16 @@
     <Compile Include="ViewModel\DotaHeroViewModel.cs" />
     <Compile Include="ViewModel\EnemyHeroAdvantageCollectionViewModel.cs" />
     <Compile Include="ViewModel\EnemyHeroAdvantageViewModel.cs" />
-    <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="View\MainWindowView.xaml.cs">
-      <DependentUpon>MainWindowView.xaml</DependentUpon>
+    <Compile Include="ViewModel\HostViewModel.cs" />
+    <Compile Include="View\HostView.xaml.cs">
+      <DependentUpon>HostView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\DataResourceDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ResultAdvantagesView.xaml">
+    <Page Include="View\ResultAdvantageEnemiesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

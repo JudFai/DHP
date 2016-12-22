@@ -8,7 +8,7 @@ using DotaHeroPickerUI.ViewModel.Core;
 
 namespace DotaHeroPickerUI.ViewModel
 {
-    public class ResultAdvantagesViewModel : ItemViewModel
+    public class ResultAdvantageEnemiesViewModel : ItemViewModel
     {
         #region Fields
 
@@ -63,7 +63,7 @@ namespace DotaHeroPickerUI.ViewModel
 
         #region Constructors
 
-        public ResultAdvantagesViewModel(MainWindowViewModel parent, string title, string iconPath)
+        public ResultAdvantageEnemiesViewModel(HostViewModel parent, string title, string iconPath)
             : base(parent, title, iconPath)
         {
             Parent.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;

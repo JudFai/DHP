@@ -116,7 +116,7 @@ namespace DotaApi
                 TowerStatusRadiant = towerStatusRadiant,
                 Winner = winner,
                 MatchPlayers = playerCollection,
-                PickOrBans = pickOrBanCollection,
+                //PickOrBans = pickOrBanCollection,
                 DireLogo = direLogo,
                 DireName = direName,
                 DireTeamComplete = direTeamComplete,
@@ -129,7 +129,7 @@ namespace DotaApi
             playerCollection.ForEach(p => 
             {
                 p.MatchDetail = match;
-                p.AbilityUpgrades.ForEach(a => a.MatchPlayer = p);
+                //p.AbilityUpgrades.ForEach(a => a.MatchPlayer = p);
             });
             pickOrBanCollection.ForEach(p => p.MatchDetail = match);
 
@@ -210,7 +210,7 @@ namespace DotaApi
                 ScaledTowerDamage = scaledTowerDamage,
                 TowerDamage = towerDamage,
                 XpPerMinute = xpPerMin,
-                AbilityUpgrades = abilityUpgradeCollection
+                //AbilityUpgrades = abilityUpgradeCollection
             };
         }
 

@@ -11,7 +11,7 @@ namespace EFDota
     {
         static void Main(string[] args)
         {
-            using (var dc = new DotaContext())
+            using (var dc = new DotaContext("DotaHeroPicker1"))
             {
                 //using (var trans = dc.Database.BeginTransaction())
                 //{

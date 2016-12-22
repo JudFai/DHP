@@ -58,7 +58,7 @@ namespace EFDota.Types
         public BarracksStatus BarracksStatusRadiant { get; set; }
         public BarracksStatus BarracksStatusDire { get; set; }
 
-        public List<PickOrBan> PickOrBans { get; set; }
+        //public List<PickOrBan> PickOrBans { get; set; }
 
         public int? RadiantTeamID { get; set; }
         public string RadiantName { get; set; }

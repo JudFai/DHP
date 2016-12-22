@@ -46,7 +46,7 @@ namespace DotaHeroPickerUI.ViewModel
         #region Constructors
 
         public SettingsViewModel(
-            MainWindowViewModel parent, 
+            HostViewModel parent, 
             string title,
             IconEnum icon, 
             HeroPickerSettings model, 

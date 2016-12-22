@@ -18,9 +18,9 @@ namespace DotaHeroPickerUI.View
     /// <summary>
     /// Interaction logic for ResultView.xaml
     /// </summary>
-    public partial class ResultAdvantagesView : UserControl
+    public partial class ResultAdvantageEnemiesView : UserControl
     {
-        public ResultAdvantagesView()
+        public ResultAdvantageEnemiesView()
         {
             InitializeComponent();
         }

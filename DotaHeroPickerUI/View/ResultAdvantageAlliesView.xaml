@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="DotaHeroPickerUI.View.ResultAdvantageAlliesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:HeroPickerResources.Controls;assembly=HeroPickerResources"
+             xmlns:converters="clr-namespace:HeroPickerResources.Converters;assembly=HeroPickerResources"
+             Foreground="White">
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/HeroPickerResources;component/MainResource.xaml" />
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Visibility="{Binding EnemyHeroAdvantageCollection, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=True}">
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding EnemyHeroAdvantageCollection}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <TextBlock Margin="{StaticResource ElementThickness}"
+                       Style="{StaticResource BodyTextBlockStyle}"
+                       Text="Преимущества перед вражескими героями:" />
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Margin="{StaticResource ElementThickness}"
+                             GroupName="AdvantageRadio"
+                             IsChecked="{Binding OnlyPositiveAdvantages,
+                                                 Converter={StaticResource BoolNotConverter}}" />
+                <TextBlock Margin="{StaticResource RadioButtonTextThickness}"
+                           Style="{StaticResource BodyTextBlockStyle}"
+                           Text="Все" />
+                <RadioButton Margin="{StaticResource ElementThickness}"
+                             GroupName="AdvantageRadio"
+                             IsChecked="{Binding OnlyPositiveAdvantages}" />
+                <TextBlock Margin="{StaticResource RadioButtonTextThickness}"
+                           Style="{StaticResource BodyTextBlockStyle}"
+                           Text="Только положительные" />
+            </StackPanel>
+            <!--
+                <TextBlock Text="Result"
+                Foreground="White" Margin="{StaticResource ElementThickness}"
+                Style="{StaticResource BodyTextBlockStyle}" />
+            -->
+            <ItemsControl Margin="{StaticResource ElementThickness}"
+                          AlternationCount="2"
+                          ItemTemplate="{StaticResource EnemyHeroAdvantageTemplate}"
+                          ItemsSource="{Binding EnemyHeroAdvantageFilteredCollection}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </StackPanel>
+        <StackPanel Margin="{StaticResource TitleElementThickness}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Orientation="Horizontal"
+                    Visibility="{Binding EnemyHeroAdvantageCollection,
+                                         Converter={StaticResource NullToVisibilityConverter}}">
+            <controls:ProgressRingIndeterminateControl Width="30"
+                                                       Height="30"
+                                                       Margin="0, 0, 5, 0" />
+            <TextBlock Margin="5"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource BodyTextBlockStyle}"
+                       Text="Ожидание выбора героев..." />
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -100,7 +100,7 @@ namespace DotaHeroPickerUI.ViewModel
 
         #region Constructors
 
-        public HeroesPickViewModel(MainWindowViewModel parent, string title, IconEnum icon)
+        public HeroesPickViewModel(HostViewModel parent, string title, IconEnum icon)
             : base(parent, title, icon)
         {
             // Создаём копию коллекции без клонирования самих элементов

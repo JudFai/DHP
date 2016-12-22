@@ -19,11 +19,11 @@ namespace DotaHeroPickerUI.View
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindowView : Window
+    public partial class HostView : Window
     {
-        public MainWindowView()
+        public HostView()
         {
-            DataContext = new MainWindowViewModel();
+            DataContext = new HostViewModel();
             InitializeComponent();
         }
 

@@ -18,7 +18,7 @@ namespace DotaHeroPickerUI.ViewModel.Core
 
         #region Properties
 
-        public MainWindowViewModel Parent { get; private set; }
+        public HostViewModel Parent { get; private set; }
 
         public string IconPath { get; private set; }
         public string Title { get; private set; }
@@ -44,14 +44,14 @@ namespace DotaHeroPickerUI.ViewModel.Core
 
         #region Constructors
 
-        protected ItemViewModel(MainWindowViewModel parent, string title, string iconPath)
+        protected ItemViewModel(HostViewModel parent, string title, string iconPath)
         {
             Parent = parent;
             Title = title;
             IconPath = iconPath;
         }
 
-        protected ItemViewModel(MainWindowViewModel parent, string title, IconEnum icon)
+        protected ItemViewModel(HostViewModel parent, string title, IconEnum icon)
         {
             Parent = parent;
             Title = title;

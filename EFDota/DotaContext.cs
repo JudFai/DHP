@@ -1,8 +1,10 @@
-﻿using EFDota.Types;
+﻿using EFDota.Migrations;
+using EFDota.Types;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +16,14 @@ namespace EFDota
         public DbSet<MatchDetail> MatchDetails { get; set; }
         public DbSet<MatchPlayer> Players { get; set; }
 
-        public DotaContext()
-            : base("dota")
+        public DotaContext(string nameOrConnectionString)
+            : base(nameOrConnectionString)
         {
+            var conf = new Configuration();
+            Database.SetInitializer<DotaContext>(
+                new MigrateDatabaseToLatestVersion<
+                    DotaContext, Configuration>(true, conf));
+                ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 600;
         }
 
         #region Public Methods

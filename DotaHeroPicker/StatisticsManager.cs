@@ -33,7 +33,7 @@ namespace DotaHeroPicker
         {
             var col = new List<EnemyHeroAdvantageCollection>();
             // TODO: пита временно
-            var filteredHeroCollection = _heroCollection.Except(enemyHeroes).Except(alliedHeroes).Except(bannedHeroes).Except(_heroCollection.Where(p => p.DotaName.Entity == Hero.Underlord));
+            var filteredHeroCollection = _heroCollection.Except(enemyHeroes).Except(alliedHeroes).Except(bannedHeroes);
             foreach (var hero in filteredHeroCollection)
             {
                 col.Add(new EnemyHeroAdvantageCollection(hero,

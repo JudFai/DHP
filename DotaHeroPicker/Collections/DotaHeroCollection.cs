@@ -1675,6 +1675,20 @@ namespace DotaHeroPicker.Collections
                     DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.DarkRift, "Dark Rift"))
                 })
             }));
+
+            Items.Add(DotaHero.Factory.CreateElement(new List<object>()
+            {
+                new DotaName<Hero>(Hero.MonkeyKing, "Monkey King"), 
+                AttackType.Melee, HeroCharacteristic.Agility,
+                new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Escape, HeroRole.Initiator },
+                new ReadOnlyCollection<DotaHeroAbility>(new List<DotaHeroAbility>
+                {
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.Firestorm, "Firestorm")),
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.PitMalice, "Pit of Malice")),
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.AtrophyAura, "Atrophy Aura")),
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.DarkRift, "Dark Rift"))
+                })
+            }));
         }
 
         #endregion

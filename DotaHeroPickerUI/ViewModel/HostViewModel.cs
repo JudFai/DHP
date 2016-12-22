@@ -20,7 +20,7 @@ using DotaHeroPicker.Types;
 
 namespace DotaHeroPickerUI.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class HostViewModel : ViewModelBase
     {
         #region Fields
 
@@ -124,6 +124,12 @@ namespace DotaHeroPickerUI.ViewModel
         /// </summary>
         public event EventHandler<List<HeroAdvantage>> GetAllHeroAdvantageCompleted;
 
+
+        /// <summary>
+        /// Вызывается, когда коллекция преимуществ союзных героев загружена
+        /// </summary>
+        public event EventHandler<List<HeroAdvantage>> GetAllHeroAdvantageAlliesCompleted;
+
         /// <summary>
         /// Происходит, когда коллекция руководств сериализованна или получена
         /// </summary>
@@ -138,7 +144,7 @@ namespace DotaHeroPickerUI.ViewModel
 
         #region Constrctuors
 
-        public MainWindowViewModel()
+        public HostViewModel()
         {
             var collection = DotaHeroCollection.GetInstance();
 
@@ -154,7 +160,7 @@ namespace DotaHeroPickerUI.ViewModel
             ItemCollection = new List<ItemViewModel>
             {
                 heroesPick,
-                new ResultAdvantagesViewModel(this, "Результат преимуществ", @"pack://application:,,,/HeroPickerResources;component/Images/Icons/Swords.png"),
+                new ResultAdvantageEnemiesViewModel(this, "Результат преимуществ", @"pack://application:,,,/HeroPickerResources;component/Images/Icons/Swords.png"),
                 new HeroGuridsViewModel(this, "Руководства героев", IconEnum.Guide)
             };
             SelectedItem = ItemCollection.FirstOrDefault();
