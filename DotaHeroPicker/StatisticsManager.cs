@@ -32,7 +32,6 @@ namespace DotaHeroPicker
         public List<EnemyHeroAdvantageCollection> GetEnemyTeamAdvantageCollection(List<DotaHero> enemyHeroes, List<DotaHero> alliedHeroes, List<DotaHero> bannedHeroes)
         {
             var col = new List<EnemyHeroAdvantageCollection>();
-            // TODO: пита временно
             var filteredHeroCollection = _heroCollection.Except(enemyHeroes).Except(alliedHeroes).Except(bannedHeroes);
             foreach (var hero in filteredHeroCollection)
             {
@@ -41,6 +40,23 @@ namespace DotaHeroPicker
                     .FirstOrDefault(p => p.Hero == hero)
                     .EnemyHeroAdvantageCollection
                     .Where(a => enemyHeroes.Contains(a.Hero))
+                    .ToList()));
+            }
+
+            return col.OrderByDescending(p => p.AdvantageValue).ToList();
+        }
+
+        public List<AlliedHeroAdvantageCollection> GetAlliedTeamAdvantageCollection(List<DotaHero> enemyHeroes, List<DotaHero> alliedHeroes, List<DotaHero> bannedHeroes)
+        {
+            var col = new List<AlliedHeroAdvantageCollection>();
+            var filteredHeroCollection = _heroCollection.Except(enemyHeroes).Except(alliedHeroes).Except(bannedHeroes);
+            foreach (var hero in filteredHeroCollection)
+            {
+                col.Add(new AlliedHeroAdvantageCollection(hero,
+                    _heroAdvantageCollection
+                    .FirstOrDefault(p => p.Hero == hero)
+                    .AlliedHeroAdvantageCollection
+                    .Where(a => alliedHeroes.Contains(a.Hero))
                     .ToList()));
             }
 

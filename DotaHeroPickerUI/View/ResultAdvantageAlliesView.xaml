@@ -8,12 +8,12 @@
         <ResourceDictionary Source="pack://application:,,,/HeroPickerResources;component/MainResource.xaml" />
     </UserControl.Resources>
     <Grid>
-        <StackPanel Visibility="{Binding EnemyHeroAdvantageCollection, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=True}">
+        <StackPanel Visibility="{Binding AlliedHeroAdvantageCollection, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=True}">
             <StackPanel.Style>
                 <Style TargetType="{x:Type StackPanel}">
                     <Setter Property="Visibility" Value="Visible" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding EnemyHeroAdvantageCollection}" Value="{x:Null}">
+                        <DataTrigger Binding="{Binding AlliedHeroAdvantageCollection}" Value="{x:Null}">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -21,7 +21,7 @@
             </StackPanel.Style>
             <TextBlock Margin="{StaticResource ElementThickness}"
                        Style="{StaticResource BodyTextBlockStyle}"
-                       Text="Преимущества перед вражескими героями:" />
+                       Text="Преимущества с союзнами героями:" />
             <StackPanel Orientation="Horizontal">
                 <RadioButton Margin="{StaticResource ElementThickness}"
                              GroupName="AdvantageRadio"
@@ -44,8 +44,8 @@
             -->
             <ItemsControl Margin="{StaticResource ElementThickness}"
                           AlternationCount="2"
-                          ItemTemplate="{StaticResource EnemyHeroAdvantageTemplate}"
-                          ItemsSource="{Binding EnemyHeroAdvantageFilteredCollection}">
+                          ItemTemplate="{StaticResource AlliedHeroAdvantageTemplate}"
+                          ItemsSource="{Binding AlliedHeroAdvantageFilteredCollection}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel />
@@ -57,7 +57,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Orientation="Horizontal"
-                    Visibility="{Binding EnemyHeroAdvantageCollection,
+                    Visibility="{Binding AlliedHeroAdvantageCollection,
                                          Converter={StaticResource NullToVisibilityConverter}}">
             <controls:ProgressRingIndeterminateControl Width="30"
                                                        Height="30"

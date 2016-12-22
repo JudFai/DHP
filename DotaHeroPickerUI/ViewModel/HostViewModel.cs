@@ -124,12 +124,6 @@ namespace DotaHeroPickerUI.ViewModel
         /// </summary>
         public event EventHandler<List<HeroAdvantage>> GetAllHeroAdvantageCompleted;
 
-
-        /// <summary>
-        /// Вызывается, когда коллекция преимуществ союзных героев загружена
-        /// </summary>
-        public event EventHandler<List<HeroAdvantage>> GetAllHeroAdvantageAlliesCompleted;
-
         /// <summary>
         /// Происходит, когда коллекция руководств сериализованна или получена
         /// </summary>

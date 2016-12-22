@@ -12,7 +12,49 @@ namespace DotaHeroPickerUI.ViewModel
     {
         #region Fields
 
-        //private 
+        private List<AlliedHeroAdvantageCollectionViewModel> _alliedHeroAdvantageCollection;
+        private List<AlliedHeroAdvantageCollectionViewModel> _alliedHeroAdvantageFilteredCollection;
+        private bool _onlyPositiveAdvantages;
+
+        #endregion
+
+        #region Properties
+
+        public List<AlliedHeroAdvantageCollectionViewModel> AlliedHeroAdvantageCollection
+        {
+            get { return _alliedHeroAdvantageCollection; }
+            set
+            {
+                _alliedHeroAdvantageCollection = value;
+                Dispatcher.Invoke(() => RaisePropertyChanged("AlliedHeroAdvantageCollection"));
+            }
+        }
+
+        public List<AlliedHeroAdvantageCollectionViewModel> AlliedHeroAdvantageFilteredCollection
+        {
+            get { return _alliedHeroAdvantageFilteredCollection; }
+            set
+            {
+                _alliedHeroAdvantageFilteredCollection = value;
+                Dispatcher.Invoke(() => RaisePropertyChanged("AlliedHeroAdvantageFilteredCollection"));
+            }
+        }
+
+        public HeroesCollectionChangedEventArgs HeroesCollection { get; private set; }
+
+        public bool OnlyPositiveAdvantages
+        {
+            get { return _onlyPositiveAdvantages; }
+            set
+            {
+                if (_onlyPositiveAdvantages != value)
+                {
+                    _onlyPositiveAdvantages = value;
+                    RaisePropertyChanged("OnlyPositiveAdvantages");
+                    RefreshFilteredCollection();
+                }
+            }
+        }
 
         #endregion
 
@@ -21,7 +63,7 @@ namespace DotaHeroPickerUI.ViewModel
         public ResultAdvantageAlliesViewModel(HostViewModel parent, string title, string iconPath)
             : base(parent, title, iconPath)
         {
-            Parent.GetAllHeroAdvantageAlliesCompleted += OnGetAllHeroAdvantageCompleted;
+            Parent.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;
             Parent.HeroesCollectionChanged += OnHeroesCollectionChanged;
         }
 
@@ -29,8 +71,57 @@ namespace DotaHeroPickerUI.ViewModel
 
         #region Private Methods
 
+        private void OnHeroesCollectionChanged(object sender, HeroesCollectionChangedEventArgs e)
+        {
+            HeroesCollection = e;
+            RefreshAlliedHeroAdvantageCollection();
+        }
+
         private void OnGetAllHeroAdvantageCompleted(object sender, List<HeroAdvantage> e)
         {
+            RefreshAlliedHeroAdvantageCollection();
+        }
+
+        private void RefreshAlliedHeroAdvantageCollection()
+        {
+            if ((Parent.StatisticsManager != null) &&
+                (HeroesCollection != null) &&
+                (HeroesCollection.EnemyHeroes.Count(p => !p.IsEmpty) > 0))
+            {
+                AlliedHeroAdvantageCollection = Parent.StatisticsManager.GetAlliedTeamAdvantageCollection(
+                    HeroesCollection.EnemyHeroes.Select(p => p.Hero).ToList(),
+                    HeroesCollection.AlliedHeroes.Select(p => p.Hero).ToList(),
+                    HeroesCollection.BannedHeroes.Select(p => p.Hero).ToList())
+                    .Select(p =>
+                        new AlliedHeroAdvantageCollectionViewModel(p,
+                            p.AlliedHeroAdvantage.Select(a => new AlliedHeroAdvantageViewModel(a, Parent.AllDotaHero.FirstOrDefault(k => k.Hero == a.Hero))).ToList(),
+                            Parent.AllDotaHero.FirstOrDefault(a => a.Hero == p.Hero)))
+                    .ToList();
+            }
+            else
+                AlliedHeroAdvantageCollection = null;
+        }
+
+        private void RefreshFilteredCollection()
+        {
+            if (AlliedHeroAdvantageCollection != null)
+            {
+                if (OnlyPositiveAdvantages)
+                {
+                    AlliedHeroAdvantageFilteredCollection =
+                        AlliedHeroAdvantageCollection
+                            .Where(p => p.AlliedHeroAdvantage.All(a => a.AdvantageValue >= 0))
+                            .ToList();
+                }
+                else
+                {
+                    AlliedHeroAdvantageFilteredCollection = AlliedHeroAdvantageCollection;
+                }
+            }
+            else
+            {
+                AlliedHeroAdvantageFilteredCollection = null;
+            }
         }
 
         #endregion

@@ -95,6 +95,8 @@
     <Compile Include="Helpers\SerializerXmlBase.cs" />
     <Compile Include="Helpers\SerializerHeroGuideCollection.cs" />
     <Compile Include="Model\DotaLaneModel.cs" />
+    <Compile Include="ViewModel\AlliedHeroAdvantageCollectionViewModel.cs" />
+    <Compile Include="ViewModel\AlliedHeroAdvantageViewModel.cs" />
     <Compile Include="ViewModel\HeroGuideViewModel.cs" />
     <Compile Include="ViewModel\DotaHeroObservableCollection.cs" />
     <Compile Include="ViewModel\HeroesPickViewModel.cs" />
@@ -108,6 +110,9 @@
     </Compile>
     <Compile Include="View\HeroGuidsView.xaml.cs">
       <DependentUpon>HeroGuidsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ResultAdvantageAlliesView.xaml.cs">
+      <DependentUpon>ResultAdvantageAlliesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ResultAdvantageEnemiesView.xaml.cs">
       <DependentUpon>ResultAdvantageEnemiesView.xaml</DependentUpon>
@@ -146,9 +151,9 @@
       <DependentUpon>HostView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\DataResourceDictionary.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="View\ResultAdvantageAlliesView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ResultAdvantageEnemiesView.xaml">
       <SubType>Designer</SubType>

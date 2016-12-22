@@ -29,6 +29,16 @@ namespace DotaHeroPicker
             EnemyHeroAdvantageCollection = new ReadOnlyCollection<EnemyHeroAdvantage>(enemyHeroAdvantageCollection);
         }
 
+        public HeroAdvantage(DotaHero hero, IList<EnemyHeroAdvantage> enemyHeroAdvantageCollection, IList<AlliedHeroAdvantage> alliedHeroAdvantageCollection)
+        {
+            if (enemyHeroAdvantageCollection.Any(p => p.Hero == hero))
+                throw new Exception("The hero can not be the enemy hero");
+
+            Hero = hero;
+            EnemyHeroAdvantageCollection = new ReadOnlyCollection<EnemyHeroAdvantage>(enemyHeroAdvantageCollection);
+            AlliedHeroAdvantageCollection = new ReadOnlyCollection<AlliedHeroAdvantage>(alliedHeroAdvantageCollection);
+        }
+
         #endregion
 
         #region Public Methods

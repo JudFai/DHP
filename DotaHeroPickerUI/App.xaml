@@ -5,10 +5,7 @@
              xmlns:vm="clr-namespace:DotaHeroPickerUI.ViewModel">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="View/DataResourceDictionary.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
+            
             <DataTemplate DataType="{x:Type vm:HeroesPickViewModel}">
                 <v:HeroesPickView />
             </DataTemplate>
@@ -18,7 +15,7 @@
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type vm:ResultAdvantageAlliesViewModel}">
-                <v:ResultAdvantageAlliesView />
+                <v:ResultAdvantageEnemiesView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
@@ -28,6 +25,7 @@
             <DataTemplate DataType="{x:Type vm:HeroGuridsViewModel}">
                 <v:HeroGuidsView />
             </DataTemplate>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
