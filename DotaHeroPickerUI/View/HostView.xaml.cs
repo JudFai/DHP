@@ -23,7 +23,6 @@ namespace DotaHeroPickerUI.View
     {
         public HostView()
         {
-            DataContext = new HostViewModel();
             InitializeComponent();
         }
 
