@@ -18,5 +18,6 @@
     <system:String x:Key="SymbolPick">&#xE1E3;</system:String>
     <system:String x:Key="SymbolSettings">&#xE115;</system:String>
     <system:String x:Key="SymbolGuide">&#xE91C;</system:String>
+    <system:String x:Key="SymbolAlliedAdvantage">&#xEC26;</system:String>
 
 </ResourceDictionary>

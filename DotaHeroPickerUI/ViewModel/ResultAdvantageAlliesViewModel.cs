@@ -1,5 +1,6 @@
 ﻿using DotaHeroPicker;
 using DotaHeroPickerUI.ViewModel.Core;
+using HeroPickerResources.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace DotaHeroPickerUI.ViewModel
 
         #region Constructors
 
-        public ResultAdvantageAlliesViewModel(HostViewModel parent, string title, string iconPath)
+        public ResultAdvantageAlliesViewModel(HostViewModel parent, string title, IconEnum iconPath)
             : base(parent, title, iconPath)
         {
             Parent.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;

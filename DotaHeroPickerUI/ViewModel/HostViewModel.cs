@@ -154,8 +154,9 @@ namespace DotaHeroPickerUI.ViewModel
             ItemCollection = new List<ItemViewModel>
             {
                 heroesPick,
-                new ResultAdvantageEnemiesViewModel(this, "Результат преимуществ", @"pack://application:,,,/HeroPickerResources;component/Images/Icons/Swords.png"),
-                new HeroGuridsViewModel(this, "Руководства героев", IconEnum.Guide)
+                new ResultAdvantageEnemiesViewModel(this, "Выгода над врагами", @"pack://application:,,,/HeroPickerResources;component/Images/Icons/Swords.png"),
+                new ResultAdvantageAlliesViewModel(this, "Выгода с союзниками", IconEnum.AlliedAdvantage),
+                //new HeroGuridsViewModel(this, "Руководства героев", IconEnum.Guide)
             };
             SelectedItem = ItemCollection.FirstOrDefault();
             //Loading settings=========================================================================================================

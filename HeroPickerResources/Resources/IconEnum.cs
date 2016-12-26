@@ -11,6 +11,7 @@ namespace HeroPickerResources.Resources
         Default,
         Pick,
         Settings,
-        Guide
+        Guide,
+        AlliedAdvantage
     }
 }

@@ -42,7 +42,7 @@ namespace DotaHeroPicker
         #endregion
     }
 
-    public class DotaStatisticsManager
+    public class DotaStatisticsManager : ILoadAdvantages
     {
         #region Fields
 
@@ -564,6 +564,15 @@ namespace DotaHeroPicker
             }
 
             return items;
+        }
+
+        #endregion
+
+        #region ILoadAdvantages Members
+
+        public void LoadAdvantageOverEnemy()
+        {
+
         }
 
         #endregion

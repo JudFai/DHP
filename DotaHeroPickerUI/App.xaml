@@ -15,7 +15,7 @@
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type vm:ResultAdvantageAlliesViewModel}">
-                <v:ResultAdvantageEnemiesView />
+                <v:ResultAdvantageAlliesView />
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type vm:SettingsViewModel}">

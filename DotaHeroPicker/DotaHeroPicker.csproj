@@ -69,6 +69,7 @@
     <Compile Include="Factories\DotaLaneFactory.cs" />
     <Compile Include="GameGuide.cs" />
     <Compile Include="HeroGuide.cs" />
+    <Compile Include="ILoadAdvantages.cs" />
     <Compile Include="Types\BoughtDotaItem.cs" />
     <Compile Include="Types\Core\DotaBase.cs" />
     <Compile Include="Types\Core\IDotaBase.cs" />

@@ -9,7 +9,7 @@ using DotaHeroPicker.Types;
 namespace DotaHeroPicker
 {
     /// <summary>
-    /// Преимущество против вражеского героя
+    /// Преимущество над вражеским героем
     /// </summary>
     public class EnemyHeroAdvantage : Advantage
     {
