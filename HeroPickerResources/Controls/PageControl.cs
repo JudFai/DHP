@@ -108,17 +108,17 @@ namespace HeroPickerResources.Controls
         {
             base.OnApplyTemplate();
             _headerTb = GetTemplateChild(PART_HeaderTextBlock) as TextBlock;
-            if (_headerTb != null)
-                try
-                {
-                    _headerTb.Style = new Style(typeof(TextBlock), (Style)this.FindResource(_header + "TextBlockStyle"));
+            //if (_headerTb != null)
+            //    try
+            //    {
+            //        _headerTb.Style = new Style(typeof(TextBlock), (Style)this.FindResource(_header + "TextBlockStyle"));
 
-                }
-                catch (Exception)
-                {
+            //    }
+            //    catch (Exception)
+            //    {
 
 
-                }
+            //    }
             if (ShowAnimation)
                 RaiseShowEvent();
             else

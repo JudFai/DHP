@@ -168,50 +168,27 @@ namespace DotaHeroPickerUI.ViewModel
             _settings = _serializerHeroPickerSettings.ReadXml() ?? new HeroPickerSettings();
 
             DotaStatisticsManager.ChangedOperationProgress += OnProgress;
-
             DotaStatisticsManager.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;
-            if (_settings.CountDaysForRefreshData <= (DateTime.Now - _settings.LastDateRefreshHeroAdvantageCollection).Days)
-            {
-                ApplicationRefreshingData = true;
-                DotaStatisticsManager.GetAllHeroAdvantage();
-            }
-            else
-            {
-                var heroAdvantageCollection = _serializerHeroAdvantageCollection.ReadXml();
-                if (heroAdvantageCollection == null)
-                {
-                    ApplicationRefreshingData = true;
-                    DotaStatisticsManager.GetAllHeroAdvantage();
-                }
-                else
-                {
-                    StatisticsManager = new StatisticsManager(heroAdvantageCollection);
-                    OnGetAllHeroAdvantageCompleted(heroAdvantageCollection);
-                }
-            }
-
-            // TODO: каким-то образом надо сделать один прогресс-бар, чтоб в одно время происходил 1 запрос
-            //DotaStatisticsManager.GetAllHeroGuideCompleted += OnGetAllHeroGuideCompleted;
-            //if (_settings.CountDaysForRefreshData <= (DateTime.Now - _settings.LastDateRefreshHeroGuideCollection).Days)
+            DotaStatisticsManager.LoadedHeroAdvantages += OnLoadedHeroAdvantages;
+            //if (_settings.CountDaysForRefreshData <= (DateTime.Now - _settings.LastDateRefreshHeroAdvantageCollection).Days)
             //{
             //    ApplicationRefreshingData = true;
-            //    DotaStatisticsManager.GetAllHeroGuide();
+            //    DotaStatisticsManager.GetAllHeroAdvantage();
             //}
             //else
             //{
-            //    var heroGuideCollection = _serializerHeroGuideCollection.ReadXml();
-            //    if (heroGuideCollection == null)
+            //    var heroAdvantageCollection = _serializerHeroAdvantageCollection.ReadXml();
+            //    if (heroAdvantageCollection == null)
             //    {
             //        ApplicationRefreshingData = true;
-            //        DotaStatisticsManager.GetAllHeroGuide();
+            //        DotaStatisticsManager.GetAllHeroAdvantage();
             //    }
             //    else
             //    {
-            //        //StatisticsManager = new StatisticsManager(heroGuideCollection);
-            //        OnGetAllHeroGuideCompleted(heroGuideCollection);
+            //        StatisticsManager = new StatisticsManager(heroAdvantageCollection);
+            //        OnGetAllHeroAdvantageCompleted(heroAdvantageCollection);
             //    }
             //}
-            //=========================================================================================================================
 
             ItemBottomCollection = new List<ItemViewModel>
             {
@@ -310,6 +287,11 @@ namespace DotaHeroPickerUI.ViewModel
             _serializerHeroPickerSettings.WriteXml(_settings);
             ApplicationRefreshingData = false;
             OnGetAllHeroAdvantageCompleted(e);
+        }
+
+        private void OnLoadedHeroAdvantages(object sender, List<HeroAdvantage> e)
+        {
+            StatisticsManager = new StatisticsManager(e);
         }
 
         private void OnGetAllHeroGuideCompleted(List<HeroGuide> e)

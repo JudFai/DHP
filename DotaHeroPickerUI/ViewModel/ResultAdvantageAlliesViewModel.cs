@@ -65,8 +65,8 @@ namespace DotaHeroPickerUI.ViewModel
             : base(parent, title, iconPath)
         {
             //Parent.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;
-            Parent.DotaStatisticsManager.LoadedHeroAdvantages += OnGetAllHeroAdvantageCompleted;
             Parent.HeroesCollectionChanged += OnHeroesCollectionChanged; 
+            Parent.DotaStatisticsManager.LoadedHeroAdvantages += OnGetAllHeroAdvantageCompleted;
         }
 
         #endregion
@@ -88,7 +88,7 @@ namespace DotaHeroPickerUI.ViewModel
         {
             if ((Parent.StatisticsManager != null) &&
                 (HeroesCollection != null) &&
-                (HeroesCollection.EnemyHeroes.Count(p => !p.IsEmpty) > 0))
+                (HeroesCollection.AlliedHeroes.Count(p => !p.IsEmpty) > 0))
             {
                 AlliedHeroAdvantageCollection = Parent.StatisticsManager.GetAlliedTeamAdvantageCollection(
                     HeroesCollection.EnemyHeroes.Select(p => p.Hero).ToList(),
@@ -102,6 +102,8 @@ namespace DotaHeroPickerUI.ViewModel
             }
             else
                 AlliedHeroAdvantageCollection = null;
+
+            RefreshFilteredCollection();
         }
 
         private void RefreshFilteredCollection()

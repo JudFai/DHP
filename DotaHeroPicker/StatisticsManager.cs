@@ -49,7 +49,8 @@ namespace DotaHeroPicker
         public List<AlliedHeroAdvantageCollection> GetAlliedTeamAdvantageCollection(List<DotaHero> enemyHeroes, List<DotaHero> alliedHeroes, List<DotaHero> bannedHeroes)
         {
             var col = new List<AlliedHeroAdvantageCollection>();
-            var filteredHeroCollection = _heroCollection.Except(enemyHeroes).Except(alliedHeroes).Except(bannedHeroes);
+            // TODO: временно убрал обезьяну, потому что заебала
+            var filteredHeroCollection = _heroCollection.Except(enemyHeroes).Except(alliedHeroes).Except(bannedHeroes).Except(_heroCollection.Where(p => p.DotaName.Entity == Hero.MonkeyKing));
             foreach (var hero in filteredHeroCollection)
             {
                 col.Add(new AlliedHeroAdvantageCollection(hero,

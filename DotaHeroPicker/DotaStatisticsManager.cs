@@ -583,7 +583,7 @@ namespace DotaHeroPicker
             Task.Run(() =>
             {
                 /// TODO: заменить на какого-то формовщика пути
-                var pathToAdvantageAllied = @"d:\Projects\DotaHeroPicker\Data\Test\22-12-16.xml";
+                var pathToAdvantageAllied = @"..\..\..\Data\Test\22-12-16.xml";
 
                 var serializerAdvantageAllied = new SerializerAdvantageAllied(pathToAdvantageAllied);
                 var advantageAlliedDict = serializerAdvantageAllied.ReadXml();
