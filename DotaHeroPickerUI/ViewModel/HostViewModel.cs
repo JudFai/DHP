@@ -140,6 +140,7 @@ namespace DotaHeroPickerUI.ViewModel
 
         public HostViewModel()
         {
+            DotaStatisticsManager = DotaStatisticsManager.GetInstance();
             var collection = DotaHeroCollection.GetInstance();
 
             AllDotaHero = new ReadOnlyCollection<DotaHeroViewModel>(
@@ -160,7 +161,6 @@ namespace DotaHeroPickerUI.ViewModel
             };
             SelectedItem = ItemCollection.FirstOrDefault();
             //Loading settings=========================================================================================================
-            DotaStatisticsManager = DotaStatisticsManager.GetInstance();
             _serializerHeroAdvantageCollection = SerializerHeroAdvantageCollection.GetInstance();
             _serializerHeroGuideCollection = SerializerHeroGuideCollection.GetInstance();
             _serializerHeroPickerSettings = SerializerHeroPickerSettings.GetInstance();
@@ -217,6 +217,8 @@ namespace DotaHeroPickerUI.ViewModel
             {
                 new SettingsViewModel(this, "Настройки", IconEnum.Settings, _settings, _serializerHeroPickerSettings)
             };
+
+            DotaStatisticsManager.LoadHeroAdvantages();
         }
 
         #endregion

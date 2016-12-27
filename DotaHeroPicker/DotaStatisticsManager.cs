@@ -42,7 +42,7 @@ namespace DotaHeroPicker
         #endregion
     }
 
-    public class DotaStatisticsManager : ILoadAdvantages
+    public class DotaStatisticsManager : ILoadHeroAdvantages
     {
         #region Fields
 
@@ -568,11 +568,27 @@ namespace DotaHeroPicker
 
         #endregion
 
-        #region ILoadAdvantages Members
+        #region ILoadHeroAdvantages Members
 
-        public void LoadAdvantageOverEnemy()
+        public event EventHandler<List<HeroAdvantage>> LoadedHeroAdvantages;
+
+        private void OnLoadedHeroAdvantages(List<HeroAdvantage> e)
         {
+            if (LoadedHeroAdvantages != null)
+                LoadedHeroAdvantages(this, e);
+        }
 
+        public void LoadHeroAdvantages()
+        {
+            Task.Run(() =>
+            {
+                /// TODO: заменить на какого-то формовщика пути
+                var pathToAdvantageAllied = @"d:\Projects\DotaHeroPicker\Data\Test\22-12-16.xml";
+
+                var serializerAdvantageAllied = new SerializerAdvantageAllied(pathToAdvantageAllied);
+                var advantageAlliedDict = serializerAdvantageAllied.ReadXml();
+                OnLoadedHeroAdvantages(advantageAlliedDict.Select(p => new HeroAdvantage(p.Key, p.Value)).ToList());
+            });
         }
 
         #endregion

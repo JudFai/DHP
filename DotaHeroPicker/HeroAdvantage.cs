@@ -39,6 +39,12 @@ namespace DotaHeroPicker
             AlliedHeroAdvantageCollection = new ReadOnlyCollection<AlliedHeroAdvantage>(alliedHeroAdvantageCollection);
         }
 
+        public HeroAdvantage(DotaHero hero, IList<AlliedHeroAdvantage> alliedHeroAdvantageCollection)
+        {
+            Hero = hero;
+            AlliedHeroAdvantageCollection = new ReadOnlyCollection<AlliedHeroAdvantage>(alliedHeroAdvantageCollection);
+        }
+
         #endregion
 
         #region Public Methods

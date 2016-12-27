@@ -64,8 +64,9 @@ namespace DotaHeroPickerUI.ViewModel
         public ResultAdvantageAlliesViewModel(HostViewModel parent, string title, IconEnum iconPath)
             : base(parent, title, iconPath)
         {
-            Parent.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;
-            Parent.HeroesCollectionChanged += OnHeroesCollectionChanged;
+            //Parent.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;
+            Parent.DotaStatisticsManager.LoadedHeroAdvantages += OnGetAllHeroAdvantageCompleted;
+            Parent.HeroesCollectionChanged += OnHeroesCollectionChanged; 
         }
 
         #endregion
