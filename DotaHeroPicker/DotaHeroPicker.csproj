@@ -68,6 +68,7 @@
     <Compile Include="Factories\DotaHeroAbilityFactory.cs" />
     <Compile Include="Factories\DotaLaneFactory.cs" />
     <Compile Include="GameGuide.cs" />
+    <Compile Include="HeroAdvantageCollection.cs" />
     <Compile Include="HeroGuide.cs" />
     <Compile Include="ILoadHeroAdvantages.cs" />
     <Compile Include="ISerializeXml.cs" />

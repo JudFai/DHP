@@ -582,8 +582,26 @@ namespace DotaHeroPicker
         {
             Task.Run(() =>
             {
-                /// TODO: заменить на какого-то формовщика пути
-                var pathToAdvantageAllied = @"..\..\..\Data\Test\22-12-16.xml";
+                //=======================================================================
+                // TODO: заменить на какого-то формовщика пути
+                var pathToDictionary = @"..\..\..\Data\Test";
+                var files = Directory.GetFiles(pathToDictionary, "*.xml", SearchOption.TopDirectoryOnly);
+                var lastFile = files
+                    .Select(p =>
+                    {
+                        var date = DateTime.MinValue;
+                        DateTime.TryParseExact(Path.GetFileNameWithoutExtension(p), "dd-MM-yyyy",
+                            CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+                        return new { Date = date, Path = p };
+                    })
+                    .OrderByDescending(p => p.Date)
+                    .FirstOrDefault();
+                //var pathToAdvantageAllied = @"..\..\..\Data\Test\22-12-16.xml";
+                if (lastFile == null)
+                    return;
+
+                var pathToAdvantageAllied = lastFile.Path;
+                //=======================================================================
 
                 var serializerAdvantageAllied = new SerializerAdvantageAllied(pathToAdvantageAllied);
                 var advantageAlliedDict = serializerAdvantageAllied.ReadXml();

@@ -51,33 +51,40 @@ namespace DotaHeroPickerUI.Helpers.DragDrop
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var items = sender as ItemsControl;
-                var fe = e.OriginalSource as FrameworkElement;
-                var draggedElement = FindParent<Border>(fe);
-                //var test = e.OriginalSource as Border;
-                if ((draggedElement != null) && (items != null))
+                try
                 {
-                    _draggedElement = draggedElement;
-                    _senderItemCollection = items.ItemsSource as DotaHeroObservableCollection;
-                    if (_senderItemCollection == null)
-                        return;
+                    var items = sender as ItemsControl;
+                    var fe = e.OriginalSource as FrameworkElement;
+                    var draggedElement = FindParent<Border>(fe);
+                    //var test = e.OriginalSource as Border;
+                    if ((draggedElement != null) && (items != null))
+                    {
+                        _draggedElement = draggedElement;
+                        _senderItemCollection = items.ItemsSource as DotaHeroObservableCollection;
+                        if (_senderItemCollection == null)
+                            return;
 
-                    var dc = draggedElement.DataContext;
-                    var senderItem = dc as DotaHeroViewModel;
-                    if ((senderItem == null) || senderItem.IsEmpty || !senderItem.IsEnabledHero)
-                        return;
+                        var dc = draggedElement.DataContext;
+                        var senderItem = dc as DotaHeroViewModel;
+                        if ((senderItem == null) || senderItem.IsEmpty || !senderItem.IsEnabledHero)
+                            return;
 
-                    var window = Window.GetWindow(items);
+                        var window = Window.GetWindow(items);
 
-                    _startPosition = e.GetPosition(window);
-                    _adornerLayer = AdornerLayer.GetAdornerLayer(draggedElement);
-                    _draggedAdorner = new DragDropAdorner(draggedElement, _adornerLayer);
+                        _startPosition = e.GetPosition(window);
+                        _adornerLayer = AdornerLayer.GetAdornerLayer(draggedElement);
+                        _draggedAdorner = new DragDropAdorner(draggedElement, _adornerLayer);
 
-                    var dataObject = new DataObject(_dataName, dc);
-                    System.Windows.DragDrop.DoDragDrop((DependencyObject)sender, dataObject, DragDropEffects.Move);
+                        var dataObject = new DataObject(_dataName, dc);
+                        System.Windows.DragDrop.DoDragDrop((DependencyObject) sender, dataObject, DragDropEffects.Move);
 
-                    _draggedAdorner.Detach();
-                    _draggedAdorner = null;
+                        _draggedAdorner.Detach();
+                        _draggedAdorner = null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    
                 }
             }
         }

@@ -97,6 +97,7 @@
     <Compile Include="Model\DotaLaneModel.cs" />
     <Compile Include="ViewModel\AlliedHeroAdvantageCollectionViewModel.cs" />
     <Compile Include="ViewModel\AlliedHeroAdvantageViewModel.cs" />
+    <Compile Include="ViewModel\HeroAdvantageCollectionViewModel.cs" />
     <Compile Include="ViewModel\HeroGuideViewModel.cs" />
     <Compile Include="ViewModel\DotaHeroObservableCollection.cs" />
     <Compile Include="ViewModel\HeroesPickViewModel.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="ViewModel\HeroGuridsViewModel.cs" />
     <Compile Include="ViewModel\ResultAdvantageAlliesViewModel.cs" />
     <Compile Include="ViewModel\ResultAdvantageEnemiesViewModel.cs" />
+    <Compile Include="ViewModel\ResultAdvantageViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="View\HeroesPickView.xaml.cs">
       <DependentUpon>HeroesPickView.xaml</DependentUpon>
@@ -116,6 +118,9 @@
     </Compile>
     <Compile Include="View\ResultAdvantageEnemiesView.xaml.cs">
       <DependentUpon>ResultAdvantageEnemiesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ResultAdvantageView.xaml.cs">
+      <DependentUpon>ResultAdvantageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
@@ -156,6 +161,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ResultAdvantageEnemiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ResultAdvantageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -25,7 +25,11 @@
             <DataTemplate DataType="{x:Type vm:HeroGuridsViewModel}">
                 <v:HeroGuidsView />
             </DataTemplate>
-            
+
+            <DataTemplate DataType="{x:Type vm:ResultAdvantageViewModel}">
+                <v:ResultAdvantageView />
+            </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
