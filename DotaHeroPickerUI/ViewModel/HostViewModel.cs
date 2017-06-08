@@ -156,7 +156,7 @@ namespace DotaHeroPickerUI.ViewModel
             {
                 heroesPick,
                 new ResultAdvantageEnemiesViewModel(this, "Выгода над врагами", @"pack://application:,,,/HeroPickerResources;component/Images/Icons/Swords.png"),
-                new ResultAdvantageAlliesViewModel(this, "Выгода с союзниками", IconEnum.AlliedAdvantage),
+                //new ResultAdvantageAlliesViewModel(this, "Выгода с союзниками", IconEnum.AlliedAdvantage),
                 //new HeroGuridsViewModel(this, "Руководства героев", IconEnum.Guide)
             };
             SelectedItem = ItemCollection.FirstOrDefault();
@@ -169,33 +169,33 @@ namespace DotaHeroPickerUI.ViewModel
 
             DotaStatisticsManager.ChangedOperationProgress += OnProgress;
             DotaStatisticsManager.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;
-            DotaStatisticsManager.LoadedHeroAdvantages += OnLoadedHeroAdvantages;
-            //if (_settings.CountDaysForRefreshData <= (DateTime.Now - _settings.LastDateRefreshHeroAdvantageCollection).Days)
-            //{
-            //    ApplicationRefreshingData = true;
-            //    DotaStatisticsManager.GetAllHeroAdvantage();
-            //}
-            //else
-            //{
-            //    var heroAdvantageCollection = _serializerHeroAdvantageCollection.ReadXml();
-            //    if (heroAdvantageCollection == null)
-            //    {
-            //        ApplicationRefreshingData = true;
-            //        DotaStatisticsManager.GetAllHeroAdvantage();
-            //    }
-            //    else
-            //    {
-            //        StatisticsManager = new StatisticsManager(heroAdvantageCollection);
-            //        OnGetAllHeroAdvantageCompleted(heroAdvantageCollection);
-            //    }
-            //}
+            //DotaStatisticsManager.LoadedHeroAdvantages += OnLoadedHeroAdvantages;
+            if (_settings.CountDaysForRefreshData <= (DateTime.Now - _settings.LastDateRefreshHeroAdvantageCollection).Days)
+            {
+                ApplicationRefreshingData = true;
+                DotaStatisticsManager.GetAllHeroAdvantage();
+            }
+            else
+            {
+                var heroAdvantageCollection = _serializerHeroAdvantageCollection.ReadXml();
+                if (heroAdvantageCollection == null)
+                {
+                    ApplicationRefreshingData = true;
+                    DotaStatisticsManager.GetAllHeroAdvantage();
+                }
+                else
+                {
+                    StatisticsManager = new StatisticsManager(heroAdvantageCollection);
+                    OnGetAllHeroAdvantageCompleted(heroAdvantageCollection);
+                }
+            }
 
             ItemBottomCollection = new List<ItemViewModel>
             {
                 new SettingsViewModel(this, "Настройки", IconEnum.Settings, _settings, _serializerHeroPickerSettings)
             };
 
-            DotaStatisticsManager.LoadHeroAdvantages();
+            //DotaStatisticsManager.LoadHeroAdvantages();
         }
 
         #endregion
