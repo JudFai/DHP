@@ -146,6 +146,7 @@ namespace DotaHeroPicker
 
                         var encoding = ASCIIEncoding.UTF8;
                         string responseText = null;
+                        //MatchCollection mc = null;
                         using (var reader = new StreamReader(res.GetResponseStream(), encoding))
                         {
                             responseText = reader.ReadToEnd()
@@ -154,6 +155,8 @@ namespace DotaHeroPicker
                                 .Replace("&raquo;", string.Empty)
                                 .Replace("&lsaquo;", string.Empty)
                                 .Replace("&laquo;", string.Empty);
+                            // TODO: в связи с тем, что на сайт добавили скрипты, которые не дают распарсить HTML, то пришлось делать регулярку
+                            responseText = Regex.Replace(responseText, @"<script.*?>.+?<\/script>", string.Empty, RegexOptions.Singleline);
                         }
 
                         var xml = new XmlDocument();
@@ -217,7 +220,7 @@ namespace DotaHeroPicker
             var tdElements = root.SelectNodes(@"
                 body
                 /div[@class='container-outer']
-                /div[@class='container-inner']
+                /div[@class='container-inner container-inner-content']
                 /div[@class='content-inner']
                 /section
                 /article
