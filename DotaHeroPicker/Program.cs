@@ -8,8 +8,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using DotaHeroPicker;
 using DotaHeroPicker.Types;
 using DotaHeroPicker.Collections;
+using DotaHeroPicker.ServerLog;
+using Microsoft.Win32;
 
 namespace DotaHeroPicker
 {
@@ -25,24 +28,35 @@ namespace DotaHeroPicker
 
         static void Main(string[] args)
         {
+            var regKey = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam");
+            if (regKey != null)
+            {
+                var pathToSteam = regKey.GetValue("SteamPath");
+                if (pathToSteam != null)
+                {
+                    var fullPath = Path.Combine(pathToSteam.ToString(), @"steamapps/common/dota 2 beta/game/dota");
+                    IServerLogWorker worker = new ServerLogWorker();
+                    var test = worker.GetDotaLobbiesFromFile(fullPath);
+                }
+            }
             //if (Directory.Exists(Path.GetFullPath()))
 
             //var test = DotaStatisticsManager.GetInstance();
-            var collection = DotaHeroCollection.GetInstance();
-            Manager.GetAllHeroGuideCompleted += (sender, list) =>
-            {
-                
-            };
-            Manager.ChangedOperationProgress += (sender, progress) =>
-            {
-                Console.Clear();
-                Console.WriteLine("{0}%", progress);
-            };
-            Manager.GetAllHeroGuide();
-            while (true)
-            {
-                Thread.Sleep(100);
-            }
+            //var collection = DotaHeroCollection.GetInstance();
+            //Manager.GetAllHeroGuideCompleted += (sender, list) =>
+            //{
+
+            //};
+            //Manager.ChangedOperationProgress += (sender, progress) =>
+            //{
+            //    Console.Clear();
+            //    Console.WriteLine("{0}%", progress);
+            //};
+            //Manager.GetAllHeroGuide();
+            //while (true)
+            //{
+            //    Thread.Sleep(100);
+        //}
             //var fullNameAbility = Manager.GetAllHeroAbilitiy().OrderBy(p => p.Value);
             //using (var sw = new StreamWriter("ForClass.txt", true))
             //{
@@ -130,31 +144,31 @@ namespace DotaHeroPicker
 
             //var tttt = test.GetHeroLanePresenceCollection(collection[Hero.Enigma]);
 
-            Manager.GetAllHeroAdvantageCompleted += (o, e) =>
-            {
-                HeroAdvantageCollection = e;
-                WriteXml("Advantage.xml", e);
-                Console.WriteLine("GetAllHeroAdvantageCompleted");
-            };
+            //Manager.GetAllHeroAdvantageCompleted += (o, e) =>
+            //{
+            //    HeroAdvantageCollection = e;
+            //    WriteXml("Advantage.xml", e);
+            //    Console.WriteLine("GetAllHeroAdvantageCompleted");
+            //};
 
-            var pathToAdvantage = "Advantage.xml";
-            if (File.Exists(pathToAdvantage))
-                HeroAdvantageCollection = ReadXml(pathToAdvantage);
-            else
-            {
-                GetAllHeroAdvantage();
-            }
+            //var pathToAdvantage = "Advantage.xml";
+            //if (File.Exists(pathToAdvantage))
+            //    HeroAdvantageCollection = ReadXml(pathToAdvantage);
+            //else
+            //{
+            //    GetAllHeroAdvantage();
+            //}
 
-            var enemyHeroes = new List<DotaHero>
-            {
-                collection[Hero.EmberSpirit], 
-                collection[Hero.Invoker], 
-                collection[Hero.Pudge],
-                //collection[Hero.Slark],
-                //collection[Hero.Timbersaw]
-            };
+            //var enemyHeroes = new List<DotaHero>
+            //{
+            //    collection[Hero.EmberSpirit], 
+            //    collection[Hero.Invoker], 
+            //    collection[Hero.Pudge],
+            //    //collection[Hero.Slark],
+            //    //collection[Hero.Timbersaw]
+            //};
 
-            var stat = new StatisticsManager(HeroAdvantageCollection);
+            //var stat = new StatisticsManager(HeroAdvantageCollection);
             //var adv = stat.GetEnemyTeamAdvantageCollection(enemyHeroes);
 
             //var col = new List<EnemyTeamAdvantage>();

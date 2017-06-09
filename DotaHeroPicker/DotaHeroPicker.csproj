@@ -70,6 +70,9 @@
     <Compile Include="GameGuide.cs" />
     <Compile Include="HeroAdvantageCollection.cs" />
     <Compile Include="HeroGuide.cs" />
+    <Compile Include="Statistics\DotaPlayerStatistics.cs" />
+    <Compile Include="Statistics\UnknowDotaPlayerStatistics.cs" />
+    <Compile Include="Statistics\IDotaPlayerStatistics.cs" />
     <Compile Include="ILoadHeroAdvantages.cs" />
     <Compile Include="ISerializeXml.cs" />
     <Compile Include="SerializerAdvantageAllied.cs" />
@@ -100,6 +103,16 @@
     <Compile Include="DotaStatisticsManager.cs" />
     <Compile Include="StatisticsManager.cs" />
     <Compile Include="EnemyHeroAdvantageCollection.cs" />
+    <Compile Include="ServerLog\DotaLobby.cs" />
+    <Compile Include="ServerLog\DotaParty.cs" />
+    <Compile Include="ServerLog\DotaPlayer.cs" />
+    <Compile Include="ServerLog\DotaServerLogParser.cs" />
+    <Compile Include="ServerLog\IDotaLobby.cs" />
+    <Compile Include="ServerLog\IDotaParty.cs" />
+    <Compile Include="ServerLog\IDotaPlayer.cs" />
+    <Compile Include="ServerLog\IDotaServerLogParser.cs" />
+    <Compile Include="ServerLog\IServerLogWorker.cs" />
+    <Compile Include="ServerLog\ServerLogWorker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -123,6 +136,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
