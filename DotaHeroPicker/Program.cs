@@ -28,17 +28,22 @@ namespace DotaHeroPicker
 
         static void Main(string[] args)
         {
-            var regKey = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam");
-            if (regKey != null)
-            {
-                var pathToSteam = regKey.GetValue("SteamPath");
-                if (pathToSteam != null)
-                {
-                    var fullPath = Path.Combine(pathToSteam.ToString(), @"steamapps/common/dota 2 beta/game/dota");
-                    IServerLogWorker worker = new ServerLogWorker();
-                    var test = worker.GetDotaLobbiesFromFile(fullPath);
-                }
-            }
+            // TODO: не удалять ServerLog
+            //var regKey = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam");
+            //if (regKey != null)
+            //{
+            //    var pathToSteam = regKey.GetValue("SteamPath");
+            //    if (pathToSteam != null)
+            //    {
+            //        var fullPath = Path.Combine(pathToSteam.ToString(), @"steamapps/common/dota 2 beta/game/dota");
+            //        IServerLogWorker worker = new ServerLogWorker();
+            //        var test = worker.GetDotaLobbiesFromFile(fullPath);
+            //    }
+            //}
+
+            var dotaStatisticsManager = DotaStatisticsManager.GetInstance();
+            var stats = dotaStatisticsManager.GetPlayerStatistics(new DotaPlayer(114115565, 0));
+
             //if (Directory.Exists(Path.GetFullPath()))
 
             //var test = DotaStatisticsManager.GetInstance();

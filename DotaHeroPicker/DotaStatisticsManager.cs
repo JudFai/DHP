@@ -13,6 +13,8 @@ using System.Xml;
 using System.Xml.Linq;
 using DotaHeroPicker.Types;
 using DotaHeroPicker.Collections;
+using DotaHeroPicker.ServerLog;
+using DotaHeroPicker.Statistics;
 
 namespace DotaHeroPicker
 {
@@ -55,6 +57,7 @@ namespace DotaHeroPicker
         private readonly string _pathToAbilities = "http://dotabuff.com/heroes/{0}/abilities";
         private readonly string _pathToOverview = "http://dotabuff.com/heroes/{0}";
         private readonly string _pathToItems = "http://dotabuff.com/items";
+        private readonly string _pathToPlayers = "https://ru.dotabuff.com/players/{0}/matches?date={1}&lobby_type=ranked_matchmaking";
         private readonly string _userAgent = "Mozilla/5.0";
 
         private readonly DotaHeroCollection _heroCollection = DotaHeroCollection.GetInstance();
@@ -154,8 +157,9 @@ namespace DotaHeroPicker
                                 .Replace("&rsaquo;", string.Empty)
                                 .Replace("&raquo;", string.Empty)
                                 .Replace("&lsaquo;", string.Empty)
-                                .Replace("&laquo;", string.Empty);
-                            // TODO: в связи с тем, что на сайт добавили скрипты, которые не дают распарсить HTML, то пришлось делать регулярку
+                                .Replace("&laquo;", string.Empty)
+                                .Replace("&hellip;", string.Empty);
+                            // TODO: в связи с тем, что на сайт dotabuff'а добавили скрипты, которые не дают распарсить HTML, то пришлось делать регулярку
                             responseText = Regex.Replace(responseText, @"<script.*?>.+?<\/script>", string.Empty, RegexOptions.Singleline);
                         }
 
@@ -485,6 +489,48 @@ namespace DotaHeroPicker
 
                 OnGetAllHeroGuideCompleted(collection);
             });
+        }
+
+        public IDotaPlayerStatistics GetPlayerStatistics(IDotaPlayer dotaPlayer)
+        {
+            var root = GetXmlElement(string.Format(_pathToPlayers, dotaPlayer.ID, "3month"));
+//            var element = root.SelectNodes(@"
+//                body
+//                /div[@class='container-outer']
+//                /div[@class='container-inner container-inner-content']
+//                /div[@class='content-inner']
+//                /div[@style='display: flex; flex-wrap: wrap']
+//                /section
+//                /article[@style='match-aggregate-stats']
+//                /div[@class='r-stats-grid']
+//                /div[@class='group group-soft']
+//                /div");
+            var element = root.SelectNodes(@"
+                body
+                /div[@class='container-outer']
+                /div[@class='container-inner container-inner-content']
+                /div[@class='content-inner']
+                /div
+                /section
+                /article[@class='match-aggregate-stats']
+                /div[@class='r-stats-grid']
+                /div[2]
+                /div");
+
+            var str = string.Empty;
+            // Count matches
+            str = element[0].InnerText;
+            var match = Regex.Match(str, @"(?<matches>\d+)\D+");
+            var strMatches = match.Groups["matches"].Value;
+            var countMatches = int.Parse(strMatches);
+
+            // Winning percentage
+            str = element[2].SelectSingleNode("span").InnerText;
+            match = Regex.Match(str, @"(?<winning>.+)%");
+            var strPercentage = match.Groups["winning"].Value;
+            var percentage = double.Parse(strPercentage, NumberStyles.Number, CultureInfo.InvariantCulture);
+
+            return new DotaPlayerStatistics(new DotaWinning(TimeSpan.FromDays(90), percentage, countMatches), dotaPlayer);
         }
 
         #endregion

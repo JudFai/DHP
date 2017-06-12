@@ -71,6 +71,8 @@
     <Compile Include="HeroAdvantageCollection.cs" />
     <Compile Include="HeroGuide.cs" />
     <Compile Include="Statistics\DotaPlayerStatistics.cs" />
+    <Compile Include="Statistics\DotaWinning.cs" />
+    <Compile Include="Statistics\IDotaWinning.cs" />
     <Compile Include="Statistics\UnknowDotaPlayerStatistics.cs" />
     <Compile Include="Statistics\IDotaPlayerStatistics.cs" />
     <Compile Include="ILoadHeroAdvantages.cs" />

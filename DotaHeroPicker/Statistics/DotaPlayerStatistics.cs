@@ -11,18 +11,11 @@ namespace DotaHeroPicker.Statistics
     {
         #region Constructors
 
-        public DotaPlayerStatistics(double winningPercentage, IDotaPlayer player)
+        public DotaPlayerStatistics(IDotaWinning winning, IDotaPlayer player)
         {
-            WinningPercentage = winningPercentage;
+            Winning = winning;
             Player = player;
         }
-
-        #endregion
-
-        #region IDotaPlayerStatistics Members
-
-        public IDotaPlayer Player { get; private set; }
-        public double WinningPercentage { get; private set; }
 
         #endregion
 
@@ -32,6 +25,13 @@ namespace DotaHeroPicker.Statistics
         {
             return new UnknowDotaPlayerStatistics(player);
         }
+
+        #endregion
+
+        #region IDotaPlayerStatistics Members
+
+        public IDotaPlayer Player { get; private set; }
+        public IDotaWinning Winning { get; private set; }
 
         #endregion
     }

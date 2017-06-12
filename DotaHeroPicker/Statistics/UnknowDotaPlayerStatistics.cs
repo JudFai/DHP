@@ -9,7 +9,7 @@ namespace DotaHeroPicker.Statistics
 {
     class UnknowDotaPlayerStatistics : IDotaPlayerStatistics
     {
-        #region Cocnstructors
+        #region Constructors
 
         public UnknowDotaPlayerStatistics(IDotaPlayer player)
         {
@@ -21,7 +21,7 @@ namespace DotaHeroPicker.Statistics
         #region IDotaPlayerStatistics Members
 
         public IDotaPlayer Player { get; private set; }
-        public double WinningPercentage { get; private set; }
+        public IDotaWinning Winning { get; private set; }
 
         #endregion
 
