@@ -70,6 +70,7 @@
     <Compile Include="GameGuide.cs" />
     <Compile Include="HeroAdvantageCollection.cs" />
     <Compile Include="HeroGuide.cs" />
+    <Compile Include="Exceptions\NotFoundWebException.cs" />
     <Compile Include="Statistics\DotaPlayerStatistics.cs" />
     <Compile Include="Statistics\DotaWinning.cs" />
     <Compile Include="Statistics\IDotaWinning.cs" />
