@@ -57,7 +57,7 @@ namespace DotaHeroPicker
         private readonly string _pathToAbilities = "http://dotabuff.com/heroes/{0}/abilities";
         private readonly string _pathToOverview = "http://dotabuff.com/heroes/{0}";
         private readonly string _pathToItems = "http://dotabuff.com/items";
-        private readonly string _pathToPlayers = "https://ru.dotabuff.com/players/{0}/matches?date={1}&lobby_type=ranked_matchmaking";
+        private readonly string _pathToPlayers = "https://dotabuff.com/players/{0}/matches?date={1}&lobby_type=ranked_matchmaking";
         private readonly string _userAgent = "Mozilla/5.0";
 
         private readonly DotaHeroCollection _heroCollection = DotaHeroCollection.GetInstance();
@@ -171,10 +171,18 @@ namespace DotaHeroPicker
                     {
                         // Ловим исключение, которое подразумевает большое кол-во запросов на сайт, поэтому ставим таймаут до тех пор,
                         // пока не будет разрешено продолжить отправлять запросы и получать ответы
-                        if ((ex.Status == WebExceptionStatus.ProtocolError) &&
-                            (((HttpWebResponse) ex.Response).StatusCode == HttpStatusCode.Forbidden))
+                        if (ex.Status == WebExceptionStatus.ProtocolError)
                         {
-                            Thread.Sleep(30000);
+                            var statusResponse = ((HttpWebResponse)ex.Response).StatusCode;
+                            switch (statusResponse)
+                            {
+                                case HttpStatusCode.Forbidden:
+                                    Thread.Sleep(30000);
+                                    break;
+                                case HttpStatusCode.NotFound:
+                                    throw new NotFoundWebException();
+                                    break;
+                            }
 
                             // TODO: пока не понятно: имеет ли смысл ставить continue, ведь не будет выхода из цикла
                             //continue;
@@ -493,18 +501,16 @@ namespace DotaHeroPicker
 
         public IDotaPlayerStatistics GetPlayerStatistics(IDotaPlayer dotaPlayer)
         {
-            var root = GetXmlElement(string.Format(_pathToPlayers, dotaPlayer.ID, "3month"));
-//            var element = root.SelectNodes(@"
-//                body
-//                /div[@class='container-outer']
-//                /div[@class='container-inner container-inner-content']
-//                /div[@class='content-inner']
-//                /div[@style='display: flex; flex-wrap: wrap']
-//                /section
-//                /article[@style='match-aggregate-stats']
-//                /div[@class='r-stats-grid']
-//                /div[@class='group group-soft']
-//                /div");
+            XmlElement root = null;
+            try
+            {
+                root = GetXmlElement(string.Format(_pathToPlayers, dotaPlayer.ID, "3month"));
+            }
+            catch (NotFoundWebException)
+            {
+                return DotaPlayerStatistics.CreateEmptyDotaPlayerStatistics(dotaPlayer);
+            }
+
             var element = root.SelectNodes(@"
                 body
                 /div[@class='container-outer']
@@ -516,8 +522,11 @@ namespace DotaHeroPicker
                 /div[@class='r-stats-grid']
                 /div[2]
                 /div");
+            if (element.Count == 0)
+                return DotaPlayerStatistics.CreateEmptyDotaPlayerStatistics(dotaPlayer);
 
             var str = string.Empty;
+
             // Count matches
             str = element[0].InnerText;
             var match = Regex.Match(str, @"(?<matches>\d+)\D+");

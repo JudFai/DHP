@@ -42,7 +42,7 @@ namespace DotaHeroPicker
             //}
 
             var dotaStatisticsManager = DotaStatisticsManager.GetInstance();
-            var stats = dotaStatisticsManager.GetPlayerStatistics(new DotaPlayer(114115565, 0));
+            var stats = dotaStatisticsManager.GetPlayerStatistics(new DotaPlayer(123989123, 0));
 
             //if (Directory.Exists(Path.GetFullPath()))
 
