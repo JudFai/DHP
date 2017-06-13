@@ -27,7 +27,7 @@ namespace DotaHeroPicker.Statistics
 
         public override string ToString()
         {
-            return string.Format("Percentage: {0:F2}%", Percentage);
+            return string.Format("(W:{0}/L:{1}) {2}%", Wins, Loses, Percentage);
         }
 
         #endregion

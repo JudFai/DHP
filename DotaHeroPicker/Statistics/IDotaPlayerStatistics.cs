@@ -1,4 +1,6 @@
-﻿using DotaHeroPicker.ServerLog;
+﻿using System.Collections.Generic;
+using DotaHeroPicker.ServerLog;
+using DotaHeroPicker.Types;
 
 namespace DotaHeroPicker.Statistics
 {
@@ -6,5 +8,7 @@ namespace DotaHeroPicker.Statistics
     {
         IDotaPlayer Player { get; }
         IDotaWinning Winning { get; }
+        List<IDotaHeroStatistics> FavoriteHeroes { get; }
+        string Nickname { get; }
     }
 }

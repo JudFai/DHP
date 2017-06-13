@@ -57,7 +57,8 @@ namespace DotaHeroPicker
         private readonly string _pathToAbilities = "http://dotabuff.com/heroes/{0}/abilities";
         private readonly string _pathToOverview = "http://dotabuff.com/heroes/{0}";
         private readonly string _pathToItems = "http://dotabuff.com/items";
-        private readonly string _pathToPlayers = "https://dotabuff.com/players/{0}/matches?date={1}&lobby_type=ranked_matchmaking";
+        private readonly string _pathToPlayerMatches = "https://ru.dotabuff.com/players/{0}/matches?date={1}&lobby_type=ranked_matchmaking";
+        private readonly string _pathToPlayerHeroes = "https://ru.dotabuff.com/players/{0}/heroes?date={1}&lobby_type=ranked_matchmaking";
         private readonly string _userAgent = "Mozilla/5.0";
 
         private readonly DotaHeroCollection _heroCollection = DotaHeroCollection.GetInstance();
@@ -499,47 +500,122 @@ namespace DotaHeroPicker
             });
         }
 
+        // TODO: этот треш надо как-то разбить на классы и методы
         public IDotaPlayerStatistics GetPlayerStatistics(IDotaPlayer dotaPlayer)
         {
             XmlElement root = null;
+            var period = "3month";
             try
             {
-                root = GetXmlElement(string.Format(_pathToPlayers, dotaPlayer.ID, "3month"));
+                root = GetXmlElement(string.Format(_pathToPlayerMatches, dotaPlayer.ID, period));
             }
             catch (NotFoundWebException)
             {
                 return DotaPlayerStatistics.CreateEmptyDotaPlayerStatistics(dotaPlayer);
             }
 
-            var element = root.SelectNodes(@"
-                body
-                /div[@class='container-outer']
-                /div[@class='container-inner container-inner-content']
-                /div[@class='content-inner']
-                /div
-                /section
-                /article[@class='match-aggregate-stats']
-                /div[@class='r-stats-grid']
-                /div[2]
-                /div");
-            if (element.Count == 0)
-                return DotaPlayerStatistics.CreateEmptyDotaPlayerStatistics(dotaPlayer);
+            if (root != null)
+            {
+                var containterElement = root.SelectSingleNode(@"
+                    body
+                    /div[@class='container-outer']
+                    /div[@class='container-inner container-inner-content']");
+                if (containterElement != null)
+                {
+                    var elements = containterElement.SelectNodes(@"
+                        div[@class='content-inner']
+                        /div
+                        /section
+                        /article[@class='match-aggregate-stats']
+                        /div[@class='r-stats-grid']
+                        /div[2]
+                        /div");
+                    if ((elements != null) && (elements.Count != 0))
+                    {
+                        var str = string.Empty;
 
-            var str = string.Empty;
+                        // Count matches
+                        str = elements[0].InnerText;
+                        var match = Regex.Match(str, @"(?<matches>\d+)\D+");
+                        var strMatches = match.Groups["matches"].Value;
+                        var countMatches = int.Parse(strMatches);
 
-            // Count matches
-            str = element[0].InnerText;
-            var match = Regex.Match(str, @"(?<matches>\d+)\D+");
-            var strMatches = match.Groups["matches"].Value;
-            var countMatches = int.Parse(strMatches);
+                        // Winning percentage
+                        str = elements[2].SelectSingleNode("span").InnerText;
+                        match = Regex.Match(str, @"(?<winning>.+)%");
+                        var strPercentage = match.Groups["winning"].Value;
+                        var percentage = double.Parse(strPercentage, NumberStyles.Number, CultureInfo.InvariantCulture);
 
-            // Winning percentage
-            str = element[2].SelectSingleNode("span").InnerText;
-            match = Regex.Match(str, @"(?<winning>.+)%");
-            var strPercentage = match.Groups["winning"].Value;
-            var percentage = double.Parse(strPercentage, NumberStyles.Number, CultureInfo.InvariantCulture);
+                        // Nickname
+                        var element = containterElement.SelectSingleNode(@"
+                            div[@class='header-content-container']
+                            /div[@class='header-content']
+                            /div[@class='header-content-primary']
+                            /div[@class='header-content-title']
+                            /h1
+                            /text()");
+                        if (element != null)
+                        {
+                            var nickname = element.Value;
+                            root = GetXmlElement(string.Format(_pathToPlayerHeroes, dotaPlayer.ID, period));
+                            if (root != null)
+                            {
+                                var dotaHeroCollection = DotaHeroCollection.GetInstance();
+                                elements = root.SelectNodes(@"
+                                    body
+                                    /div[@class='container-outer']
+                                    /div[@class='container-inner container-inner-content']
+                                    /div[@class='content-inner']
+                                    /section
+                                    /article
+                                    /table
+                                    /tbody
+                                    /tr");
+                                if (elements != null)
+                                {
+                                    var heroStatCollection = new List<IDotaHeroStatistics>();
+                                    foreach (XmlElement xmlElement in elements)
+                                    {
+                                        // Hero
+                                        element = xmlElement.SelectSingleNode(@"td[@class='cell-xlarge']/a/text()");
+                                        var dotaHero = dotaHeroCollection[element.Value];
+                                        // Count matches
+                                        element = xmlElement.SelectSingleNode(@"td[3]/text()");
+                                        var heroMatches = int.Parse(element.Value);
+                                        // Percentage
+                                        element = xmlElement.SelectSingleNode(@"td[4]/@data-value");
+                                        var heroPercentage = double.Parse(element.Value, NumberStyles.Number, CultureInfo.InvariantCulture);
+                                        var heroWinning = new DotaWinning(TimeSpan.FromDays(90), heroPercentage, heroMatches);
+                                        var heroStat = new DotaHeroStatistics(heroWinning, dotaHero);
+                                        heroStatCollection.Add(heroStat);
+                                    }
 
-            return new DotaPlayerStatistics(new DotaWinning(TimeSpan.FromDays(90), percentage, countMatches), dotaPlayer);
+                                    return new DotaPlayerStatistics(
+                                        new DotaWinning(TimeSpan.FromDays(90), percentage, countMatches),
+                                        dotaPlayer, nickname, heroStatCollection);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+                
+            return DotaPlayerStatistics.CreateEmptyDotaPlayerStatistics(dotaPlayer);
+        }
+
+        public List<IDotaPlayerStatistics> GetPlayersStatisticsCollection(IEnumerable<IDotaPlayer> dotaPlayers)
+        {
+            var dotaPlayerStatiscsCollection = new List<IDotaPlayerStatistics>();
+            foreach (var dotaPlayer in dotaPlayers)
+            {
+                var playerStatistics = GetPlayerStatistics(dotaPlayer);
+                dotaPlayerStatiscsCollection.Add(playerStatistics);
+#if DEBUG
+                Console.WriteLine(playerStatistics.ToString());
+#endif
+            }
+
+            return dotaPlayerStatiscsCollection;
         }
 
         #endregion

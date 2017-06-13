@@ -41,8 +41,18 @@ namespace DotaHeroPicker
             //    }
             //}
 
-            var dotaStatisticsManager = DotaStatisticsManager.GetInstance();
-            var stats = dotaStatisticsManager.GetPlayerStatistics(new DotaPlayer(123989123, 0));
+            //var parser = DotaServerLogParser.Instance;
+            //var lobby = 
+            //    parser.TryParse("06/08/2017 - 22:09:06: =[A:1:2429176835:8657] (Lobby 25112027075713098 DOTA_GAMEMODE_ALL_DRAFT 0:[U:1:179231329] 1:[U:1:212143194] 2:[U:1:379513007] 3:[U:1:296779678] 4:[U:1:165126837] 5:[U:1:235070275] 6:[U:1:117075774] 7:[U:1:114115565] 8:[U:1:350925960] 9:[U:1:98759982]) (Party 25112027075236447 0:[U:1:114115565])");
+
+            //if (lobby != null)
+            //{
+            //    var dotaStatisticsManager = DotaStatisticsManager.GetInstance();
+            //    var stats = dotaStatisticsManager.GetPlayersStatisticsCollection(lobby.Players);
+            //}
+
+            IServerLogWorker worker = new ServerLogWorker();
+            worker.WaitForNewDotaLobby(TimeSpan.FromMinutes(5));
 
             //if (Directory.Exists(Path.GetFullPath()))
 
