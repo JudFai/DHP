@@ -71,10 +71,14 @@
     <Compile Include="HeroAdvantageCollection.cs" />
     <Compile Include="HeroGuide.cs" />
     <Compile Include="Exceptions\NotFoundWebException.cs" />
+    <Compile Include="ServerLog\DotaServerLogPathWorker.cs" />
+    <Compile Include="ServerLog\IDotaServerLogPathWorker.cs" />
     <Compile Include="Statistics\DotaHeroStatistics.cs" />
     <Compile Include="Statistics\DotaPlayerStatistics.cs" />
+    <Compile Include="Statistics\DotaPlayerStatisticsWorker.cs" />
     <Compile Include="Statistics\DotaWinning.cs" />
     <Compile Include="Statistics\IDotaHeroStatistics.cs" />
+    <Compile Include="Statistics\IDotaPlayerStatisticsWorker.cs" />
     <Compile Include="Statistics\IDotaWinning.cs" />
     <Compile Include="Statistics\UnknowDotaPlayerStatistics.cs" />
     <Compile Include="Statistics\IDotaPlayerStatistics.cs" />

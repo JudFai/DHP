@@ -5,6 +5,7 @@ namespace DotaHeroPicker.ServerLog
 {
     public interface IServerLogWorker
     {
+        List<IDotaLobby> GetDotaLobbiesFromFile();
         List<IDotaLobby> GetDotaLobbiesFromFile(string pathToFile);
         event EventHandler<IDotaLobby> ReceivedNewDotaLobby;
         /// <summary>
