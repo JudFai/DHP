@@ -10,7 +10,7 @@ using HeroPickerResources.Resources;
 
 namespace DotaHeroPickerUI.ViewModel
 {
-    public class SettingsViewModel : ItemViewModel
+    public class SettingsViewModel : Core.ViewModelBase//ItemViewModel
     {
         #region Fields
 
@@ -46,17 +46,23 @@ namespace DotaHeroPickerUI.ViewModel
         #region Constructors
 
         public SettingsViewModel(
-            HostViewModel parent, 
+            HostViewModel parent/*, 
             string title,
             IconEnum icon, 
             HeroPickerSettings model, 
-            SerializerHeroPickerSettings serializerHeroPickerSettings)
-            : base(parent, title, icon)
+            SerializerHeroPickerSettings serializerHeroPickerSettings*/)
+            //: base(parent, title, icon)
+            : base(parent)
         {
             _model = model;
             _serializerHeroPickerSettings = serializerHeroPickerSettings;
         }
 
         #endregion
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

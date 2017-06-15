@@ -8,7 +8,7 @@ using DotaHeroPickerUI.ViewModel.Core;
 
 namespace DotaHeroPickerUI.ViewModel
 {
-    public class ResultAdvantageEnemiesViewModel : ItemViewModel
+    public class ResultAdvantageEnemiesViewModel : Core.ViewModelBase //ItemViewModel
     {
         #region Fields
 
@@ -63,8 +63,9 @@ namespace DotaHeroPickerUI.ViewModel
 
         #region Constructors
 
-        public ResultAdvantageEnemiesViewModel(HostViewModel parent, string title, string iconPath)
-            : base(parent, title, iconPath)
+        public ResultAdvantageEnemiesViewModel(HostViewModel parent/*, string title, string iconPath*/)
+            //: base(parent, title, iconPath)
+            : base(parent)
         {
             Parent.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;
             Parent.HeroesCollectionChanged += OnHeroesCollectionChanged;
@@ -128,6 +129,16 @@ namespace DotaHeroPickerUI.ViewModel
             {
                 EnemyHeroAdvantageFilteredCollection = null;
             }
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public override void Dispose()
+        {
+            Parent.GetAllHeroAdvantageCompleted -= OnGetAllHeroAdvantageCompleted;
+            Parent.HeroesCollectionChanged -= OnHeroesCollectionChanged;
         }
 
         #endregion

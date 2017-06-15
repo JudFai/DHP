@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DotaHeroPicker.Statistics
 {
-    interface IDotaPlayerStatisticsWorker
+    public interface IDotaPlayerStatisticsWorker : IDisposable
     {
         event EventHandler<List<IDotaPlayerStatistics>> DotaPlayersStatisticsReceived;
         void StartGettingDotaPlayersStatistics();

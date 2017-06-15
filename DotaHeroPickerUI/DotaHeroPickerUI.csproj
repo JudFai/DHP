@@ -97,6 +97,10 @@
     <Compile Include="Model\DotaLaneModel.cs" />
     <Compile Include="ViewModel\AlliedHeroAdvantageCollectionViewModel.cs" />
     <Compile Include="ViewModel\AlliedHeroAdvantageViewModel.cs" />
+    <Compile Include="ViewModel\Core\IMenuItem.cs" />
+    <Compile Include="ViewModel\Core\Menu.cs" />
+    <Compile Include="ViewModel\Core\MenuItem.cs" />
+    <Compile Include="ViewModel\Core\ViewModelBase.cs" />
     <Compile Include="ViewModel\HeroAdvantageCollectionViewModel.cs" />
     <Compile Include="ViewModel\HeroGuideViewModel.cs" />
     <Compile Include="ViewModel\DotaHeroObservableCollection.cs" />

@@ -8,7 +8,7 @@ using Microsoft.TeamFoundation.MVVM;
 
 namespace DotaHeroPickerUI.ViewModel.Core
 {
-    public abstract class ItemViewModel : ViewModelBase
+    public abstract class ItemViewModel : Microsoft.TeamFoundation.MVVM.ViewModelBase
     {
         #region Fields
 

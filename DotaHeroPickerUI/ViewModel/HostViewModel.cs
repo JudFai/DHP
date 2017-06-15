@@ -1,5 +1,5 @@
 ﻿using DotaHeroPicker;
-using Microsoft.TeamFoundation.MVVM;
+//using Microsoft.TeamFoundation.MVVM;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -41,6 +41,7 @@ namespace DotaHeroPickerUI.ViewModel
         private string _progressDescription;
         private bool _applicationRefreshingData;
         private bool _applicationBusy;
+        private IMenuItem _selectedMenuItem;
 
         #endregion
 
@@ -107,6 +108,18 @@ namespace DotaHeroPickerUI.ViewModel
         public List<ItemViewModel> ItemCollection { get; private set; }
         public List<ItemViewModel> ItemBottomCollection { get; private set; }
 
+        public List<IMenuItem> MenuItemCollection { get; private set; }
+
+        public IMenuItem SelectedMenuItem
+        {
+            get { return _selectedMenuItem; }
+            set
+            {
+                _selectedMenuItem = value;
+                RaisePropertyChanged(() => SelectedMenuItem);
+            }
+        }
+
         public ItemViewModel SelectedItem
         {
             get { return _selectedItem; }
@@ -160,6 +173,14 @@ namespace DotaHeroPickerUI.ViewModel
                 //new HeroGuridsViewModel(this, "Руководства героев", IconEnum.Guide)
             };
             SelectedItem = ItemCollection.FirstOrDefault();
+
+            MenuItemCollection = new List<IMenuItem>
+            {
+                new MenuItem("Выбор героев", Menu.HeroesPick, IconEnum.Pick),
+                new MenuItem("Выгода над врагами", Menu.ResultAdvantageEnemies, IconEnum.EnemyAdvantage),
+                new MenuItem("Настройки", Menu.Settings, IconEnum.Settings, true)
+            };
+            SelectedMenuItem = MenuItemCollection.FirstOrDefault();
             //Loading settings=========================================================================================================
             _serializerHeroAdvantageCollection = SerializerHeroAdvantageCollection.GetInstance();
             _serializerHeroGuideCollection = SerializerHeroGuideCollection.GetInstance();
@@ -201,6 +222,37 @@ namespace DotaHeroPickerUI.ViewModel
         #endregion
 
         #region Private Methods
+
+        private void SetSelectedMenuItem(MenuItem value)
+        {
+            if (_selectedMenuItem != value)
+            {
+                if (_selectedMenuItem != null)
+                {
+                    _selectedMenuItem.Value.Dispose();
+                    _selectedMenuItem.Value = null;
+                }
+
+                _selectedMenuItem = value;
+                _selectedMenuItem.Value = CreateViewModel(value.Menu);
+                RaisePropertyChanged(() => SelectedMenuItem);
+            }
+        }
+
+        private ViewModelBase CreateViewModel(Menu menu)
+        {
+            switch (menu)
+            {
+                case Menu.HeroesPick:
+                    return new HeroesPickViewModel(this);
+                case Menu.ResultAdvantageEnemies:
+                    return new ResultAdvantageEnemiesViewModel(this);
+                case Menu.Settings:
+                    return new SettingsViewModel(this);
+                default:
+                    throw new NotImplementedException();
+            }
+        }
 
         private async void WorkProgressFunction(Operation operation)
         {
@@ -336,6 +388,14 @@ namespace DotaHeroPickerUI.ViewModel
                     ApplicationBusy = false;
                 });
             }
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public override void Dispose()
+        {
         }
 
         #endregion

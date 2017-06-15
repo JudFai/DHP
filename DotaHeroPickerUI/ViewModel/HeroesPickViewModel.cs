@@ -29,7 +29,7 @@ namespace DotaHeroPickerUI.ViewModel
         }
     }
 
-    public class HeroesPickViewModel : ItemViewModel
+    public class HeroesPickViewModel : Core.ViewModelBase //ItemViewModel
     {
         #region Fields
 
@@ -100,8 +100,9 @@ namespace DotaHeroPickerUI.ViewModel
 
         #region Constructors
 
-        public HeroesPickViewModel(HostViewModel parent, string title, IconEnum icon)
-            : base(parent, title, icon)
+        public HeroesPickViewModel(HostViewModel parent/*, string title, IconEnum icon*/)
+            : base(parent)
+            //: base(parent, title, icon)
         {
             // Создаём копию коллекции без клонирования самих элементов
             DotaHeroColletion = new DotaHeroObservableCollection(Parent.AllDotaHero.Select(p => p), HeroCharacteristic.None);
@@ -303,6 +304,18 @@ namespace DotaHeroPickerUI.ViewModel
 
             foreach (var hero in filteredCollection)
                 hero.IsEnabledHero = true;
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public override void Dispose()
+        {
+            BannedDotaHeroCollection.CollectionChanged -= OnCollectionChanged;
+            AlliedDotaHeroCollection.CollectionChanged -= OnCollectionChanged;
+            EnemyDotaHeroCollection.CollectionChanged -= OnCollectionChanged;
+            HeroesCollectionChanged = null;
         }
 
         #endregion
