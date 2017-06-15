@@ -13,12 +13,27 @@ namespace DotaHeroPicker.ServerLog
 
         private bool _isRunning;
         private IDotaLobby _lastFoundLobby;
+        private readonly string _pathToServerLog;
 
         private readonly IDotaServerLogParser _dotaServerLogParser = DotaServerLogParser.Instance;
 
         #endregion
 
+        #region Consturctors
+
+        public ServerLogWorker(string pathToServerLog)
+        {
+            _pathToServerLog = pathToServerLog;
+        }
+
+        #endregion
+
         #region IServerLogWorker Members
+
+        public List<IDotaLobby> GetDotaLobbiesFromFile()
+        {
+            return GetDotaLobbiesFromFile(_pathToServerLog);
+        }
 
         public List<IDotaLobby> GetDotaLobbiesFromFile(string pathToFile)
         {
@@ -46,8 +61,6 @@ namespace DotaHeroPicker.ServerLog
         public event EventHandler<IDotaLobby> ReceivedNewDotaLobby;
         public void WaitForNewDotaLobby(TimeSpan maxWaitingTime)
         {
-            // TODO: заменить на формовщика пути
-            const string path = @"D:\server_log.txt";
             if (_isRunning)
                 throw new Exception("WaitForNewDotaLobby already is running");
 
@@ -60,7 +73,7 @@ namespace DotaHeroPicker.ServerLog
                     List<IDotaLobby> lobbies = null;
                     try
                     {
-                        lobbies = GetDotaLobbiesFromFile(path);
+                        lobbies = GetDotaLobbiesFromFile();
                     }
                     catch (IOException)
                     {
@@ -95,6 +108,5 @@ namespace DotaHeroPicker.ServerLog
         }
 
         #endregion
-
     }
 }
