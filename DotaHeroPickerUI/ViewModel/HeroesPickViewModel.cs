@@ -163,6 +163,9 @@ namespace DotaHeroPickerUI.ViewModel
             var hero = param as DotaHeroViewModel;
             if (hero != null)
             {
+                if (hero.IsEmpty)
+                    return;
+
                 DotaHeroObservableCollection heroFromCollection = null;
                 switch (hero.Hero.MainCharacteristic)
                 {

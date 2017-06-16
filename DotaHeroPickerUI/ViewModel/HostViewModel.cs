@@ -105,26 +105,26 @@ namespace DotaHeroPickerUI.ViewModel
             }
         }
 
-        public List<ItemViewModel> ItemCollection { get; private set; }
-        public List<ItemViewModel> ItemBottomCollection { get; private set; }
+        //public List<ItemViewModel> ItemCollection { get; private set; }
+        //public List<ItemViewModel> ItemBottomCollection { get; private set; }
 
         public List<IMenuItem> MenuItemCollection { get; private set; }
 
         public IMenuItem SelectedMenuItem
         {
             get { return _selectedMenuItem; }
-            set
-            {
-                _selectedMenuItem = value;
-                RaisePropertyChanged(() => SelectedMenuItem);
-            }
+            set { SetSelectedMenuItem(value); }
+            //{
+            //    _selectedMenuItem = value;
+            //    RaisePropertyChanged(() => SelectedMenuItem);
+            //}
         }
 
-        public ItemViewModel SelectedItem
-        {
-            get { return _selectedItem; }
-            set { SetSelectedItem(value); }
-        }
+        //public ItemViewModel SelectedItem
+        //{
+        //    get { return _selectedItem; }
+        //    set { SetSelectedItem(value); }
+        //}
 
         public ReadOnlyCollection<DotaHeroViewModel> AllDotaHero { get; private set; }
 
@@ -163,16 +163,16 @@ namespace DotaHeroPickerUI.ViewModel
                     true,
                     string.Format("{0}{1}.png", _pathToHeroIcons, p.DotaName.Entity))).ToList());
 
-            var heroesPick = new HeroesPickViewModel(this, "Выбор героев", IconEnum.Pick);
-            heroesPick.HeroesCollectionChanged += OnHeroesCollectionChanged;
-            ItemCollection = new List<ItemViewModel>
-            {
-                heroesPick,
-                new ResultAdvantageEnemiesViewModel(this, "Выгода над врагами", @"pack://application:,,,/HeroPickerResources;component/Images/Icons/Swords.png"),
-                //new ResultAdvantageAlliesViewModel(this, "Выгода с союзниками", IconEnum.AlliedAdvantage),
-                //new HeroGuridsViewModel(this, "Руководства героев", IconEnum.Guide)
-            };
-            SelectedItem = ItemCollection.FirstOrDefault();
+            //var heroesPick = new HeroesPickViewModel(this, "Выбор героев", IconEnum.Pick);
+            //heroesPick.HeroesCollectionChanged += OnHeroesCollectionChanged;
+            //ItemCollection = new List<ItemViewModel>
+            //{
+            //    heroesPick,
+            //    new ResultAdvantageEnemiesViewModel(this, "Выгода над врагами", @"pack://application:,,,/HeroPickerResources;component/Images/Icons/Swords.png"),
+            //    //new ResultAdvantageAlliesViewModel(this, "Выгода с союзниками", IconEnum.AlliedAdvantage),
+            //    //new HeroGuridsViewModel(this, "Руководства героев", IconEnum.Guide)
+            //};
+            //SelectedItem = ItemCollection.FirstOrDefault();
 
             MenuItemCollection = new List<IMenuItem>
             {
@@ -193,16 +193,18 @@ namespace DotaHeroPickerUI.ViewModel
             //DotaStatisticsManager.LoadedHeroAdvantages += OnLoadedHeroAdvantages;
             if (_settings.CountDaysForRefreshData <= (DateTime.Now - _settings.LastDateRefreshHeroAdvantageCollection).Days)
             {
-                ApplicationRefreshingData = true;
-                DotaStatisticsManager.GetAllHeroAdvantage();
+                // TODO: вернуть, когда UI будет готов
+                //ApplicationRefreshingData = true;
+                //DotaStatisticsManager.GetAllHeroAdvantage();
             }
             else
             {
                 var heroAdvantageCollection = _serializerHeroAdvantageCollection.ReadXml();
                 if (heroAdvantageCollection == null)
                 {
-                    ApplicationRefreshingData = true;
-                    DotaStatisticsManager.GetAllHeroAdvantage();
+                    // TODO: вернуть, когда UI будет готов
+                    //ApplicationRefreshingData = true;
+                    //DotaStatisticsManager.GetAllHeroAdvantage();
                 }
                 else
                 {
@@ -211,10 +213,10 @@ namespace DotaHeroPickerUI.ViewModel
                 }
             }
 
-            ItemBottomCollection = new List<ItemViewModel>
-            {
-                new SettingsViewModel(this, "Настройки", IconEnum.Settings, _settings, _serializerHeroPickerSettings)
-            };
+            //ItemBottomCollection = new List<ItemViewModel>
+            //{
+            //    new SettingsViewModel(this, "Настройки", IconEnum.Settings, _settings, _serializerHeroPickerSettings)
+            //};
 
             //DotaStatisticsManager.LoadHeroAdvantages();
         }
@@ -223,7 +225,7 @@ namespace DotaHeroPickerUI.ViewModel
 
         #region Private Methods
 
-        private void SetSelectedMenuItem(MenuItem value)
+        private void SetSelectedMenuItem(IMenuItem value)
         {
             if (_selectedMenuItem != value)
             {
@@ -248,7 +250,7 @@ namespace DotaHeroPickerUI.ViewModel
                 case Menu.ResultAdvantageEnemies:
                     return new ResultAdvantageEnemiesViewModel(this);
                 case Menu.Settings:
-                    return new SettingsViewModel(this);
+                    return new SettingsViewModel(this, _settings);
                 default:
                     throw new NotImplementedException();
             }
