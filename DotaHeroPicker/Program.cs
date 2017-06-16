@@ -13,6 +13,7 @@ using DotaHeroPicker.Types;
 using DotaHeroPicker.Collections;
 using DotaHeroPicker.ServerLog;
 using Microsoft.Win32;
+using DotaHeroPicker.Statistics;
 
 namespace DotaHeroPicker
 {
@@ -41,13 +42,16 @@ namespace DotaHeroPicker
             //    var stats = dotaStatisticsManager.GetPlayersStatisticsCollection(lobby.Players);
             //}
 
-            IDotaServerLogPathWorker pathWorker = new DotaServerLogPathWorker();
-            var pathToServerLog = pathWorker.GetPathToServerLog();
-            if (pathToServerLog != null)
-            {
-                IServerLogWorker worker = new ServerLogWorker(pathToServerLog);
-                worker.WaitForNewDotaLobby(TimeSpan.FromMinutes(5));
-            }
+            //IDotaServerLogPathWorker pathWorker = new DotaServerLogPathWorker();
+            //var pathToServerLog = pathWorker.GetPathToServerLog();
+            //if (pathToServerLog != null)
+            //{
+            //    IServerLogWorker worker = new ServerLogWorker(pathToServerLog);
+            //    worker.WaitForNewDotaLobby(TimeSpan.FromMinutes(5));
+            //}
+
+            var dotaPlayerStatWorker = DotaPlayerStatisticsWorker.Instance;
+            dotaPlayerStatWorker.StartGettingDotaPlayersStatistics();
 
             //if (Directory.Exists(Path.GetFullPath()))
 
