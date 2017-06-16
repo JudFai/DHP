@@ -28,17 +28,17 @@ namespace DotaHeroPickerUI.ViewModel.Core
 
         #region Commands
 
-        public RelayCommand SelectItemCommand
-        {
-            get
-            {
-                return _selectItemCommand ??
-                       (_selectItemCommand = new RelayCommand(p =>
-                       {
-                           Parent.SelectedItem = this;
-                       }));
-            }
-        }
+        //public RelayCommand SelectItemCommand
+        //{
+        //    get
+        //    {
+        //        return _selectItemCommand ??
+        //               (_selectItemCommand = new RelayCommand(p =>
+        //               {
+        //                   Parent.SelectedItem = this;
+        //               }));
+        //    }
+        //}
 
         #endregion
 

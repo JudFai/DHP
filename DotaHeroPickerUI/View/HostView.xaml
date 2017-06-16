@@ -46,15 +46,114 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ListBox Grid.Row="0"
-                             ItemsSource="{Binding ItemCollection}"
-                             SelectedItem="{Binding SelectedItem}"
-                             Style="{StaticResource ListBoxMenuStyle}" />
+                             ItemsSource="{Binding MenuItemCollection}"
+                             SelectedItem="{Binding SelectedMenuItem}"
+                             Style="{StaticResource ListBoxMenuStyle}">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                            <Grid x:Name="ListBoxItemGrid" Height="48">
+                                                <Grid.Style>
+                                                    <Style TargetType="{x:Type Grid}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Path=IsSelected, 
+                                                                                           RelativeSource={RelativeSource FindAncestor, 
+                                                                                           AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                                <Setter Property="Background" Value="{StaticResource BaseLowColorBrush}" />
+                                                            </DataTrigger>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="{StaticResource BaseLowestColorBrush}" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="48"/>
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" 
+                                                           Style="{StaticResource IconStyle}"/>
+                                                <UserControl Grid.Column="0" 
+                                                             Width="16" Height="16"
+                                                             Background="White"  />
+                                                <TextBlock Grid.Column="1" 
+                                                           Text="{Binding Title}"
+                                                           FontFamily="Segoe UI"
+                                                           FontSize="20"
+                                                           Margin="10, 0"
+                                                           VerticalAlignment="Center" />
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsBottomPosition}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
                     <Border Grid.Row="1"
                             BorderBrush="{StaticResource BaseLowestColorBrush}"
                             BorderThickness="0, 1, 0, 0">
-                        <ListBox ItemsSource="{Binding ItemBottomCollection}"
+                        <ListBox ItemsSource="{Binding MenuItemCollection}"
+                                 SelectedItem="{Binding SelectedMenuItem}"
+                                 Style="{StaticResource ListBoxMenuStyle}">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListBoxItem}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                <Grid x:Name="ListBoxItemGrid" Height="48">
+                                                    <Grid.Style>
+                                                        <Style TargetType="{x:Type Grid}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=IsSelected, 
+                                                                                           RelativeSource={RelativeSource FindAncestor, 
+                                                                                           AncestorType={x:Type ListBoxItem}}}" Value="True">
+                                                                    <Setter Property="Background" Value="{StaticResource BaseLowColorBrush}" />
+                                                                </DataTrigger>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="{StaticResource BaseLowestColorBrush}" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Grid.Style>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="48"/>
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" 
+                                                           Style="{StaticResource IconStyle}"/>
+                                                    <UserControl Grid.Column="0" 
+                                                             Width="16" Height="16"
+                                                             Background="White"  />
+                                                    <TextBlock Grid.Column="1" 
+                                                           Text="{Binding Title}"
+                                                           FontFamily="Segoe UI"
+                                                           FontSize="20"
+                                                           Margin="10, 0"
+                                                           VerticalAlignment="Center" />
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsBottomPosition}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
+                        <!--<ListBox ItemsSource="{Binding ItemBottomCollection}"
                                  SelectedItem="{Binding SelectedItem}"
-                                 Style="{StaticResource ListBoxMenuStyle}" />
+                                 Style="{StaticResource ListBoxMenuStyle}" />-->
                     </Border>
                 </Grid>
             </controls:FlyGridViewControl.MenuContent>
@@ -76,14 +175,15 @@
                         <ScrollViewer>
                             <!--  Visibility="{Binding ApplicationBusy, Converter={StaticResource VisibilityToBoolConverter}, ConverterParameter=True}"  -->
                             <StackPanel>
-                                <ContentPresenter Content="{Binding SelectedItem}" />
+                                <ContentPresenter Content="{Binding SelectedMenuItem.Value}" />
                             </StackPanel>
                         </ScrollViewer>
                     </controls:PageControl>
                 </Grid>
             </controls:FlyGridViewControl.MainContent>
         </controls:FlyGridViewControl>
-        <Grid VerticalAlignment="Center" Visibility="{Binding ApplicationRefreshingData, Converter={StaticResource VisibilityToBoolConverter}}">
+        <Grid VerticalAlignment="Center" 
+              Visibility="{Binding ApplicationRefreshingData, Converter={StaticResource VisibilityToBoolConverter}}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />

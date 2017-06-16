@@ -97,12 +97,13 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>-->
-                    <controls:MenuButtonItem Title="{Binding Title}" 
+                    <!--<controls:MenuButtonItem Title="{Binding Title}" 
                                              Style="{StaticResource ButtonAppBarStyle}"  
                                              HorizontalAlignment="Stretch"
                                              Icon="{Binding Icon}"
                                              ImagePath="{Binding IconPath}"
-                                             Command="{Binding SelectItemCommand}"/>
+                                             IsEnabled="{Binding IsEnabled}"
+                                             Command="{Binding SelectItemCommand}" />-->
                 </ItemContainerTemplate>
             </Setter.Value>
         </Setter>

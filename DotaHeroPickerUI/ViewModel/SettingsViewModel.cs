@@ -45,8 +45,7 @@ namespace DotaHeroPickerUI.ViewModel
 
         #region Constructors
 
-        public SettingsViewModel(
-            HostViewModel parent/*, 
+        public SettingsViewModel(HostViewModel parent, HeroPickerSettings model/*, 
             string title,
             IconEnum icon, 
             HeroPickerSettings model, 
@@ -55,14 +54,14 @@ namespace DotaHeroPickerUI.ViewModel
             : base(parent)
         {
             _model = model;
-            _serializerHeroPickerSettings = serializerHeroPickerSettings;
+            _serializerHeroPickerSettings = SerializerHeroPickerSettings.GetInstance();
         }
 
         #endregion
 
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
