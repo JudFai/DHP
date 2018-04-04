@@ -21,7 +21,8 @@ namespace DotaHeroPicker
     public enum Operation
     {
         GetAllHeroAdvantage,
-        GetAllHeroGuide
+        GetAllHeroGuide,
+        GetPlayerStatistics
     }
 
     public class ProgressEventArgs : EventArgs
@@ -52,13 +53,15 @@ namespace DotaHeroPicker
         private static DotaStatisticsManager _instance;
 
         private readonly object _lockerRequest = new object();
+        private readonly object _statLocker = new object();
+
         private readonly string _pathToMatchups = "http://dotabuff.com/heroes/{0}/matchups";
         private readonly string _pathToGuides = "http://dotabuff.com/heroes/{0}/guides?page={1}";
         private readonly string _pathToAbilities = "http://dotabuff.com/heroes/{0}/abilities";
         private readonly string _pathToOverview = "http://dotabuff.com/heroes/{0}";
         private readonly string _pathToItems = "http://dotabuff.com/items";
-        private readonly string _pathToPlayerMatches = "https://ru.dotabuff.com/players/{0}/matches?date={1}&lobby_type=ranked_matchmaking";
-        private readonly string _pathToPlayerHeroes = "https://ru.dotabuff.com/players/{0}/heroes?date={1}&lobby_type=ranked_matchmaking";
+        private readonly string _pathToPlayerMatches = "https://dotabuff.com/players/{0}/matches?date={1}&lobby_type=ranked_matchmaking";
+        private readonly string _pathToPlayerHeroes = "https://dotabuff.com/players/{0}/heroes?date={1}&lobby_type=ranked_matchmaking";
         private readonly string _userAgent = "Mozilla/5.0";
 
         private readonly DotaHeroCollection _heroCollection = DotaHeroCollection.GetInstance();
@@ -99,7 +102,12 @@ namespace DotaHeroPicker
         #region Constructors
 
         private DotaStatisticsManager()
-        { }
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                | SecurityProtocolType.Tls11
+                | SecurityProtocolType.Tls12
+                | SecurityProtocolType.Ssl3;
+        }
 
         #endregion
 
@@ -162,6 +170,7 @@ namespace DotaHeroPicker
                                 .Replace("&hellip;", string.Empty);
                             // TODO: в связи с тем, что на сайт dotabuff'а добавили скрипты, которые не дают распарсить HTML, то пришлось делать регулярку
                             responseText = Regex.Replace(responseText, @"<script.*?>.+?<\/script>", string.Empty, RegexOptions.Singleline);
+                            responseText = Regex.Replace(responseText, @"<div id=.?match-aggregate-stats-target-button.?.*?>.+?<\/div>", string.Empty, RegexOptions.Singleline);
                         }
 
                         var xml = new XmlDocument();
@@ -232,7 +241,7 @@ namespace DotaHeroPicker
             var root = GetXmlElement(string.Format(_pathToMatchups, hero.DotaName.HtmlName));
             var tdElements = root.SelectNodes(@"
                 body
-                /div[@class='container-outer']
+                /div[@class='container-outer seemsgood']
                 /div[@class='container-inner container-inner-content']
                 /div[@class='content-inner']
                 /section
@@ -248,7 +257,7 @@ namespace DotaHeroPicker
                     var attributeAdvantage = td.SelectSingleNode(@"
                         td
                         /div
-                        /div[@class='segment segment-advantage']
+                        /div[@class='segment segment-disadvantage']
                         /..
                         /..
                         /@data-value");
@@ -259,7 +268,7 @@ namespace DotaHeroPicker
                         {
                             var enemyHero = _heroCollection[attributeHeroName.InnerText];
                             if (enemyHero != null)
-                                enemyHeroAdvantageCollection.Add(new EnemyHeroAdvantage(enemyHero, advantageValue));
+                                enemyHeroAdvantageCollection.Add(new EnemyHeroAdvantage(enemyHero, -advantageValue));
                             else
                                 throw new Exception("Hero not found");
                         }
@@ -285,20 +294,23 @@ namespace DotaHeroPicker
         {
             await Task.Run(() =>
             {
-                var collection = new List<HeroAdvantage>();
-                SetOperationProgress(0, Operation.GetAllHeroAdvantage);
-                //OperationProgress = 0;
-                var percentsInIteration = 100d / _heroCollection.Count;
-                foreach (var hero in _heroCollection)
+                lock (_statLocker)
                 {
-                    collection.Add(GetHeroAdvantage(hero));
-                    //OperationProgress += percentsInIteration;
-                    SetOperationProgress(OperationProgress + percentsInIteration, Operation.GetAllHeroAdvantage);
-                }
+                    var collection = new List<HeroAdvantage>();
+                    SetOperationProgress(0, Operation.GetAllHeroAdvantage);
+                    //OperationProgress = 0;
+                    var percentsInIteration = 100d / _heroCollection.Count;
+                    foreach (var hero in _heroCollection)
+                    {
+                        collection.Add(GetHeroAdvantage(hero));
+                        //OperationProgress += percentsInIteration;
+                        SetOperationProgress(OperationProgress + percentsInIteration, Operation.GetAllHeroAdvantage);
+                    }
 
-                //OperationProgress = 100;
-                SetOperationProgress(100, Operation.GetAllHeroAdvantage);
-                OnGetAllHeroAdvantageCompleted(collection);
+                    //OperationProgress = 100;
+                    SetOperationProgress(100, Operation.GetAllHeroAdvantage);
+                    OnGetAllHeroAdvantageCompleted(collection);
+                }
             });
         }
 
@@ -518,13 +530,16 @@ namespace DotaHeroPicker
             {
                 var containterElement = root.SelectSingleNode(@"
                     body
-                    /div[@class='container-outer']
+                    /div[@class='container-outer seemsgood']
                     /div[@class='container-inner container-inner-content']");
                 if (containterElement != null)
                 {
                     var elements = containterElement.SelectNodes(@"
                         div[@class='content-inner']
-                        /div
+                        /section
+                        /div[@class='filter  inline-filter']
+                        /form[@method='get']
+                        /div[3]
                         /section
                         /article[@class='match-aggregate-stats']
                         /div[@class='r-stats-grid']
@@ -563,7 +578,7 @@ namespace DotaHeroPicker
                                 var dotaHeroCollection = DotaHeroCollection.GetInstance();
                                 elements = root.SelectNodes(@"
                                     body
-                                    /div[@class='container-outer']
+                                    /div[@class='container-outer seemsgood']
                                     /div[@class='container-inner container-inner-content']
                                     /div[@class='content-inner']
                                     /section
@@ -605,17 +620,24 @@ namespace DotaHeroPicker
 
         public List<IDotaPlayerStatistics> GetPlayersStatisticsCollection(IEnumerable<IDotaPlayer> dotaPlayers)
         {
-            var dotaPlayerStatiscsCollection = new List<IDotaPlayerStatistics>();
-            foreach (var dotaPlayer in dotaPlayers)
+            lock (_statLocker)
             {
-                var playerStatistics = GetPlayerStatistics(dotaPlayer);
-                dotaPlayerStatiscsCollection.Add(playerStatistics);
+                var dotaPlayerStatiscsCollection = new List<IDotaPlayerStatistics>();
+                var percentsInIteration = 100d / dotaPlayers.Count();
+                foreach (var dotaPlayer in dotaPlayers)
+                {
+                    var playerStatistics = GetPlayerStatistics(dotaPlayer);
+                    dotaPlayerStatiscsCollection.Add(playerStatistics);
+                    SetOperationProgress(OperationProgress + percentsInIteration, Operation.GetPlayerStatistics);
 #if DEBUG
-                Console.WriteLine(playerStatistics.ToString());
+                    Console.WriteLine(playerStatistics.ToString());
 #endif
-            }
+                }
 
-            return dotaPlayerStatiscsCollection;
+                SetOperationProgress(100, Operation.GetPlayerStatistics);
+
+                return dotaPlayerStatiscsCollection;
+            }
         }
 
         #endregion

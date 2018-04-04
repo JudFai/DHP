@@ -22,7 +22,7 @@ namespace DotaHeroPickerUI.ViewModel
 
         #region Properties
 
-        public HeroesCollectionChangedEventArgs HeroesCollection { get; private set; }
+        //public HeroesCollectionChangedEventArgs HeroesCollection { get; private set; }
 
         public List<HeroAdvantageCollectionViewModel> HeroAdvantageCollection
         {
@@ -65,47 +65,47 @@ namespace DotaHeroPickerUI.ViewModel
         public ResultAdvantageViewModel(HostViewModel parent, string title, IconEnum icon)
             : base(parent, title, icon)
         {
-            Parent.HeroesCollectionChanged += OnHeroesCollectionChanged;
-            Parent.DotaStatisticsManager.LoadedHeroAdvantages += OnGetAllHeroAdvantageCompleted;
+            //Parent.HeroesCollectionChanged += OnHeroesCollectionChanged;
+            //Parent.DotaStatisticsManager.LoadedHeroAdvantages += OnGetAllHeroAdvantageCompleted;
         }
 
         #endregion
 
         #region Private Methods
 
-        private void OnHeroesCollectionChanged(object sender, HeroesCollectionChangedEventArgs e)
-        {
-            HeroesCollection = e;
-            RefreshHeroAdvantageCollection();
-        }
+        //private void OnHeroesCollectionChanged(object sender, HeroesCollectionChangedEventArgs e)
+        //{
+        //    HeroesCollection = e;
+        //    RefreshHeroAdvantageCollection();
+        //}
 
-        private void OnGetAllHeroAdvantageCompleted(object sender, List<HeroAdvantage> e)
-        {
-            RefreshHeroAdvantageCollection();
-        }
+        //private void OnGetAllHeroAdvantageCompleted(object sender, List<HeroAdvantage> e)
+        //{
+        //    RefreshHeroAdvantageCollection();
+        //}
 
-        private void RefreshHeroAdvantageCollection()
-        {
-            if ((Parent.StatisticsManager != null) &&
-                (HeroesCollection != null) &&
-                (HeroesCollection.EnemyHeroes.Count(p => !p.IsEmpty) > 0))
-            {
-                HeroAdvantageCollection = Parent.StatisticsManager.GetAdvantageCollection(
-                    HeroesCollection.EnemyHeroes.Select(p => p.Hero).ToList(),
-                    HeroesCollection.AlliedHeroes.Select(p => p.Hero).ToList(),
-                    HeroesCollection.BannedHeroes.Select(p => p.Hero).ToList())
-                    .Select(p =>
-                        new HeroAdvantageCollectionViewModel(p,
-                            p.EnemyHeroAdvantage.Select(a => new EnemyHeroAdvantageViewModel(a, Parent.AllDotaHero.FirstOrDefault(k => k.Hero == a.Hero))).ToList(),
-                            p.AlliedHeroAdvantage.Select(a => new AlliedHeroAdvantageViewModel(a, Parent.AllDotaHero.FirstOrDefault(k => k.Hero == a.Hero))).ToList(),
-                            Parent.AllDotaHero.FirstOrDefault(a => a.Hero == p.Hero)))
-                    .ToList();
-            }
-            else
-                HeroAdvantageCollection = null;
+        //private void RefreshHeroAdvantageCollection()
+        //{
+        //    if ((Parent.StatisticsManager != null) &&
+        //        (HeroesCollection != null) &&
+        //        (HeroesCollection.EnemyHeroes.Count(p => !p.IsEmpty) > 0))
+        //    {
+        //        HeroAdvantageCollection = Parent.StatisticsManager.GetAdvantageCollection(
+        //            HeroesCollection.EnemyHeroes.Select(p => p.Hero).ToList(),
+        //            HeroesCollection.AlliedHeroes.Select(p => p.Hero).ToList(),
+        //            HeroesCollection.BannedHeroes.Select(p => p.Hero).ToList())
+        //            .Select(p =>
+        //                new HeroAdvantageCollectionViewModel(p,
+        //                    p.EnemyHeroAdvantage.Select(a => new EnemyHeroAdvantageViewModel(a, Parent.AllDotaHero.FirstOrDefault(k => k.Hero == a.Hero))).ToList(),
+        //                    p.AlliedHeroAdvantage.Select(a => new AlliedHeroAdvantageViewModel(a, Parent.AllDotaHero.FirstOrDefault(k => k.Hero == a.Hero))).ToList(),
+        //                    Parent.AllDotaHero.FirstOrDefault(a => a.Hero == p.Hero)))
+        //            .ToList();
+        //    }
+        //    else
+        //        HeroAdvantageCollection = null;
 
-            RefreshFilteredCollection();
-        }
+        //    RefreshFilteredCollection();
+        //}
 
         private void RefreshFilteredCollection()
         {

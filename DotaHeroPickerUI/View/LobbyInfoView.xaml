@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="DotaHeroPickerUI.View.LobbyInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:HeroPickerResources.Converters;assembly=HeroPickerResources"
+             xmlns:controls="clr-namespace:HeroPickerResources.Controls;assembly=HeroPickerResources"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HeroPickerResources;component/MainResource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="The Radiant"
+                       Foreground="Green" 
+                       Margin="{StaticResource ElementThickness}"
+                       Style="{StaticResource TitleTextBlockStyle}" />
+            <ItemsControl ItemsSource="{Binding RadiantDotaPlayerStatisticsCollection}"
+                          ItemTemplate="{StaticResource DotaPlayerStatisticsTemplate}"
+                          Margin="{StaticResource ElementThickness}"
+                          AlternationCount="2" />
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="The Dire"
+                       Foreground="Red" 
+                       Margin="{StaticResource ElementThickness}"
+                       Style="{StaticResource TitleTextBlockStyle}" />
+            <ItemsControl ItemsSource="{Binding DireDotaPlayerStatisticsCollection}"
+                          ItemTemplate="{StaticResource DotaPlayerStatisticsTemplate}"
+                          Margin="{StaticResource ElementThickness}"
+                          AlternationCount="2" />
+        </StackPanel>
+    </Grid>
+</UserControl>

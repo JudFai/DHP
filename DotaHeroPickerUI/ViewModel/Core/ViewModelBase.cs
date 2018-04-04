@@ -17,10 +17,7 @@ namespace DotaHeroPickerUI.ViewModel.Core
 
         #region Constructors
 
-        public ViewModelBase()
-            : this(null) { }
-
-        public ViewModelBase(HostViewModel parent)
+        public ViewModelBase(HostViewModel parent = null)
         {
             Parent = parent;
         }
@@ -29,7 +26,7 @@ namespace DotaHeroPickerUI.ViewModel.Core
 
         #region Protected Methods
 
-        protected void RaisePropertyChanged<T>(Expression<Func<T>> expr)
+        public void RaisePropertyChanged<T>(Expression<Func<T>> expr)
         {
             var memberExprBody = expr.Body as MemberExpression;
             if (memberExprBody != null)
@@ -46,6 +43,5 @@ namespace DotaHeroPickerUI.ViewModel.Core
         public abstract void Dispose();
 
         #endregion
-
     }
 }

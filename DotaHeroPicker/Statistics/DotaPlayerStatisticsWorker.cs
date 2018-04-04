@@ -56,7 +56,9 @@ namespace DotaHeroPicker.Statistics
 
         private void OnReceivedNewDotaLobby(object sender, IDotaLobby dotaLobby)
         {
+            OnReceivingDotaPlayersStatistics(this, true);
             var playersStatistics = _statisticsManager.GetPlayersStatisticsCollection(dotaLobby.Players);
+            OnReceivingDotaPlayersStatistics(this, false);
             OnDotaPlayersStatisticsReceived(playersStatistics);
         }
 
@@ -64,13 +66,24 @@ namespace DotaHeroPicker.Statistics
 
         #region IDotaPlayerStatisticsWorker Members
 
+        public List<IDotaPlayerStatistics> LastReceviedDotaPlayerStatisticsCollection { get; private set; }
+
         private void OnDotaPlayersStatisticsReceived(List<IDotaPlayerStatistics> e)
         {
+            LastReceviedDotaPlayerStatisticsCollection = e;
             if (DotaPlayersStatisticsReceived != null)
                 DotaPlayersStatisticsReceived(this, e);
         }
 
         public event EventHandler<List<IDotaPlayerStatistics>> DotaPlayersStatisticsReceived;
+
+        private void OnReceivingDotaPlayersStatistics(object sender, bool e)
+        {
+            if (ReceivingDotaPlayersStatistics != null)
+                ReceivingDotaPlayersStatistics(sender, e);
+        }
+
+        public event EventHandler<bool> ReceivingDotaPlayersStatistics;
 
         public void StartGettingDotaPlayersStatistics()
         {

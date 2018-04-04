@@ -344,6 +344,21 @@ namespace DotaHeroPicker.Collections
                 })
             }));
 
+            // TODO: добавить способности
+            Items.Add(DotaHero.Factory.CreateElement(new List<object>()
+            {
+                new DotaName<Hero>(Hero.DarkWillow, "Dark Willow"), 
+                AttackType.Ranged, HeroCharacteristic.Intelligence,
+                new List<HeroRole> { HeroRole.Disabler, HeroRole.Escape, HeroRole.Nuker, HeroRole.Support },
+                new ReadOnlyCollection<DotaHeroAbility>(new List<DotaHeroAbility>
+                {
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.IonShell, "Ion Shell")),
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.Surge, "Surge")),
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.Vacuum, "Vacuum")),
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.WallReplica, "Wall of Replica"))
+                })
+            }));
+
             Items.Add(DotaHero.Factory.CreateElement(new List<object>()
             {
                 new DotaName<Hero>(Hero.Dazzle, "Dazzle"), 
@@ -994,6 +1009,22 @@ namespace DotaHeroPicker.Collections
                     DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.AstralImprisonment, "Astral Imprisonment")),
                     DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.EssenceAura, "Essence Aura")),
                     DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.SanityEclipse, "Sanity's Eclipse"))
+                })
+            }));
+
+
+            // TODO: добавить способности герою
+            Items.Add(DotaHero.Factory.CreateElement(new List<object>()
+            {
+                new DotaName<Hero>(Hero.Pangolier, "Pangolier"), 
+                AttackType.Melee, HeroCharacteristic.Agility,
+                new List<HeroRole> { HeroRole.Carry, HeroRole.Disabler, HeroRole.Durable, HeroRole.Escape, HeroRole.Initiator, HeroRole.Nuker },
+                new ReadOnlyCollection<DotaHeroAbility>(new List<DotaHeroAbility>
+                {
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.ArcaneOrb, "Arcane Orb")),
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.AstralImprisonment, "Astral Imprisonment")),
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.EssenceAura, "Essence Aura")),
+                    //DotaHeroAbility.Factory.CreateElement(new DotaName<Ability>(Ability.SanityEclipse, "Sanity's Eclipse"))
                 })
             }));
 

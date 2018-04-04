@@ -1,11 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:HeroPickerResources.Controls">
+                    xmlns:controls="clr-namespace:HeroPickerResources.Controls"
+                    xmlns:converters="clr-namespace:HeroPickerResources.Converters">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../Converters/ConverterResource.xaml" />
         <ResourceDictionary Source="../Styles/TextBlockStyle.xaml" />
         <ResourceDictionary Source="../Styles/ColorStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    <converters:PercentsToColorConverter x:Key="PercentsToColorConverter" />
+    <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 
     <!--Width="64" Height="36"-->
     <!--Width="56" Height="31"-->
@@ -142,6 +145,107 @@
             </controls:PanelWithToolTipControl.PopupContent>
             <Grid x:Name="BackgroundGrid" Margin="0, 1, 0, 0">
                 <ContentPresenter ContentTemplate="{StaticResource HeroAdvantageTemplate}" />
+            </Grid>
+        </controls:PanelWithToolTipControl>
+        <DataTemplate.Triggers>
+            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                <Setter Property="Background" Value="{StaticResource BaseLowestColorBrush}" TargetName="BackgroundGrid"/>
+            </Trigger>
+            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                <Setter Property="Background" Value="{StaticResource ChromeLowColorBrush}" TargetName="BackgroundGrid"/>
+            </Trigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!--LobbyInfo-->
+    <DataTemplate x:Key="DotaWinningTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Percentage, StringFormat={}{0:F2}%}" 
+                                      VerticalAlignment="Center"
+                                      Margin="3">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{Binding Percentage, Converter={StaticResource PercentsToColorConverter}}"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <TextBlock Text="(" 
+                        Foreground="{StaticResource BaseLowestColorBrush}"
+                        Margin="3, 3, 0, 3"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BodyTextBlockStyle}" />
+            <TextBlock Text="{Binding Wins}"
+                        Foreground="Green"
+                        Margin="3"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BodyTextBlockStyle}" />
+            <TextBlock Text="/"
+                        Foreground="{StaticResource BaseLowestColorBrush}"
+                        Margin="0, 3, 0, 3"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BodyTextBlockStyle}" />
+            <TextBlock Text="{Binding Loses}"
+                        Foreground="Red"
+                        Margin="3"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BodyTextBlockStyle}" />
+            <TextBlock Text=")" 
+                        Foreground="{StaticResource BaseLowestColorBrush}"
+                        Margin="0, 3, 3, 3"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BodyTextBlockStyle}" />
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="DotaHeroStatisticsTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Image Source="{Binding Hero.IconPath}" 
+                   Width="32" Height="32"
+                   Margin="3"/>
+            <TextBlock Text="{Binding Hero.Hero.DotaName.FullName}" 
+                       Width="200" Margin="3"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource BodyTextBlockStyle}" />
+            <ContentControl Content="{Binding Winning}"
+                            ContentTemplate="{StaticResource DotaWinningTemplate}" />
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="DotaPlayerStatisticsTemplate">
+        <controls:PanelWithToolTipControl HorizontalAlignment="Left">
+            <controls:PanelWithToolTipControl.PopupContent>
+                <Border Background="{StaticResource AltMediumHighColorBrush}"
+                        BorderBrush="{StaticResource BaseLowColorBrush}"
+                        BorderThickness="1">
+                    <StackPanel>
+                        <ItemsControl ItemsSource="{Binding TopFavoriteHeroes}"
+                                  ItemTemplate="{StaticResource DotaHeroStatisticsTemplate}"
+                                  Visibility="{Binding FavoriteHeroes, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=True}" />
+                        <TextBlock Text="No data" 
+                                   Margin="5"
+                                   Visibility="{Binding FavoriteHeroes, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=False}" />
+                    </StackPanel>
+                </Border>
+            </controls:PanelWithToolTipControl.PopupContent>
+            <Grid x:Name="BackgroundGrid" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Nickname}" 
+                               Width="170" Margin="3"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource BodyTextBlockStyle}" />
+                    <StackPanel Width="240" Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Winning}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <TextBlock Text="{Binding Player.ID}" 
+                                   VerticalAlignment="Center"
+                                   Width="90" Margin="3" />
+                        <ContentControl Content="{Binding Winning}"
+                                        ContentTemplate="{StaticResource DotaWinningTemplate}" />
+                    </StackPanel>
+                </StackPanel>
             </Grid>
         </controls:PanelWithToolTipControl>
         <DataTemplate.Triggers>

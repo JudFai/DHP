@@ -65,13 +65,13 @@
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <ItemsControl Grid.Column="0" 
-                                  ItemsSource="{Binding DotaHeroAgilityColletion, IsAsync=True}"
+                                  ItemsSource="{Binding LobbyDotaHeroCollection.DotaHeroAgilityColletion, IsAsync=True}"
                                   Style="{StaticResource HeroByCharStyle}" />
                     <ItemsControl Grid.Column="1" 
-                                  ItemsSource="{Binding DotaHeroStrengthColletion, IsAsync=True}"
+                                  ItemsSource="{Binding LobbyDotaHeroCollection.DotaHeroStrengthColletion, IsAsync=True}"
                                   Style="{StaticResource HeroByCharStyle}" />
                     <ItemsControl Grid.Column="2" 
-                                  ItemsSource="{Binding DotaHeroIntelligenceColletion, IsAsync=True}"
+                                  ItemsSource="{Binding LobbyDotaHeroCollection.DotaHeroIntelligenceColletion, IsAsync=True}"
                                   Style="{StaticResource HeroByCharStyle}" />
                 </Grid>
             </StackPanel>
@@ -87,7 +87,7 @@
                            Foreground="White" 
                            Margin="{StaticResource ElementThickness}"
                            Style="{StaticResource TitleTextBlockStyle}" />
-                <ItemsControl ItemsSource="{Binding BannedDotaHeroCollection, IsAsync=True}"
+                <ItemsControl ItemsSource="{Binding LobbyDotaHeroCollection.BannedDotaHeroCollection, IsAsync=True}"
                               ItemTemplate="{StaticResource HeroTemplate}"
                               dragDrop:DragDropHelper.IsDragSource="True"
                               dragDrop:DragDropHelper.IsDropTarget="True"
@@ -103,7 +103,7 @@
                 <TextBlock Text="Allies" 
                             Foreground="White" Margin="{StaticResource ElementThickness}"
                             Style="{StaticResource TitleTextBlockStyle}" />
-                <ItemsControl ItemsSource="{Binding AlliedDotaHeroCollection, IsAsync=True}"
+                <ItemsControl ItemsSource="{Binding LobbyDotaHeroCollection.AlliedDotaHeroCollection, IsAsync=True}"
                               ItemTemplate="{StaticResource HeroTemplate}"
                               dragDrop:DragDropHelper.IsDragSource="True"
                               dragDrop:DragDropHelper.IsDropTarget="True"
@@ -119,7 +119,7 @@
                 <TextBlock Text="Enemies" 
                            Foreground="White" Margin="{StaticResource ElementThickness}"
                            Style="{StaticResource TitleTextBlockStyle}" />
-                <ItemsControl ItemsSource="{Binding EnemyDotaHeroCollection, IsAsync=True}"
+                <ItemsControl ItemsSource="{Binding LobbyDotaHeroCollection.EnemyDotaHeroCollection, IsAsync=True}"
                               ItemTemplate="{StaticResource HeroTemplate}"
                               dragDrop:DragDropHelper.IsDragSource="True"
                               dragDrop:DragDropHelper.IsDropTarget="True"

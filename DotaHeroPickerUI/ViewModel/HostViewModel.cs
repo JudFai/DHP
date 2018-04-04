@@ -17,6 +17,7 @@ using DotaHeroPickerUI.ViewModel.Core;
 using HeroPickerResources.Resources;
 using DotaHeroPicker.Collections;
 using DotaHeroPicker.Types;
+using DotaHeroPicker.Statistics;
 
 namespace DotaHeroPickerUI.ViewModel
 {
@@ -26,12 +27,10 @@ namespace DotaHeroPickerUI.ViewModel
 
         private object _selectedItemLocker = new object();
         private object _workProgressFunction = new object();
-        private ItemViewModel _selectedItem;
-
-        private readonly string _pathToHeroImage = "/HeroPickerResources;component/Images/Heroes/";
-        private readonly string _pathToHeroIcons = "/HeroPickerResources;component/Images/Heroes/Icons/";       
+        private ItemViewModel _selectedItem;     
 
         private readonly HeroPickerSettings _settings;
+        private readonly IDotaPlayerStatisticsWorker _dotaPlayerStatisticsWorker;
 
         private readonly SerializerHeroAdvantageCollection _serializerHeroAdvantageCollection;
         private readonly SerializerHeroGuideCollection _serializerHeroGuideCollection;
@@ -58,7 +57,7 @@ namespace DotaHeroPickerUI.ViewModel
                 if (_progress != value)
                 {
                     _progress = value;
-                    Dispatcher.Invoke(() => RaisePropertyChanged("Progress"));
+                    Dispatcher.Invoke(() => RaisePropertyChanged(() => Progress));
                 }
             }
         }
@@ -71,7 +70,7 @@ namespace DotaHeroPickerUI.ViewModel
                 if (_progressDescription != value)
                 {
                     _progressDescription = value;
-                    Dispatcher.Invoke(() => RaisePropertyChanged("ProgressDescription"));
+                    Dispatcher.Invoke(() => RaisePropertyChanged(() => ProgressDescription));
                 }
             }
         }
@@ -84,7 +83,7 @@ namespace DotaHeroPickerUI.ViewModel
                 if (_applicationRefreshingData != value)
                 {
                     _applicationRefreshingData = value;
-                    Dispatcher.Invoke(() => RaisePropertyChanged("ApplicationRefreshingData"));
+                    Dispatcher.Invoke(() => RaisePropertyChanged(() => ApplicationRefreshingData));
                 }
             }
         }
@@ -126,7 +125,9 @@ namespace DotaHeroPickerUI.ViewModel
         //    set { SetSelectedItem(value); }
         //}
 
-        public ReadOnlyCollection<DotaHeroViewModel> AllDotaHero { get; private set; }
+        public DotaHeroViewModelCollection AllDotaHero { get; private set; }
+        public LobbyDotaHeroCollectionViewModel LobbyDotaHeroCollection { get; private set; }
+        public List<HeroAdvantage> HeroAdvantageCollection { get; private set; }
 
         #endregion
 
@@ -140,12 +141,7 @@ namespace DotaHeroPickerUI.ViewModel
         /// <summary>
         /// Происходит, когда коллекция руководств сериализованна или получена
         /// </summary>
-        public event EventHandler<List<HeroGuide>> GetAllHeroGuideCompleted;
-
-        /// <summary>
-        /// Происходит, когда изменяется одна из коллекций вражских, союзных или забанненых героев
-        /// </summary>
-        public event EventHandler<HeroesCollectionChangedEventArgs> HeroesCollectionChanged;
+        //public event EventHandler<List<HeroGuide>> GetAllHeroGuideCompleted;
 
         #endregion
 
@@ -154,33 +150,19 @@ namespace DotaHeroPickerUI.ViewModel
         public HostViewModel()
         {
             DotaStatisticsManager = DotaStatisticsManager.GetInstance();
-            var collection = DotaHeroCollection.GetInstance();
-
-            AllDotaHero = new ReadOnlyCollection<DotaHeroViewModel>(
-                collection.Select(p => new DotaHeroViewModel(
-                    p,
-                    string.Format("{0}{1}.jpg", _pathToHeroImage, p.DotaName.Entity),
-                    true,
-                    string.Format("{0}{1}.png", _pathToHeroIcons, p.DotaName.Entity))).ToList());
-
-            //var heroesPick = new HeroesPickViewModel(this, "Выбор героев", IconEnum.Pick);
-            //heroesPick.HeroesCollectionChanged += OnHeroesCollectionChanged;
-            //ItemCollection = new List<ItemViewModel>
-            //{
-            //    heroesPick,
-            //    new ResultAdvantageEnemiesViewModel(this, "Выгода над врагами", @"pack://application:,,,/HeroPickerResources;component/Images/Icons/Swords.png"),
-            //    //new ResultAdvantageAlliesViewModel(this, "Выгода с союзниками", IconEnum.AlliedAdvantage),
-            //    //new HeroGuridsViewModel(this, "Руководства героев", IconEnum.Guide)
-            //};
-            //SelectedItem = ItemCollection.FirstOrDefault();
+            AllDotaHero = DotaHeroViewModelCollection.GetInstance();
+            LobbyDotaHeroCollection = new LobbyDotaHeroCollectionViewModel(AllDotaHero);
+            _dotaPlayerStatisticsWorker = DotaPlayerStatisticsWorker.Instance;
+            _dotaPlayerStatisticsWorker.StartGettingDotaPlayersStatistics();
+            _dotaPlayerStatisticsWorker.ReceivingDotaPlayersStatistics += OnReceivingDotaPlayersStatistics;
 
             MenuItemCollection = new List<IMenuItem>
             {
                 new MenuItem("Выбор героев", Menu.HeroesPick, IconEnum.Pick),
                 new MenuItem("Выгода над врагами", Menu.ResultAdvantageEnemies, IconEnum.EnemyAdvantage),
+                new MenuItem("Информация лобби", Menu.LobbyInfo, IconEnum.EnemyAdvantage),
                 new MenuItem("Настройки", Menu.Settings, IconEnum.Settings, true)
             };
-            SelectedMenuItem = MenuItemCollection.FirstOrDefault();
             //Loading settings=========================================================================================================
             _serializerHeroAdvantageCollection = SerializerHeroAdvantageCollection.GetInstance();
             _serializerHeroGuideCollection = SerializerHeroGuideCollection.GetInstance();
@@ -193,18 +175,16 @@ namespace DotaHeroPickerUI.ViewModel
             //DotaStatisticsManager.LoadedHeroAdvantages += OnLoadedHeroAdvantages;
             if (_settings.CountDaysForRefreshData <= (DateTime.Now - _settings.LastDateRefreshHeroAdvantageCollection).Days)
             {
-                // TODO: вернуть, когда UI будет готов
-                //ApplicationRefreshingData = true;
-                //DotaStatisticsManager.GetAllHeroAdvantage();
+                ApplicationRefreshingData = true;
+                DotaStatisticsManager.GetAllHeroAdvantage();
             }
             else
             {
                 var heroAdvantageCollection = _serializerHeroAdvantageCollection.ReadXml();
                 if (heroAdvantageCollection == null)
                 {
-                    // TODO: вернуть, когда UI будет готов
-                    //ApplicationRefreshingData = true;
-                    //DotaStatisticsManager.GetAllHeroAdvantage();
+                    ApplicationRefreshingData = true;
+                    DotaStatisticsManager.GetAllHeroAdvantage();
                 }
                 else
                 {
@@ -213,12 +193,7 @@ namespace DotaHeroPickerUI.ViewModel
                 }
             }
 
-            //ItemBottomCollection = new List<ItemViewModel>
-            //{
-            //    new SettingsViewModel(this, "Настройки", IconEnum.Settings, _settings, _serializerHeroPickerSettings)
-            //};
-
-            //DotaStatisticsManager.LoadHeroAdvantages();
+            SelectedMenuItem = MenuItemCollection.FirstOrDefault();
         }
 
         #endregion
@@ -229,7 +204,7 @@ namespace DotaHeroPickerUI.ViewModel
         {
             if (_selectedMenuItem != value)
             {
-                if (_selectedMenuItem != null)
+                if ((_selectedMenuItem != null) && (_selectedMenuItem.Value != null))
                 {
                     _selectedMenuItem.Value.Dispose();
                     _selectedMenuItem.Value = null;
@@ -246,11 +221,13 @@ namespace DotaHeroPickerUI.ViewModel
             switch (menu)
             {
                 case Menu.HeroesPick:
-                    return new HeroesPickViewModel(this);
+                    return new HeroesPickViewModel(this, LobbyDotaHeroCollection);
                 case Menu.ResultAdvantageEnemies:
-                    return new ResultAdvantageEnemiesViewModel(this);
+                    return new ResultAdvantageEnemiesViewModel(this, LobbyDotaHeroCollection);
                 case Menu.Settings:
                     return new SettingsViewModel(this, _settings);
+                case Menu.LobbyInfo:
+                    return new LobbyInfoViewModel(this, _dotaPlayerStatisticsWorker);
                 default:
                     throw new NotImplementedException();
             }
@@ -293,7 +270,7 @@ namespace DotaHeroPickerUI.ViewModel
                         else
                         {
                             //StatisticsManager = new StatisticsManager(heroGuideCollection);
-                            OnGetAllHeroGuideCompleted(heroGuideCollection);
+                            //OnGetAllHeroGuideCompleted(heroGuideCollection);
                         }
                     }
                 }
@@ -316,6 +293,9 @@ namespace DotaHeroPickerUI.ViewModel
                         break;
                     case Operation.GetAllHeroGuide:
                         ProgressDescription = "Загрузка руководств для героев...";
+                        break;
+                    case Operation.GetPlayerStatistics:
+                        ProgressDescription = "Загрузка статистики на игроков...";
                         break;
                 }
             }
@@ -340,6 +320,7 @@ namespace DotaHeroPickerUI.ViewModel
             _serializerHeroAdvantageCollection.WriteXml(e);
             _serializerHeroPickerSettings.WriteXml(_settings);
             ApplicationRefreshingData = false;
+            HeroAdvantageCollection = e;
             OnGetAllHeroAdvantageCompleted(e);
         }
 
@@ -348,31 +329,36 @@ namespace DotaHeroPickerUI.ViewModel
             StatisticsManager = new StatisticsManager(e);
         }
 
-        private void OnGetAllHeroGuideCompleted(List<HeroGuide> e)
+        private void OnReceivingDotaPlayersStatistics(object sender, bool e)
         {
-            if (GetAllHeroGuideCompleted != null)
-                GetAllHeroGuideCompleted(this, e);
+            ApplicationRefreshingData = e;
         }
 
-        private void OnGetAllHeroGuideCompleted(object sender, List<HeroGuide> e)
-        {
-            _settings.LastDateRefreshHeroGuideCollection = DateTime.Now.Date;
-            _serializerHeroGuideCollection.WriteXml(e);
-            _serializerHeroPickerSettings.WriteXml(_settings);
-            ApplicationRefreshingData = false;
-            OnGetAllHeroGuideCompleted(e);
-        }
+        //private void OnGetAllHeroGuideCompleted(List<HeroGuide> e)
+        //{
+        //    if (GetAllHeroGuideCompleted != null)
+        //        GetAllHeroGuideCompleted(this, e);
+        //}
 
-        private void OnHeroesCollectionChanged(HeroesCollectionChangedEventArgs e)
-        {
-            if (HeroesCollectionChanged != null)
-                HeroesCollectionChanged(this, e);
-        }
+        //private void OnGetAllHeroGuideCompleted(object sender, List<HeroGuide> e)
+        //{
+        //    _settings.LastDateRefreshHeroGuideCollection = DateTime.Now.Date;
+        //    _serializerHeroGuideCollection.WriteXml(e);
+        //    _serializerHeroPickerSettings.WriteXml(_settings);
+        //    ApplicationRefreshingData = false;
+        //    OnGetAllHeroGuideCompleted(e);
+        //}
 
-        private void OnHeroesCollectionChanged(object sender, HeroesCollectionChangedEventArgs e)
-        {
-            OnHeroesCollectionChanged(e);
-        }
+        //private void OnHeroesCollectionChanged(HeroesCollectionChangedEventArgs e)
+        //{
+        //    if (HeroesCollectionChanged != null)
+        //        HeroesCollectionChanged(this, e);
+        //}
+
+        //private void OnHeroesCollectionChanged(object sender, HeroesCollectionChangedEventArgs e)
+        //{
+        //    OnHeroesCollectionChanged(e);
+        //}
 
         private void SetSelectedItem(ItemViewModel val)
         {

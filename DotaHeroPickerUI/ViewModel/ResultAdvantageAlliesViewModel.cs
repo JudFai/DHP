@@ -41,7 +41,7 @@ namespace DotaHeroPickerUI.ViewModel
             }
         }
 
-        public HeroesCollectionChangedEventArgs HeroesCollection { get; private set; }
+        //public HeroesCollectionChangedEventArgs HeroesCollection { get; private set; }
 
         public bool OnlyPositiveAdvantages
         {
@@ -65,46 +65,46 @@ namespace DotaHeroPickerUI.ViewModel
             : base(parent, title, iconPath)
         {
             //Parent.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;
-            Parent.HeroesCollectionChanged += OnHeroesCollectionChanged; 
-            Parent.DotaStatisticsManager.LoadedHeroAdvantages += OnGetAllHeroAdvantageCompleted;
+            //Parent.HeroesCollectionChanged += OnHeroesCollectionChanged; 
+            //Parent.DotaStatisticsManager.LoadedHeroAdvantages += OnGetAllHeroAdvantageCompleted;
         }
 
         #endregion
 
         #region Private Methods
 
-        private void OnHeroesCollectionChanged(object sender, HeroesCollectionChangedEventArgs e)
-        {
-            HeroesCollection = e;
-            RefreshAlliedHeroAdvantageCollection();
-        }
+        //private void OnHeroesCollectionChanged(object sender, HeroesCollectionChangedEventArgs e)
+        //{
+        //    HeroesCollection = e;
+        //    RefreshAlliedHeroAdvantageCollection();
+        //}
 
-        private void OnGetAllHeroAdvantageCompleted(object sender, List<HeroAdvantage> e)
-        {
-            RefreshAlliedHeroAdvantageCollection();
-        }
+        //private void OnGetAllHeroAdvantageCompleted(object sender, List<HeroAdvantage> e)
+        //{
+        //    RefreshAlliedHeroAdvantageCollection();
+        //}
 
-        private void RefreshAlliedHeroAdvantageCollection()
-        {
-            if ((Parent.StatisticsManager != null) &&
-                (HeroesCollection != null) &&
-                (HeroesCollection.AlliedHeroes.Count(p => !p.IsEmpty) > 0))
-            {
-                AlliedHeroAdvantageCollection = Parent.StatisticsManager.GetAlliedTeamAdvantageCollection(
-                    HeroesCollection.EnemyHeroes.Select(p => p.Hero).ToList(),
-                    HeroesCollection.AlliedHeroes.Select(p => p.Hero).ToList(),
-                    HeroesCollection.BannedHeroes.Select(p => p.Hero).ToList())
-                    .Select(p =>
-                        new AlliedHeroAdvantageCollectionViewModel(p,
-                            p.AlliedHeroAdvantage.Select(a => new AlliedHeroAdvantageViewModel(a, Parent.AllDotaHero.FirstOrDefault(k => k.Hero == a.Hero))).ToList(),
-                            Parent.AllDotaHero.FirstOrDefault(a => a.Hero == p.Hero)))
-                    .ToList();
-            }
-            else
-                AlliedHeroAdvantageCollection = null;
+        //private void RefreshAlliedHeroAdvantageCollection()
+        //{
+        //    if ((Parent.StatisticsManager != null) &&
+        //        (HeroesCollection != null) &&
+        //        (HeroesCollection.AlliedHeroes.Count(p => !p.IsEmpty) > 0))
+        //    {
+        //        AlliedHeroAdvantageCollection = Parent.StatisticsManager.GetAlliedTeamAdvantageCollection(
+        //            HeroesCollection.EnemyHeroes.Select(p => p.Hero).ToList(),
+        //            HeroesCollection.AlliedHeroes.Select(p => p.Hero).ToList(),
+        //            HeroesCollection.BannedHeroes.Select(p => p.Hero).ToList())
+        //            .Select(p =>
+        //                new AlliedHeroAdvantageCollectionViewModel(p,
+        //                    p.AlliedHeroAdvantage.Select(a => new AlliedHeroAdvantageViewModel(a, Parent.AllDotaHero.FirstOrDefault(k => k.Hero == a.Hero))).ToList(),
+        //                    Parent.AllDotaHero.FirstOrDefault(a => a.Hero == p.Hero)))
+        //            .ToList();
+        //    }
+        //    else
+        //        AlliedHeroAdvantageCollection = null;
 
-            RefreshFilteredCollection();
-        }
+        //    RefreshFilteredCollection();
+        //}
 
         private void RefreshFilteredCollection()
         {

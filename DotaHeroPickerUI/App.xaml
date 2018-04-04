@@ -30,6 +30,10 @@
                 <v:ResultAdvantageView />
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type vm:LobbyInfoViewModel}">
+                <v:LobbyInfoView />
+            </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

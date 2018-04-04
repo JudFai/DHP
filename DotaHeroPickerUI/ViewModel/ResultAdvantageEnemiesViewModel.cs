@@ -29,7 +29,7 @@ namespace DotaHeroPickerUI.ViewModel
             set
             {
                 _enemyHeroAdvantageCollection = value;
-                Dispatcher.Invoke(() => RaisePropertyChanged("EnemyHeroAdvantageCollection"));
+                Dispatcher.Invoke(() => RaisePropertyChanged(() => EnemyHeroAdvantageCollection));
             }
         }
 
@@ -39,11 +39,11 @@ namespace DotaHeroPickerUI.ViewModel
             set
             {
                 _enemyHeroAdvantageFilteredCollection = value;
-                Dispatcher.Invoke(() => RaisePropertyChanged("EnemyHeroAdvantageFilteredCollection"));
+                Dispatcher.Invoke(() => RaisePropertyChanged(() => EnemyHeroAdvantageFilteredCollection));
             }
         }
 
-        public HeroesCollectionChangedEventArgs HeroesCollection { get; private set; }
+        public LobbyDotaHeroCollectionViewModel LobbyDotaHeroCollection { get; private set; }
 
         public bool OnlyPositiveAdvantages
         {
@@ -53,7 +53,7 @@ namespace DotaHeroPickerUI.ViewModel
                 if (_onlyPositiveAdvantages != value)
                 {
                     _onlyPositiveAdvantages = value;
-                    RaisePropertyChanged("OnlyPositiveAdvantages");
+                    RaisePropertyChanged(() => OnlyPositiveAdvantages);
                     RefreshFilteredCollection();
                 }
             }
@@ -63,21 +63,21 @@ namespace DotaHeroPickerUI.ViewModel
 
         #region Constructors
 
-        public ResultAdvantageEnemiesViewModel(HostViewModel parent/*, string title, string iconPath*/)
-            //: base(parent, title, iconPath)
+        public ResultAdvantageEnemiesViewModel(HostViewModel parent, LobbyDotaHeroCollectionViewModel lobbyDotaHeroCollection)
             : base(parent)
         {
+            LobbyDotaHeroCollection = lobbyDotaHeroCollection;
             Parent.GetAllHeroAdvantageCompleted += OnGetAllHeroAdvantageCompleted;
-            Parent.HeroesCollectionChanged += OnHeroesCollectionChanged;
+            LobbyDotaHeroCollection.HeroesCollectionChanged += OnHeroesCollectionChanged;
+            RefreshEnemyHeroAdvantageCollection();
         }
 
         #endregion
 
         #region Private Methods
 
-        private void OnHeroesCollectionChanged(object sender, HeroesCollectionChangedEventArgs e)
+        private void OnHeroesCollectionChanged(object sender, EventArgs e)
         {
-            HeroesCollection = e;
             RefreshEnemyHeroAdvantageCollection();
         }
 
@@ -89,14 +89,14 @@ namespace DotaHeroPickerUI.ViewModel
 
         private void RefreshEnemyHeroAdvantageCollection()
         {
-            if ((Parent.StatisticsManager != null) && 
-                (HeroesCollection != null) && 
-                (HeroesCollection.EnemyHeroes.Count(p => !p.IsEmpty) > 0))
+            if ((Parent.StatisticsManager != null) &&
+                (LobbyDotaHeroCollection != null) &&
+                (LobbyDotaHeroCollection.EnemyDotaHeroCollection.Count(p => !p.IsEmpty) > 0))
             {
                 EnemyHeroAdvantageCollection = Parent.StatisticsManager.GetEnemyTeamAdvantageCollection(
-                    HeroesCollection.EnemyHeroes.Select(p => p.Hero).ToList(),
-                    HeroesCollection.AlliedHeroes.Select(p => p.Hero).ToList(),
-                    HeroesCollection.BannedHeroes.Select(p => p.Hero).ToList())
+                    LobbyDotaHeroCollection.EnemyDotaHeroCollection.Select(p => p.Hero).ToList(),
+                    LobbyDotaHeroCollection.AlliedDotaHeroCollection.Select(p => p.Hero).ToList(),
+                    LobbyDotaHeroCollection.BannedDotaHeroCollection.Select(p => p.Hero).ToList())
                     .Select(p =>
                         new EnemyHeroAdvantageCollectionViewModel(p,
                             p.EnemyHeroAdvantage.Select(a => new EnemyHeroAdvantageViewModel(a, Parent.AllDotaHero.FirstOrDefault(k => k.Hero == a.Hero))).ToList(),
@@ -138,7 +138,7 @@ namespace DotaHeroPickerUI.ViewModel
         public override void Dispose()
         {
             Parent.GetAllHeroAdvantageCompleted -= OnGetAllHeroAdvantageCompleted;
-            Parent.HeroesCollectionChanged -= OnHeroesCollectionChanged;
+            //Parent.HeroesCollectionChanged -= OnHeroesCollectionChanged;
         }
 
         #endregion

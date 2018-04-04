@@ -13,7 +13,7 @@ namespace DotaHeroPicker.ServerLog
         private static readonly object _instanceLocker = new object();
         private static IDotaServerLogParser _instance;
 
-        private readonly string _generalPattern = @"(?<time>\d{2}\/\d{2}\/\d{4}\s\-\s\d{2}\:\d{2}\:\d{2})\:\s\=\[\w{1}:\d+:\d+\:\d+\]\s\(Lobby\s(?<lobby>\d+)\s(?<mode>[\w_]+)(?<players>(\s\d+:\[\w{1}:\d+:\d+\])+)\)\s\(Party\s(?<party>\d+)(?<party_players>(\s\d+:\[\w+:\d+:\d+\])+)\)";
+        private readonly string _generalPattern = @"(?<time>\d{2}\/\d{2}\/\d{4}\s\-\s\d{2}\:\d{2}\:\d{2})\:\s((\=\[\w{1}:\d+:\d+\:\d+\])|(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\:\d+))\s\(Lobby\s(?<lobby>\d+)\s(?<mode>[\w_]+)(?<players>(\s\d+:\[\w{1}:\d+:\d+\])+)\)\s\(Party\s(?<party>\d+)(?<party_players>(\s\d+:\[\w+:\d+:\d+\])+)\)";
         private readonly string _playerPattern = @"(?<slot>\d+)\:\[\w+\:\d+\:(?<id>\d+)\]";
 
         #endregion

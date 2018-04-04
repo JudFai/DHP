@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaHeroPicker", "DotaHeroPicker\DotaHeroPicker.csproj", "{CAB2648D-78C8-4AAE-852F-2392EFFC3789}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaApi", "DotaApi\DotaApi.csproj", "{D2F585E2-C3D2-4131-9675-0C1B80FC3F36}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDota", "EFDota\EFDota.csproj", "{DE02F5F7-66BC-445B-A0DD-912BC7375A05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenDota", "OpenDota\OpenDota.csproj", "{8FAA9E19-18D9-46BB-980E-DCE28F2FF0D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{DE02F5F7-66BC-445B-A0DD-912BC7375A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE02F5F7-66BC-445B-A0DD-912BC7375A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE02F5F7-66BC-445B-A0DD-912BC7375A05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FAA9E19-18D9-46BB-980E-DCE28F2FF0D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FAA9E19-18D9-46BB-980E-DCE28F2FF0D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FAA9E19-18D9-46BB-980E-DCE28F2FF0D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FAA9E19-18D9-46BB-980E-DCE28F2FF0D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

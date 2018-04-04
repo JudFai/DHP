@@ -134,7 +134,8 @@ namespace DotaHeroPicker
         Zeus = 22,
 
         Underlord = 108,
-        // TODO: поменять ID
-        MonkeyKing = 255
+        MonkeyKing = 114,
+        Pangolier = 120,
+        DarkWillow = 119
     }
 }
