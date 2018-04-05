@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenDota.Extensions;
 using OpenDota.Logger;
+using OpenDota.Types;
 
 namespace OpenDota
 {
@@ -161,7 +162,80 @@ namespace OpenDota
             return heroWinrateCollection;
         }
 
-        public List<IPlayerMatch> GetPlayerMatchCollection(uint playerId)
+        #endregion
+
+        #region IDataExplorer Members
+
+        public List<IHeroRatio> GetHeroEnemyRatioCollection(DateTime beginDt, DateTime endDt)
+        {
+            if (endDt < beginDt)
+                throw new ArgumentException("beginDt greater than endDt");
+
+            var delta = endDt - beginDt;
+            int beginUnix = 0;
+            int endUnix = 0;
+            var heroEnemyRatioCollection = new List<IHeroRatio>();
+            for (double i = 0; i < delta.TotalSeconds; i += MaxDeltaTimeSpan.TotalSeconds)
+            {
+                DateTime localBegint = beginDt.AddSeconds(i);
+                DateTime localEndDt = i + MaxDeltaTimeSpan.TotalSeconds < delta.TotalSeconds
+                    ? beginDt.AddSeconds(i + MaxDeltaTimeSpan.TotalSeconds)
+                    : endDt;
+
+                var pertiodHeroEnemyRatioCollection = GetHeroEnemyRationCollection(localBegint.GetUnixTimestamp(), localEndDt.GetUnixTimestamp());
+                heroEnemyRatioCollection.AddRange(pertiodHeroEnemyRatioCollection);
+            }
+
+            heroEnemyRatioCollection = heroEnemyRatioCollection
+                .GroupBy(p => new { p.HeroID, p.InterplayHeroID })
+                .Select(p => new HeroRatio 
+                {
+                    HeroID = p.Key.HeroID,
+                    InterplayHeroID = p.Key.InterplayHeroID,
+                    Matches = p.Sum(a => a.Matches),
+                    Wins = p.Sum(a => a.Wins)
+                })
+                .OrderByDescending(p => p.Matches)
+                .Cast<IHeroRatio>().ToList();
+
+            return heroEnemyRatioCollection;
+        }
+
+        public List<IHeroWinrate> GetHeroWinrateCollection(DateTime beginDt, DateTime endDt)
+        {
+            if (endDt < beginDt)
+                throw new ArgumentException("beginDt greater than endDt");
+
+            var delta = endDt - beginDt;
+            int beginUnix = 0;
+            int endUnix = 0;
+            var heroWinrateCollection = new List<IHeroWinrate>();
+            for (double i = 0; i < delta.TotalSeconds; i += MaxDeltaTimeSpan.TotalSeconds)
+            {
+                var localBegint = beginDt.AddSeconds(i);
+                var localEndDt = i + MaxDeltaTimeSpan.TotalSeconds < delta.TotalSeconds
+                    ? beginDt.AddSeconds(i + MaxDeltaTimeSpan.TotalSeconds)
+                    : endDt;
+
+                var pertiodHeroWinrateCollection = GetHeroWinrateCollection(localBegint.GetUnixTimestamp(), localEndDt.GetUnixTimestamp());
+                heroWinrateCollection.AddRange(pertiodHeroWinrateCollection);
+            }
+
+            heroWinrateCollection = heroWinrateCollection
+                .GroupBy(p => p.HeroID)
+                .Select(p => new HeroWinrate
+                {
+                    HeroID = p.Key,
+                    Matches = p.Sum(a => a.Matches),
+                    Wins = p.Sum(a => a.Wins)
+                })
+                .OrderByDescending(p => p.Matches)
+                .Cast<IHeroWinrate>().ToList();
+
+            return heroWinrateCollection;
+        }
+
+        public List<IPlayerMatch> GetPlayerMatchCollection(ulong playerId)
         {
             var sw = Stopwatch.StartNew();
             long totalElapsedMilliseconds = 0;
@@ -224,79 +298,6 @@ namespace OpenDota
             }
 
             return playerMatchCollection;
-        }
-
-        #endregion
-
-        #region IDataExplorer Members
-
-        public List<IHeroRatio> GetHeroEnemyRatioCollection(DateTime beginDt, DateTime endDt)
-        {
-            if (endDt < beginDt)
-                throw new ArgumentException("beginDt greater than endDt");
-
-            var delta = endDt - beginDt;
-            int beginUnix = 0;
-            int endUnix = 0;
-            var heroEnemyRatioCollection = new List<IHeroRatio>();
-            for (double i = 0; i < delta.TotalSeconds; i += MaxDeltaTimeSpan.TotalSeconds)
-            {
-                DateTime localBegint = beginDt.AddSeconds(i);
-                DateTime localEndDt = i + MaxDeltaTimeSpan.TotalSeconds < delta.TotalSeconds
-                    ? beginDt.AddSeconds(i + MaxDeltaTimeSpan.TotalSeconds)
-                    : endDt;
-
-                var pertiodHeroEnemyRatioCollection = GetHeroEnemyRationCollection(localBegint.GetUnixTimestamp(), localEndDt.GetUnixTimestamp());
-                heroEnemyRatioCollection.AddRange(pertiodHeroEnemyRatioCollection);
-            }
-
-            heroEnemyRatioCollection = heroEnemyRatioCollection
-                .GroupBy(p => new { p.HeroID, p.InterplayHeroID })
-                .Select(p => new HeroRatio 
-                {
-                    HeroID = p.Key.HeroID,
-                    InterplayHeroID = p.Key.InterplayHeroID,
-                    Matches = p.Sum(a => a.Matches),
-                    Wins = p.Sum(a => a.Wins)
-                })
-                .OrderByDescending(p => p.Matches)
-                .Cast<IHeroRatio>().ToList();
-
-            return heroEnemyRatioCollection;
-        }
-
-        public List<IHeroWinrate> GetHeroWinrateCollection(DateTime beginDt, DateTime endDt)
-        {
-            if (endDt < beginDt)
-                throw new ArgumentException("beginDt greater than endDt");
-
-            var delta = endDt - beginDt;
-            int beginUnix = 0;
-            int endUnix = 0;
-            var heroWinrateCollection = new List<IHeroWinrate>();
-            for (double i = 0; i < delta.TotalSeconds; i += MaxDeltaTimeSpan.TotalSeconds)
-            {
-                DateTime localBegint = beginDt.AddSeconds(i);
-                DateTime localEndDt = i + MaxDeltaTimeSpan.TotalSeconds < delta.TotalSeconds
-                    ? beginDt.AddSeconds(i + MaxDeltaTimeSpan.TotalSeconds)
-                    : endDt;
-
-                var pertiodHeroWinrateCollection = GetHeroWinrateCollection(localBegint.GetUnixTimestamp(), localEndDt.GetUnixTimestamp());
-                heroWinrateCollection.AddRange(pertiodHeroWinrateCollection);
-            }
-
-            heroWinrateCollection = heroWinrateCollection
-                .GroupBy(p => p.HeroID)
-                .Select(p => new HeroWinrate
-                {
-                    HeroID = p.Key,
-                    Matches = p.Sum(a => a.Matches),
-                    Wins = p.Sum(a => a.Wins)
-                })
-                .OrderByDescending(p => p.Matches)
-                .Cast<IHeroWinrate>().ToList();
-
-            return heroWinrateCollection;
         }
 
         #endregion
