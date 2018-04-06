@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace OpenDota.Types
 {
-    interface IPlayerMatch
+    public interface IDotaPlayerMatch
     {
         ulong MatchID { get; set; }
         PlayerSlot Slot { get; set; }
-        ulong AccountID { get; set; }
+        ulong? AccountID { get; set; }
         int Assists { get; set; }
         Item Backpack1 { get; set; }
         Item Backpack2 { get; set; }
@@ -36,8 +36,8 @@ namespace OpenDota.Types
         int XpPerMinute { get; set; }
         string PersonName { get; set; }
         Faction Faction { get; set; }
-        bool Win { get; set; }
         int TotalGold { get; set; }
         int TotalXp { get; set; }
+        IRankTier RankTier { get; set; }
     }
 }

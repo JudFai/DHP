@@ -50,6 +50,9 @@
     <Compile Include="DataExplorerUrlBuilder.cs" />
     <Compile Include="DotaStatisticsManager.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Types\BarracksStatus.cs" />
+    <Compile Include="Types\DotaMatch.cs" />
+    <Compile Include="Types\DotaPlayerMatch.cs" />
     <Compile Include="Types\Faction.cs" />
     <Compile Include="Types\GameMode.cs" />
     <Compile Include="Types\Hero.cs" />
@@ -63,6 +66,8 @@
     <Compile Include="IHeroRatio.cs" />
     <Compile Include="IHeroWinrate.cs" />
     <Compile Include="IPlayerMatch.cs" />
+    <Compile Include="Types\IDotaMatch.cs" />
+    <Compile Include="Types\IRankTier.cs" />
     <Compile Include="Types\Item.cs" />
     <Compile Include="Types\LeaverStatus.cs" />
     <Compile Include="Types\LobbyType.cs" />
@@ -72,7 +77,11 @@
     <Compile Include="Types\PlayerSlot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\IPlayerMatch.cs" />
+    <Compile Include="Types\IDotaPlayerMatch.cs" />
+    <Compile Include="Types\RankMedal.cs" />
+    <Compile Include="Types\RankTier.cs" />
+    <Compile Include="Types\ServerRegion.cs" />
+    <Compile Include="Types\TowerStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -16,7 +16,8 @@ namespace OpenDota
             //var dataMath = DataMath.Instance;
             //var test = dataMath.GetHeroAdvantageEnemyCollection(new DateTime(2017, 11, 1), DateTime.Now);
             var dataExplorer = new DataExplorer();
-            var test = dataExplorer.GetPlayerMatchCollection(114115565);
+            var test = dataExplorer.GetDotaMatch(3817756580);
+            Console.WriteLine(test);
 
             Console.ReadKey(true);
         }

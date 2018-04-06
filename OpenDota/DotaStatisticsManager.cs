@@ -58,6 +58,7 @@ namespace OpenDota
                         Player2 = p2
                     });
 
+            return null;
         }
 
         public List<IHeroAdvantage> GetHeroAdvantageEnemyCollection(DateTime begin, DateTime end)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenDota.Types;
 
 namespace OpenDota
 {
@@ -28,5 +29,11 @@ namespace OpenDota
         /// <param name="playerId">Идентификатор игрока</param>
         /// <returns>Матчи игрока</returns>
         List<IPlayerMatch> GetPlayerMatchCollection(ulong playerId);
+        /// <summary>
+        /// Возвращает информацию о матче
+        /// </summary>
+        /// <param name="matchId">ID матча</param>
+        /// <returns>Инфморация о матче</returns>
+        IDotaMatch GetDotaMatch(ulong matchId);
     }
 }
