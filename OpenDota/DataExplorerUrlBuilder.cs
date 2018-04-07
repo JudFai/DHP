@@ -15,6 +15,7 @@ namespace OpenDota
 
         private readonly string _openDotaApiExplorer = @"https://api.opendota.com/api/explorer?sql={0}";
         private readonly string _openDotaApiPlayerMatches = @"https://api.opendota.com/api/players/{0}/matches";
+        private readonly string _openDotaApiDotaMatch = @"https://api.opendota.com/api/matches/{0}";
 
         #endregion
 
@@ -59,6 +60,11 @@ namespace OpenDota
         public string GetPlayerMatchCollectionQuery(ulong accountId)
         {
             return string.Format(_openDotaApiPlayerMatches, accountId);
+        }
+
+        public string GetDotaMatchQuery(ulong matchId)
+        {
+            return string.Format(_openDotaApiDotaMatch, matchId);
         }
 
         #endregion

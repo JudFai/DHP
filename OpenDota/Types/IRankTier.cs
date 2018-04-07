@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenDota
+namespace OpenDota.Types
 {
-    public enum Faction
+    public interface IRankTier
     {
-        Radiant = 1,
-        Dire = 2
+        RankMedal Medal { get; }
+        int Stars { get; }
     }
 }

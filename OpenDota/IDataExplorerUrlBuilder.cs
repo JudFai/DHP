@@ -11,5 +11,6 @@ namespace OpenDota
         string GetHeroEnemyRationCollectionQuery(int beginUnixTimestamp, int endUnixTimestamp);
         string GetHeroWinrateCollectionQuery(int beginUnixTimestamp, int endUnixTimestamp);
         string GetPlayerMatchCollectionQuery(ulong accountId);
+        string GetDotaMatchQuery(ulong matchId);
     }
 }
