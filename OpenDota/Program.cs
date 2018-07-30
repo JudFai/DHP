@@ -19,7 +19,7 @@ namespace OpenDota
             //var test = dataExplorer.GetDotaMatch(3817756580);
 
             var dotaStat = DotaStatisticsManager.Instance;
-            var test = dotaStat.GetJoinMatchesOfPlayers(114115565, 344578644);
+            var test = dotaStat.GetJoinMatchesOfPlayers(114115565, 83424627);
 
             Console.WriteLine(test);
 
