@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenDota.Types;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,7 +45,7 @@ namespace OpenDota
 
         #region IDotaStatisticsManager Members
 
-        public List<IPlayerMatch> GetJoinMatchesOfPlayers(ulong player1, ulong player2)
+        public List<IDotaMatch> GetJoinMatchesOfPlayers(ulong player1, ulong player2)
         {
             var matchesPlayer1 = DataExplorer.GetPlayerMatchCollection(player1);
             var matchesPlayer2 = DataExplorer.GetPlayerMatchCollection(player2);
@@ -52,13 +53,16 @@ namespace OpenDota
                 .Join(matchesPlayer2, 
                     p1 => p1.MatchID, 
                     p2 => p2.MatchID, 
-                    (p1, p2) => new
-                    {
-                        Player1 = p1, 
-                        Player2 = p2
-                    });
+                    (p1, p2) => p1.MatchID).ToList();
 
-            return null;
+            var dotaMatchCollection = new List<IDotaMatch>();
+            foreach (var jointMatchId in jointMatches)
+            {
+                var dotaMatch = DataExplorer.GetDotaMatch(jointMatchId);
+                dotaMatchCollection.Add(dotaMatch);
+            }
+
+            return dotaMatchCollection;
         }
 
         public List<IHeroAdvantage> GetHeroAdvantageEnemyCollection(DateTime begin, DateTime end)

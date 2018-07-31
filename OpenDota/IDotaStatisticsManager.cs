@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenDota.Types;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace OpenDota
         /// </summary>
         /// <param name="player1">ID первого игрока</param>
         /// <param name="player2">ID второго игрока</param>
-        List<IPlayerMatch> GetJoinMatchesOfPlayers(ulong player1, ulong player2);
+        List<IDotaMatch> GetJoinMatchesOfPlayers(ulong player1, ulong player2);
         /// <summary>
         /// Возвращает коллекцию преимуществ героев перед героями-врагами
         /// </summary>
