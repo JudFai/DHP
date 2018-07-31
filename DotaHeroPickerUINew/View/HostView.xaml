@@ -1,0 +1,77 @@
+﻿<metro:MetroWindow x:Class="DotaHeroPickerUINew.View.HostView"
+                   Title="MainWindow"
+                   DataContext="{Binding Source={StaticResource Locator}, Path=Host}"
+                   xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+                   xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:converters="clr-namespace:DotaHeroPickerUINew.Converters"
+                   xmlns:views="clr-namespace:DotaHeroPickerUINew.View"
+                   mc:Ignorable="d"
+                   TitleForeground="White"
+                   BorderThickness="1"
+                   BorderBrush="{DynamicResource PrimaryHueDarkBrush}"
+                   WindowTitleBrush="{StaticResource PrimaryHueDarkBrush}"
+                   OverrideDefaultWindowCommandsBrush="White"
+                   Background="White"
+                   TitlebarHeight="22">
+    <metro:MetroWindow.Resources>
+        <converters:ObjectToTypeConverter x:Key="ObjectToTypeConverter" />
+    </metro:MetroWindow.Resources>
+    <metro:MetroWindow.TitleTemplate>
+        <DataTemplate>
+            <TextBlock Text="{Binding}"
+                       Margin="15, 0, 0, 0"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource MaterialDesignBody1TextBlock}" />
+        </DataTemplate>
+    </metro:MetroWindow.TitleTemplate>
+    <StackPanel>
+        <materialDesign:ColorZone Mode="PrimaryMid" 
+                                  Height="50"
+                                  Padding="15"
+                                  materialDesign:ShadowAssist.ShadowDepth="Depth2">
+            <TextBlock Text="More" 
+                       FontSize="18"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource MaterialDesignSubheadingTextBlock}" />
+        </materialDesign:ColorZone>
+        <ListBox Width="200"
+                 HorizontalAlignment="Left">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon x:Name="ItemIcon" Grid.Column="0"
+                                                 VerticalAlignment="Center"
+                                                 Foreground="#57585A"
+                                                 Height="20" Width="20"
+                                                 Margin="10, 0, 15, 0" />
+                        <TextBlock x:Name="ItemTitle" Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   FontSize="15"
+                                   Foreground="#838485"
+                                   Style="{StaticResource MaterialDesignBody2TextBlock}" />
+                    </Grid>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Converter={StaticResource ObjectToTypeConverter}}" Value="{x:Type views:HeroPickerView}">
+                            <Setter TargetName="ItemIcon" Property="Kind" Value="YinYang" />
+                            <Setter TargetName="ItemTitle" Property="Text" Value="Hero picker" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Converter={StaticResource ObjectToTypeConverter}}" Value="{x:Type views:CounterHeroesView}">
+                            <Setter TargetName="ItemIcon" Property="Kind" Value="SwordCross" />
+                            <Setter TargetName="ItemTitle" Property="Text" Value="Counter heroes" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <views:HeroPickerView />
+            <views:CounterHeroesView />
+        </ListBox>
+    </StackPanel>
+</metro:MetroWindow>

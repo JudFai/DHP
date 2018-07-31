@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DotaHeroPickerUINew
+namespace DotaHeroPickerUINew.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for CounterHeroesView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CounterHeroesView : UserControl
     {
-        public MainWindow()
+        public CounterHeroesView()
         {
             InitializeComponent();
         }

@@ -42,17 +42,35 @@ namespace DotaHeroPickerUINew.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<HostViewModel>();
+            SimpleIoc.Default.Register<HeroPickerViewModel>();
+            SimpleIoc.Default.Register<CounterHeroesViewModel>();
         }
 
-        public MainViewModel Main
+        public HostViewModel Host
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
+                return ServiceLocator.Current.GetInstance<HostViewModel>();
             }
         }
-        
+
+        public HeroPickerViewModel HeroPicker
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<HeroPickerViewModel>();
+            }
+        }
+
+        public CounterHeroesViewModel CounterHeroes
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<CounterHeroesViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
