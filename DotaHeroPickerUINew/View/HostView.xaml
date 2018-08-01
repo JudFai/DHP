@@ -28,50 +28,166 @@
                        Style="{StaticResource MaterialDesignBody1TextBlock}" />
         </DataTemplate>
     </metro:MetroWindow.TitleTemplate>
-    <StackPanel>
-        <materialDesign:ColorZone Mode="PrimaryMid" 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <materialDesign:ColorZone Grid.Row="0" Grid.ColumnSpan="2"
+                                  Mode="PrimaryMid" 
                                   Height="50"
                                   Padding="15"
-                                  materialDesign:ShadowAssist.ShadowDepth="Depth2">
-            <TextBlock Text="More" 
+                                  materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                  Panel.ZIndex="100">
+            <TextBlock x:Name="SelectedMenuTextBlock"
+                       Text="Dota Hero Picker"
                        FontSize="18"
                        VerticalAlignment="Center"
                        Style="{StaticResource MaterialDesignSubheadingTextBlock}" />
         </materialDesign:ColorZone>
-        <ListBox Width="200"
-                 HorizontalAlignment="Left">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon x:Name="ItemIcon" Grid.Column="0"
-                                                 VerticalAlignment="Center"
-                                                 Foreground="#57585A"
-                                                 Height="20" Width="20"
-                                                 Margin="10, 0, 15, 0" />
-                        <TextBlock x:Name="ItemTitle" Grid.Column="1"
-                                   VerticalAlignment="Center"
-                                   FontSize="15"
-                                   Foreground="#838485"
-                                   Style="{StaticResource MaterialDesignBody2TextBlock}" />
-                    </Grid>
-                    <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Converter={StaticResource ObjectToTypeConverter}}" Value="{x:Type views:HeroPickerView}">
-                            <Setter TargetName="ItemIcon" Property="Kind" Value="YinYang" />
-                            <Setter TargetName="ItemTitle" Property="Text" Value="Hero picker" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Converter={StaticResource ObjectToTypeConverter}}" Value="{x:Type views:CounterHeroesView}">
-                            <Setter TargetName="ItemIcon" Property="Kind" Value="SwordCross" />
-                            <Setter TargetName="ItemTitle" Property="Text" Value="Counter heroes" />
-                        </DataTrigger>
-                    </DataTemplate.Triggers>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-            <views:HeroPickerView />
-            <views:CounterHeroesView />
-        </ListBox>
-    </StackPanel>
+        <materialDesign:ColorZone Grid.Row="1" Grid.Column="0"
+                                  Width="250"
+                                  Mode="Light"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Stretch"
+                                  VerticalContentAlignment="Stretch"
+                                  materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                  Panel.ZIndex="10">
+            <ListBox x:Name="MenuListBox" 
+                     HorizontalAlignment="Stretch"
+                     HorizontalContentAlignment="Stretch"
+                     VerticalAlignment="Stretch"
+                     VerticalContentAlignment="Stretch">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                        <Setter Property="Padding" Value="0" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <Border Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            Margin="{TemplateBinding Margin}"
+                                            ClipToBounds="{TemplateBinding ClipToBounds}">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualStateGroup.Transitions>
+                                                    <VisualTransition GeneratedDuration="0:0:0.3" To="Normal">
+                                                        <VisualTransition.GeneratedEasingFunction>
+                                                            <CircleEase EasingMode="EaseOut"/>
+                                                        </VisualTransition.GeneratedEasingFunction>
+                                                    </VisualTransition>
+                                                </VisualStateGroup.Transitions>
+                                                <VisualState Name="Normal"/>
+                                                <VisualState Name="MouseOver">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="MouseOverBorder" Storyboard.TargetProperty="Opacity"
+                                                                         To="0.1" Duration="0"/>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState Name="Disabled"/>
+                                            </VisualStateGroup>
+                                            <VisualStateGroup Name="SelectionStates">
+                                                <VisualStateGroup.Transitions>
+                                                    <VisualTransition GeneratedDuration="0:0:0.6"/>
+                                                </VisualStateGroup.Transitions>
+                                                <!--<VisualState Name="Selected">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="SelectedBorder"
+                                                                         Storyboard.TargetProperty="Opacity"
+                                                                         To="0.18" Duration="0"/>
+                                                    </Storyboard>
+                                                </VisualState>-->
+                                                <VisualState Name="Unselected"/>
+                                                <!--<VisualState Name="SelectedUnfocused">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="SelectedBorder"
+                                                                         Storyboard.TargetProperty="Opacity"
+                                                                         To="0.03" Duration="0"/>
+                                                    </Storyboard>
+                                                </VisualState>-->
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <Grid>
+                                            <Border x:Name="MouseOverBorder"
+                                                    Opacity="0"
+                                                    Background="#777777"/>
+
+                                            <!--<Border x:Name="SelectedBorder"
+                                                    Opacity="0"
+                                                    Background="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}"
+                                                    RenderTransformOrigin="0.5,0.5">
+                                                <Border.RenderTransform>
+                                                    <ScaleTransform ScaleX="1"/>
+                                                </Border.RenderTransform>
+                                            </Border>-->
+                                            <materialDesign:Ripple Feedback="#AAAAAA"
+                                                                   Focusable="False"
+                                                                   Content="{TemplateBinding Content}"
+                                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                   Padding="{TemplateBinding Padding}"/>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value=".56" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon x:Name="ItemIcon" Grid.Column="0"
+                                                     VerticalAlignment="Center"
+                                                     Foreground="#57585A"
+                                                     Height="20" Width="20"
+                                                     Margin="20, 10, 20, 10" />
+                            <Border Grid.Column="1"
+                                    BorderThickness="0, 0, 0, 1" 
+                                    BorderBrush="#DFDFDF"
+                                    HorizontalAlignment="Stretch"
+                                    SnapsToDevicePixels="True">
+                                <TextBlock x:Name="ItemTitle" 
+                                           Margin="0, 10, 0, 10"
+                                           VerticalAlignment="Center"
+                                           FontSize="15"
+                                           Foreground="#838485"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}" />
+                            </Border>
+                        </Grid>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Converter={StaticResource ObjectToTypeConverter}}" Value="{x:Type views:HeroPickerView}">
+                                <Setter TargetName="ItemIcon" Property="Kind" Value="YinYang" />
+                                <Setter TargetName="ItemTitle" Property="Text" Value="Hero picker" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Converter={StaticResource ObjectToTypeConverter}}" Value="{x:Type views:CounterHeroesView}">
+                                <Setter TargetName="ItemIcon" Property="Kind" Value="SwordCross" />
+                                <Setter TargetName="ItemTitle" Property="Text" Value="Counter heroes" />
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <views:HeroPickerView />
+                <views:CounterHeroesView />
+            </ListBox>
+        </materialDesign:ColorZone>
+        <ContentControl Grid.Row="1" Grid.Column="1" 
+                        Content="{Binding ElementName=MenuListBox, Path=SelectedItem}" />
+    </Grid>
 </metro:MetroWindow>
