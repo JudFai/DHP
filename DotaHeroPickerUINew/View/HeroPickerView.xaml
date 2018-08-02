@@ -5,9 +5,48 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DotaHeroPickerUINew.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="HERO PICKER" />
-    </Grid>
+    <StackPanel>
+        <TextBox Margin="10" 
+                 HorizontalAlignment="Left"
+                 HorizontalContentAlignment="Left"
+                 materialDesign:HintAssist.Hint="Filter" />
+        <WrapPanel Margin="10, 0, 0, 10">
+            <materialDesign:Card Margin="20, 10, 10, 20"
+                                 Padding="5">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Images/Agility.png" />
+                    <TextBlock Text="Agility" 
+                               Margin="10, 0, 0, 0"
+                               VerticalAlignment="Center"
+                               Foreground="{StaticResource MaterialDesignBodyLight}"
+                               Style="{StaticResource MaterialDesignTitleTextBlock}" />
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card Margin="20, 10, 10, 20"
+                                 Padding="5">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Images/Strengh.png" />
+                    <TextBlock Text="Strengh"
+                               Margin="10, 0, 0, 0"
+                               VerticalAlignment="Center"
+                               Foreground="#666666"
+                               Style="{StaticResource MaterialDesignTitleTextBlock}" />
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card Margin="20, 10, 10, 20"
+                                 Padding="5">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Images/Intelligence.png" />
+                    <TextBlock Text="Intelligence"
+                               Margin="10, 0, 0, 0"
+                               VerticalAlignment="Center"
+                               Foreground="#666666"
+                               Style="{StaticResource MaterialDesignTitleTextBlock}" />
+                </StackPanel>
+            </materialDesign:Card>
+        </WrapPanel>
+    </StackPanel>
 </UserControl>
