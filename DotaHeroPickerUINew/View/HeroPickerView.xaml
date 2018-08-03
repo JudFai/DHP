@@ -13,8 +13,8 @@
                  HorizontalAlignment="Left"
                  HorizontalContentAlignment="Left"
                  materialDesign:HintAssist.Hint="Filter" />
-        <WrapPanel Margin="10, 0, 0, 10">
-            <materialDesign:Card Margin="20, 10, 10, 20"
+        <WrapPanel Margin="10, 0, 0, 0">
+            <materialDesign:Card Margin="20, 10, 10, 10"
                                  Padding="5">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,/Images/Agility.png" />
@@ -25,7 +25,7 @@
                                Style="{StaticResource MaterialDesignTitleTextBlock}" />
                 </StackPanel>
             </materialDesign:Card>
-            <materialDesign:Card Margin="20, 10, 10, 20"
+            <materialDesign:Card Margin="20, 10, 10, 10"
                                  Padding="5">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,/Images/Strengh.png" />
@@ -36,7 +36,7 @@
                                Style="{StaticResource MaterialDesignTitleTextBlock}" />
                 </StackPanel>
             </materialDesign:Card>
-            <materialDesign:Card Margin="20, 10, 10, 20"
+            <materialDesign:Card Margin="20, 10, 10, 10"
                                  Padding="5">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,/Images/Intelligence.png" />
@@ -48,5 +48,38 @@
                 </StackPanel>
             </materialDesign:Card>
         </WrapPanel>
+        <materialDesign:Card Margin="30, 10, 10, 10"
+                             HorizontalAlignment="Left"
+                             Padding="5">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Banned" 
+                               Margin="5, 0, 0, 0"
+                               VerticalAlignment="Center"
+                               Foreground="{StaticResource MaterialDesignBodyLight}"
+                               Style="{StaticResource MaterialDesignTitleTextBlock}" />
+            </StackPanel>
+        </materialDesign:Card>
+        <materialDesign:Card Margin="30, 10, 10, 10"
+                             HorizontalAlignment="Left"
+                             Padding="5">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Allies" 
+                               Margin="5, 0, 0, 0"
+                               VerticalAlignment="Center"
+                               Foreground="{StaticResource MaterialDesignBodyLight}"
+                               Style="{StaticResource MaterialDesignTitleTextBlock}" />
+            </StackPanel>
+        </materialDesign:Card>
+        <materialDesign:Card Margin="30, 10, 10, 10"
+                             HorizontalAlignment="Left"
+                             Padding="5">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Enemies" 
+                               Margin="5, 0, 0, 0"
+                               VerticalAlignment="Center"
+                               Foreground="{StaticResource MaterialDesignBodyLight}"
+                               Style="{StaticResource MaterialDesignTitleTextBlock}" />
+            </StackPanel>
+        </materialDesign:Card>
     </StackPanel>
 </UserControl>
